@@ -3,696 +3,757 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>520 · 赛博月老 · 究极整活ProMax版</title>
-    <script>MathJax={chtml:{fontURL:'https://cdn.jsdelivr.net/npm/mathjax@3/es5/output/chtml/fonts/woff-v2'}}</script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&family=ZCOOL+XiaoWei&family=Fira+Code:wght@400&display=swap" rel="stylesheet">
+    <title>大年初三的那一夜</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-<style>
-:root {
-    --bg-gradient-start: #23153C; /* Deep indigo */
-    --bg-gradient-end: #4A0E39; /* Dark magenta */
-    --container-bg: rgba(40, 25, 60, 0.7);
-    --text-color: #EAE0FF; /* Light lavender */
-    --primary-color: #f472b6; /* Vibrant pink */
-    --secondary-color: #ba68c8; /* Light purple */
-    --accent-color: #00bcd4; /* Bright cyan */
-    --heading-color: #f8bbd0; /* Soft pink for headings */
-    --card-border-color: rgba(248, 187, 208, 0.3);
-    --button-hover-bg: #ec407a;
-    --input-focus-border: var(--primary-color);
-    --input-focus-shadow: rgba(240, 98, 146, 0.35);
-    --heart-color: #e91e63;
-    --star-color: rgba(255, 255, 255, 0.8);
-}
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Inter:wght@400;500;700&family=Creepster&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color-dark: #060606;
+            --bg-color-lit: #f0e8d8; /* A dim, old paper lit color */
+            --text-color-dark: #b8b8b8;
+            --text-color-lit: #4a3b3b;
+            --text-secondary-color-dark: #707070;
+            --text-secondary-color-lit: #6d5f5f;
+            --accent-color: #8A0707; /* Deep, blood red for Chinese horror */
+            --highlight-color: #D4AC0D;
+            --lantern-glow-color: rgba(255, 30, 30, 0.6);
+            --lantern-core-color: #FF4136;
+            --font-serif: 'Noto Serif SC', 'ZCOOL XiaoWei', serif;
+            --font-sans: 'Inter', sans-serif;
+            --font-horror: 'Creepster', cursive;
+        }
 
-html,body{height:100%;margin:0;scroll-behavior:smooth; overflow-x: hidden;}
-body{font-family:"Noto Sans SC","Inter",sans-serif;line-height:1.85;background-image:linear-gradient(145deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);color:var(--text-color);padding:10px;box-sizing:border-box;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: var(--font-serif);
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-dark);
+            line-height: 1.9;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--bg-color-dark);
+            transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
+        }
 
-.container{max-width:950px;margin:20px auto;padding:35px;background-color:var(--container-bg);border-radius:20px;box-shadow:0 12px 35px rgba(194, 24, 91, 0.25);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px); border: 1px solid var(--card-border-color);}
-.material-icons-outlined{vertical-align:middle;font-size:1.3em;margin-right:.5em;line-height:1;color: var(--primary-color);}
-h1>.material-icons-outlined,h2>.material-icons-outlined{font-size:1.35em;margin-right:.5em;}
-h3>.material-icons-outlined{font-size:1.25em;color:var(--secondary-color)}
-h1,h2,h3,h4,h5{color:var(--heading-color);margin:1.7em 0 0.9em;font-weight:700;display:flex;align-items:center;line-height:1.4}
-h1{font-size:2.8rem;letter-spacing:-.2px;border-bottom:2px solid var(--primary-color);padding-bottom:.6em;margin:.0 0 0.9em;text-align:center;justify-content:center; font-family: 'ZCOOL XiaoWei', serif; cursor: pointer; text-shadow: 0 0 10px var(--primary-color);}
-h1 .heartbeat { display: inline-block; animation: heartbeat 1.2s ease-in-out infinite alternate; color: var(--heart-color); filter: drop-shadow(0 0 5px var(--heart-color)); }
-h1 .subtitle-text { font-size: 0.45em; color: var(--secondary-color); display: block; margin-top: 8px; font-weight:normal; letter-spacing: 0.8px; text-shadow: none;}
-@keyframes heartbeat { 0% { transform: scale(1) rotate(-2deg); } 100% { transform: scale(1.15) rotate(2deg); } }
-h2{font-size:2.1rem;padding-bottom:.6em; border-bottom: 1px dashed var(--card-border-color); font-family: 'ZCOOL XiaoWei', serif;}
-h3{font-size:1.7rem;color:var(--heading-color); margin-top: 0.3em;}
-p{margin-bottom:1.4em;color:var(--text-color);font-size:1.1rem; letter-spacing: 0.2px;}
-strong,.strong-emphasis{font-weight:bold;color:var(--primary-color); text-shadow: 0 0 3px rgba(240, 98, 146, 0.5);}
-.math-formula{display:inline-block;font-size:1.2em;padding:4px 10px;background-color:rgba(248, 187, 208, 0.15);border-radius:.4rem;color:var(--primary-color);margin:0 5px;border:1px solid var(--card-border-color); font-weight: bold;}
-.feature-box{background:rgba(255,255,255,0.05);border:1px solid var(--card-border-color);border-radius:15px;padding:30px;margin-bottom:30px;box-shadow:0 8px 25px rgba(194, 24, 91, 0.12); transition: transform 0.3s ease, box-shadow 0.3s ease;}
-.feature-box:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 12px 30px rgba(194, 24, 91, 0.2); }
-.input-group{margin-bottom:20px;display:flex;flex-direction:column}
-.input-group label{font-weight:600;color:var(--heading-color);margin-bottom:10px;display:flex;align-items:center}
-.input-group label .material-icons-outlined { color: var(--secondary-color); }
-.input-group input[type="text"]{padding:14px 18px;border:1px solid var(--card-border-color);border-radius:10px;font-size:1.05rem;background-color:rgba(255,255,255,0.1);color:var(--text-color);transition:border-color .3s, box-shadow .3s, background-color .3s;}
-.input-group input[type="text"]::placeholder { color: rgba(234, 224, 255, 0.5); }
-.input-group input[type="text"]:focus{border-color:var(--input-focus-border);box-shadow:0 0 0 4px var(--input-focus-shadow);outline:none; background-color:rgba(255,255,255,0.15);}
-.styled-button{background-image:linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);color:#fff;padding:14px 30px;border:none;border-radius:10px;font-size:1.1rem;font-weight:600;cursor:pointer;transition:all .3s ease;display:inline-flex;align-items:center;justify-content:center;gap:10px; letter-spacing: 0.8px; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); box-shadow: 0 4px 15px rgba(0,0,0,0.2);}
-.styled-button:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 6px 20px rgba(0,0,0,0.3); filter: brightness(1.1);}
-.styled-button:active{transform:translateY(-1px) scale(1.01);box-shadow:0 2px 10px rgba(0,0,0,0.2);}
-.styled-button .material-icons-outlined { margin-right: 8px; }
-.result-area {margin-top:25px;padding:20px;background-color:rgba(0,0,0,0.2);border-left:6px solid var(--secondary-color);border-radius:10px;color:var(--text-color);min-height:50px;line-height:1.8; font-size: 1.1rem; animation: fadeInSlideUp 0.6s ease-out; box-shadow: inset 0 0 15px rgba(0,0,0,0.2);}
-@keyframes fadeInSlideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-.intro-text { text-align: center; font-size: 1.25rem; color: var(--heading-color); margin-bottom: 2.8em; line-height: 2; }
-.intro-text code { background-color: rgba(240,98,146,0.2); color: var(--primary-color); padding: 0.25em 0.6em; border-radius: 5px; font-weight: bold;}
-.footer-text { text-align: center; margin-top: 3.5em; padding-top: 2.5em; border-top: 1px dashed var(--card-border-color); font-size: 0.95rem; color:var(--text-color); }
-.footer-text .material-icons-outlined { color: var(--primary-color); font-size: 1.15em; }
-.footer-text .hidden-trigger { cursor:pointer; color: var(--accent-color); font-weight: bold; text-decoration: none; border-bottom: 1px dashed var(--accent-color); padding-bottom: 1px;}
-.footer-text .hidden-trigger:hover { color: #00e5ff; border-bottom-color: #00e5ff; text-shadow: 0 0 5px var(--accent-color);}
+        body.page-is-lit {
+            background-color: var(--bg-color-lit);
+            color: var(--text-color-lit);
+        }
+        body.page-is-lit .scene {
+            background-color: rgba(220, 210, 190, 0.6); /* Lighter scene bg when page is lit */
+            border: 1px solid #d8c8b8;
+            box-shadow: 0 0 25px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.1);
+        }
+        body.page-is-lit h1, body.page-is-lit h2 {
+            color: #7a0606; /* Darker red for titles when lit */
+             text-shadow: 0 0 8px #7a0606;
+        }
+        body.page-is-lit .text-danger { color: #A02C2C; text-shadow: 0 0 3px #A02C2C; }
+        body.page-is-lit .text-highlight { color: #b8860b; text-shadow: 0 0 3px #b8860b; }
+        body.page-is-lit .text-white-shadow { color: #503030; text-shadow: 0 0 5px rgba(0,0,0,0.3); }
 
-#fireworks-page {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: #00000A; z-index: 10000; overflow: hidden;
-}
-#fireworks-canvas { display: block; width: 100%; height: 100%; }
-#back-to-main-button {
-    position: absolute; top: 25px; left: 25px; z-index: 10001;
-    background-image:linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%); color: white;
-    padding: 12px 22px; border: none; border-radius: 10px;
-    font-size: 1rem; cursor: pointer; font-family: "Noto Sans SC";
-    box-shadow: 0 0 20px rgba(240, 98, 146, 0.6); transition: all 0.3s ease;
-}
-#back-to-main-button:hover { transform: scale(1.05); filter: brightness(1.15); box-shadow: 0 0 25px rgba(240, 98, 146, 0.8); }
-.fireworks-title {
-    position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
-    color: #fff; font-size: 3rem; text-align: center; font-family: 'ZCOOL XiaoWei', serif;
-    text-shadow: 0 0 8px #f06292, 0 0 15px #f06292, 0 0 25px #f06292, 0 0 35px #e91e63;
-    z-index: 10001; pointer-events: none;
-}
-.loading-bar-container {
-    width: 80%; max-width: 350px; height: 22px;
-    background-color: rgba(255,255,255,0.15);
-    border-radius: 11px; margin: 12px auto 0; overflow: hidden; border: 1px solid rgba(255,255,255,0.2);
-}
-.loading-bar {
-    width: 0%; height: 100%;
-    background-image: linear-gradient(90deg, var(--accent-color) 0%, #00e5ff 100%);
-    border-radius: 10px; transition: width 0.35s ease-out;
-}
-.small-note {font-size: 0.9em; color: #c0b8d8; text-align: center; margin-top: 10px;}
 
-@media (max-width:768px){body{padding:5px} .container{padding:25px;margin:10px auto} h1{font-size:2.3rem} h2{font-size:1.8rem} h3{font-size:1.5rem} .styled-button{padding:12px 25px; font-size:1rem;} .fireworks-title{font-size:2rem; top: 30px;} #back-to-main-button{padding: 10px 18px; font-size:0.95rem;}}
-@media (max-width:480px){h1{font-size:2rem} h2{font-size:1.6rem} h3{font-size:1.3rem} .intro-text{font-size:1.1rem} .styled-button{padding:12px 20px; font-size:0.95rem} .input-group input[type="text"]{padding:12px 15px;} .fireworks-title{font-size:1.6rem; top: 50px;} #back-to-main-button{font-size:0.9rem; padding: 9px 16px;}}
-</style>
+        .story-container {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 25px;
+            box-sizing: border-box;
+        }
+
+        .scene {
+            display: none;
+            padding: 35px 25px;
+            border-radius: 10px;
+            background-color: rgba(10, 10, 10, 0.7); /* Slightly more opaque */
+            margin-bottom: 35px;
+            animation: fadeInScene 1s ease-in-out;
+            border: 1px solid #1f1f1f;
+            box-shadow: 0 0 35px rgba(0,0,0,0.7), inset 0 0 15px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        .scene.active { display: block; }
+
+        @keyframes fadeInScene {
+            from { opacity: 0; transform: translateY(25px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes screenShakeStrong {
+            0%, 100% { transform: translateX(0) rotate(0); }
+            10%, 90% { transform: translateX(-5px) rotate(-0.5deg); }
+            30%, 70% { transform: translateX(5px) rotate(0.5deg); }
+            50% { transform: translateX(-3px) rotate(-0.3deg); }
+        }
+        .screen-shake-effect { animation: screenShakeStrong 0.35s linear; }
+        @keyframes textGlitchStrong {
+            0% { text-shadow: 1.5px 0 var(--accent-color), -1.5px 0 var(--highlight-color); opacity: 0.8; transform: skewX(-2deg);}
+            25% { text-shadow: -1.5px 0 var(--accent-color), 1.5px 0 var(--highlight-color); opacity: 1; transform: skewX(2deg);}
+            50% { text-shadow: 1px 1px var(--accent-color), -1px -1px var(--highlight-color); opacity: 0.75; transform: skewX(-1deg);}
+            75% { text-shadow: -1px 1px var(--accent-color), 1px -1px var(--highlight-color); opacity: 1; transform: skewX(1deg);}
+            100% { text-shadow: 1.5px 0 var(--accent-color), -1.5px 0 var(--highlight-color); opacity: 0.8; transform: skewX(-2deg);}
+        }
+        .glitch-text { animation: textGlitchStrong 0.15s infinite alternate; display: inline-block; }
+
+        h1, h2 {
+            font-family: var(--font-horror);
+            font-weight: normal;
+            text-align: center;
+            margin-bottom: 1.5em;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 1.5px; /* Wider spacing for horror font */
+        }
+        h1 { font-size: 3.2rem; text-shadow: 0 0 12px var(--accent-color), 0 0 6px var(--highlight-color); }
+        h2 { font-size: 2.6rem; text-shadow: 0 0 10px var(--accent-color); }
+
+        h1 .material-icons-outlined, h2 .material-icons-outlined {
+            margin-right: 15px; font-size: 1.3em; color: var(--highlight-color);
+            filter: drop-shadow(0 0 4px var(--highlight-color));
+        }
+
+        p { margin-bottom: 1.6em; font-size: 1.15rem; }
+        .text-danger { color: var(--accent-color); font-weight: bold; text-shadow: 0 0 6px var(--accent-color); }
+        .text-highlight { color: var(--highlight-color); font-weight: 500; text-shadow: 0 0 6px var(--highlight-color); }
+        .text-white-shadow { color: #ddd; text-shadow: 0 0 8px rgba(0,0,0,0.7), 0 0 5px #1C2833, 0 0 2px #fff; font-weight: bold;}
+        .text-purple-haze { color: #c5aeda; font-style: italic; text-shadow: 0 0 5px #c5aeda; }
+        .narrative-emphasis { font-style: italic; color: #a3adc2; }
+
+        /* Lanterns for Intro */
+        .lantern-container { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; }
+        .lantern {
+            width: 50px; height: 70px; background-color: var(--lantern-core-color);
+            border-radius: 40% 40% 30% 30% / 50% 50% 40% 40%;
+            position: relative;
+            box-shadow: 0 0 15px 5px var(--lantern-glow-color), inset 0 0 10px rgba(255,255,100,0.3);
+            animation: lanternSway 7s infinite ease-in-out, lanternGlowPulse 3s infinite alternate;
+        }
+        .lantern::before { /* Tassel */
+            content: ''; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+            width: 5px; height: 20px; background: gold;
+        }
+        @keyframes lanternSway {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+        @keyframes lanternGlowPulse {
+            0% { box-shadow: 0 0 15px 5px var(--lantern-glow-color), inset 0 0 10px rgba(255,255,100,0.3); opacity: 0.85; }
+            50% { box-shadow: 0 0 25px 10px var(--lantern-glow-color), inset 0 0 15px rgba(255,255,100,0.4); opacity: 1; }
+            100% { box-shadow: 0 0 15px 5px var(--lantern-glow-color), inset 0 0 10px rgba(255,255,100,0.3); opacity: 0.85; }
+        }
+
+
+        button, .action-button { /* Styles from previous good version */
+            font-family: var(--font-sans); background-color: #2C3E50; color: #fff; border: 1px solid #555;
+            padding: 13px 28px; border-radius: 6px; cursor: pointer; font-size: 1.05rem;
+            transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;
+            margin-top: 12px; box-shadow: 0 3px 8px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.1);
+        }
+        button:hover, .action-button:hover { background-color: #3B5369; transform: translateY(-3px) scale(1.02); box-shadow: 0 5px 12px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1); border-color: var(--highlight-color); }
+        button:active, .action-button:active { transform: translateY(0px) scale(1); }
+        .next-scene-btn { display: block; margin: 25px auto 0; background-color: var(--accent-color); }
+        .next-scene-btn:hover { background-color: #600000; } /* Darker red hover */
+        .global-light-toggle {
+            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+            background-color: rgba(40,40,40,0.8); border: 1px solid #666;
+            color: #eee; padding: 10px 15px;
+            backdrop-filter: blur(5px);
+        }
+        body.page-is-lit .global-light-toggle {
+            background-color: rgba(230,220,200,0.8); color: #333; border-color: #aaa;
+        }
+
+
+        .hidden { display: none !important; }
+        .visual-element-container { /* Styles from previous good version */
+            margin: 20px auto; padding: 10px; background-color: rgba(0,0,0,0.3);
+            border: 1px dashed #333; border-radius: 5px; display: flex;
+            justify-content: center; align-items: center; min-height: 250px;
+            position: relative; overflow: hidden;
+        }
+        .visual-element-container img { max-width: 90%; max-height: 400px; height: auto; border-radius: 4px; display: block; border: 1px solid #555; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
+        
+        /* Corridor specific styling from previous version - mostly good */
+        #corridor-view-container { background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAPDw8QEA8QDw8PDw8PDw8PDw8PDw8PFREWFhURFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIALMAWgMBIgACEQEDEQH/xAAYAAEBAQEBAAAAAAAAAAAAAAAAAQIDBf/EABgQAQEBAQEAAAAAAAAAAAAAAAABEQIS/9oADAMBAAIQAxAAAAHqAAAAAAAACVWQCFQSiLKgAAAAAAAB//xAAbEAEBAAEFAAAAAAAAAAAAAAABAAIREBITIv/aAAgBAQABBQJ5Rk8oyeVHgf/EABQRAQAAAAAAAAAAAAAAAAAAAGD/2gAIAQMBAT8Bf//EABQRAQAAAAAAAAAAAAAAAAAAAGD/2gAIAQIBAT8Bf//EABoQAAICAwAAAAAAAAAAAAAAAAARASAhMED/2gAIAQEABj8C8VSYf//EABwQAQEAAgMBAAAAAAAAAAAAAAERACExQWGBkf/aAAgBAQABPyEcCHAh0g+PcN9PvhwgjwEPeAj3DxA8P//aAAwDAQACAAMAAAAQAAAAAAAADCBAA8EAAAAAAAD//xAAUEQEAAAAAAAAAAAAAAAAAAABg/9oACAEDAQE/EGL/xAAUEQEAAAAAAAAAAAAAAAAAAABg/9oACAECAQE/EGL/xAAdEAEBAAICAwEAAAAAAAAAAAABEQAhMUEQUWFx/9oACAEBAAE/EDwjwjwQPhB4hD44nIg+DzCHuYfch4fOEHAg8EHgg8EHzCEPiH//2Q==') center center / cover no-repeat; filter: brightness(0.15); transition: filter 1s ease-in-out; }
+        #corridor-view-container.lit { filter: brightness(0.4); }
+        #corridor-light-effect { position: absolute; top: 0; left: 50%; width: 200%; height: 300px; background: radial-gradient(ellipse at 50% 0%, rgba(255, 223, 100, 0.35) 0%, rgba(255, 223, 100, 0.2) 30%, transparent 70%); transform: translateX(-50%); opacity: 0; transition: opacity 0.7s ease-out; pointer-events: none; }
+        #corridor-light-effect.on { opacity: 1; }
+
+        #white-figure { /* Enhanced white figure */
+            position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
+            width: 55px; height: 170px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, background-color 1s linear, box-shadow 1s linear, filter 0.5s ease;
+            filter: blur(2.5px);
+            animation: figureSway 6s infinite ease-in-out alternate;
+        }
+        #white-figure::before { /* Head/Shoulder part */
+            content: ''; display: block; width: 45px; height: 50px; margin: 0 auto;
+            background-color: rgba(235, 235, 245, 0.55);
+            border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%; /* Headish shape */
+            box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.25);
+        }
+        #white-figure::after { /* Body part */
+            content: ''; display: block; width: 100%; height: 120px; margin-top: -10px; /* Overlap slightly */
+            background-color: rgba(225, 225, 235, 0.5);
+            border-radius: 30% 30% 5px 5px / 40% 40% 10% 10%; /* Torso/gown shape */
+            box-shadow: 0 0 18px 6px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes figureSway {
+            from { transform: translateX(-50%) scale(0.9) translateY(0px) rotateZ(-1deg); filter: blur(3px); }
+            to { transform: translateX(-45%) scale(0.95) translateY(-7px) rotateZ(1deg); filter: blur(2px); }
+        }
+        #white-figure.visible { opacity: 0.75; transform: translateX(-50%) scale(1); }
+        #white-figure.revealed-as-sheet { /* Keep this good effect */
+            background-color: rgba(180, 180, 170, 0.8); height: 200px; width: 100px;
+            border-radius: 5px; box-shadow: 0 0 5px rgba(150,150,150,0.5);
+            filter: blur(0.5px); animation: none; transform: translateX(-50%) scale(1) rotate(-5deg);
+        }
+        #white-figure.revealed-as-sheet::before, #white-figure.revealed-as-sheet::after { display:none; } /* Hide pseudo elements when it's a sheet */
+
+        /* Curtain Animation */
+        #curtain-image-container { min-height: 280px; position:relative; } /* Ensure container has height */
+        #curtain-image {
+            /* Placeholder: a dark, slightly transparent curtain. Replace with actual image data URI if possible */
+            width: 280px; height: 220px;
+            background: linear-gradient(to right, rgba(30,20,40,0.7) 0%, rgba(40,30,50,0.75) 30%, rgba(40,30,50,0.75) 70%, rgba(30,20,40,0.7) 100%);
+            border: 1px solid #111;
+            box-shadow: inset 0 0 10px #000;
+            border-radius: 3px;
+            position: relative;
+            overflow: hidden;
+            animation: curtainFlutter 8s infinite ease-in-out alternate;
+            transform-origin: top center;
+        }
+        #curtain-image::before, #curtain-image::after { /* Subtle folds */
+            content: ''; position: absolute; top: 0; height: 100%; width: 20px;
+            background: rgba(0,0,0,0.1);
+        }
+        #curtain-image::before { left: 30%; filter: blur(1px); }
+        #curtain-image::after { right: 30%; filter: blur(1px); }
+
+        @keyframes curtainFlutter {
+            0% { transform: skewX(-1deg) perspective(500px) rotateY(1deg) scaleY(1); opacity: 0.65; }
+            25% { transform: skewX(0.5deg) perspective(500px) rotateY(-0.5deg) scaleY(1.01); opacity: 0.7; }
+            50% { transform: skewX(-0.5deg) perspective(500px) rotateY(0.5deg) scaleY(1); opacity: 0.68; }
+            75% { transform: skewX(1deg) perspective(500px) rotateY(-1deg) scaleY(1.005); opacity: 0.72; }
+            100% { transform: skewX(-1deg) perspective(500px) rotateY(1deg) scaleY(1); opacity: 0.65; }
+        }
+
+        #window-peek-view { /* From previous, good */
+            text-align: center; padding: 50px 25px; background: repeating-linear-gradient( 45deg, #010101, #010101 5px, #030303 5px, #030303 10px );
+            color: #333; margin: 20px 0; border-radius: 5px; font-style: italic; border: 1px solid #222; box-shadow: inset 0 0 15px #000;
+        }
+        
+        /* Wardrobe and Figure */
+        .wardrobe-container {
+            width: 250px; height: 350px;
+            background-color: #2a1a0f; /* Dark wood color */
+            border: 3px solid #1e120a;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.7), 0 5px 10px rgba(0,0,0,0.5);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            margin: 30px auto;
+        }
+        .wardrobe-container::before, .wardrobe-container::after { /* Doors */
+            content: ''; position: absolute; top: 5px; bottom: 5px; width: 48%;
+            background-color: #382214; border: 1px solid #1a0f08;
+        }
+        .wardrobe-container::before { left: 1.5%; }
+        .wardrobe-container::after { right: 1.5%; }
+
+        #wardrobe-hunched-figure {
+            width: 70px; height: 90px;
+            position: absolute; top: -60px; /* Positioned on top, slightly forward */
+            left: 50%; transform: translateX(-50%);
+            opacity: 0; /* Initially hidden */
+            filter: blur(1.5px);
+            animation: figureAppearAndLoom 5s ease-out forwards, figureSubtleShift 7s infinite ease-in-out 5s alternate;
+        }
+        #wardrobe-hunched-figure .head {
+            width: 35px; height: 30px; background: #1a1a1a;
+            border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+            margin: 0 auto; transform: rotate(-15deg) translateY(5px); /* Tilted head */
+        }
+        #wardrobe-hunched-figure .body {
+            width: 100%; height: 60px; background: #121212;
+            border-radius: 40% 40% 60% 60% / 30% 30% 70% 70%; /* Hunched back */
+            margin-top: -10px; transform: scaleY(1.2) skewX(-10deg); /* Hunched */
+        }
+        @keyframes figureAppearAndLoom {
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.8); }
+            60% { opacity: 0.6; transform: translateX(-50%) translateY(0) scale(1); }
+            100% { opacity: 0.5; transform: translateX(-50%) translateY(0) scale(1); } /* Settle */
+        }
+        @keyframes figureSubtleShift {
+            from { filter: blur(1.5px) brightness(0.9); transform: translateX(-50%) translateY(0px) rotateZ(-0.5deg); }
+            to { filter: blur(2px) brightness(0.8); transform: translateX(-48%) translateY(-2px) rotateZ(0.5deg); }
+        }
+
+
+        #horror-overlay { /* From previous, good */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--accent-color);
+            opacity: 0; z-index: 9999; pointer-events: none; transition: opacity 0.05s ease-out;
+        }
+        #horror-overlay.flash { opacity: 0.35; }
+        
+        .material-icons-outlined { vertical-align: middle; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; } h2 { font-size: 2rem; } p { font-size: 1.05rem; }
+            button, .action-button { padding: 11px 22px; font-size: 0.95rem;}
+            .story-container { padding: 15px; } .scene { padding: 25px 20px; }
+            .lantern-container { gap: 15px; } .lantern { width: 40px; height: 60px; }
+            .wardrobe-container { width: 200px; height: 300px; }
+            #wardrobe-hunched-figure { top: -50px; }
+        }
+    </style>
 </head>
 <body>
-    <div id="main-content-wrapper">
-        <div class="container">
-            <h1 id="main-title"><span class="material-icons-outlined heartbeat" aria-hidden="true">local_fire_department</span> 520·赛博月老·究极整活 <span class="material-icons-outlined heartbeat" aria-hidden="true">rocket_launch</span><span class="subtitle-text">(连续点击标题5次，月老送你看一场宇宙级浪漫！)</span></h1>
-            <p class="intro-text">值此<strong class="strong-emphasis">5月20日</strong>，宇宙谐音梗保护协会认证节日之际，<br>本赛博月老办事处正式上线，致力于为您提供一站式<code style="color:#00bcd4;">量子纠缠</code>与<code style="color:#ffeb3b;">土味超神</code>服务！<br>无论你是<strong style="color:#90caf9;">“电子显眼包”</strong>还是<strong style="color:#ffcc80;">“摸鱼磕CP大师”</strong>，今日必有斩获！</p>
+    <div class="story-container">
+        <section id="intro" class="scene active">
+            <div class="lantern-container">
+                <div class="lantern"></div>
+                <div class="lantern"></div>
+            </div>
+            <h1><span class="material-icons-outlined">flare</span>大年初三的那一夜</h1>
+            <p class="narrative-emphasis" style="text-align:center; font-size: 1.2em;">年节的喧嚣犹在耳畔，红灯笼摇曳着<strong class="text-danger">诡异的光</strong>。然而，喜庆的表象之下，有什么东西，正悄然苏醒...</p>
+            <p>那个夜晚，沉甸甸地压在我心头，像一块墓碑。它并非寻常的黑暗，而是一种冰冷、黏稠，带着<strong class="text-danger">铁锈味</strong>的恐惧，至今仍在我的记忆深处<strong class="glitch-text">蠢蠢欲动</strong>。</p>
+            <button class="next-scene-btn" data-next="scene1" autofocus><span class="material-icons-outlined">play_arrow</span>开始讲述</button>
+        </section>
 
-            <div class="feature-box">
-                <h3><span class="material-icons-outlined">radar</span>爱情雷达·超光速版 Mark V</h3>
-                <p>输入您和TA的专属昵称/代号/黑话，本月老即刻启动<strong style="color:#7e57c2;">“跨次元因果律探测仪”</strong>，为您解析那冥冥之中的亿万分之一！</p>
-                <div class="input-group">
-                    <label for="name1"><span class="material-icons-outlined">person_pin_circle</span>您的赛博名讳：</label>
-                    <input type="text" id="name1" placeholder="例如：人间清醒的显眼包">
+        <section id="scene1" class="scene">
+            <h2><span class="material-icons-outlined">holiday_village</span>异样的老宅</h2>
+            <p>那是2022年的大年初三，高一的寒假。我如往年一样，在除夕前一天回到了乡下老宅。空气里有鞭炮的硝烟味，也有一些不易察觉的、<strong class="text-highlight">老房子特有的陈旧气息</strong>。</p>
+            <p>过年那几天，我几乎是黑白颠倒，每天玩到凌晨才睡，中午时分才慢吞吞起床。父母即便在过年期间，也常要外出忙碌，甚至除夕也不例外。这一点，总让我心里有些不是滋味。</p>
+            <div>
+                <p>老宅是一栋三层的自建房。我和父母住在三层，祖父母在一层。二楼，很久没人住了，渐渐变成了堆放杂物的地方，<strong class="text-highlight">暗沉沉的，少有人去</strong>。</p>
+                <p>三楼上来是一条长长的走廊，尽头是上四楼屋顶的楼梯。屋顶原本是露天的，但后来搭了个瓦片顶，原来的平台和新屋顶之间就夹出了一片<strong class="text-danger">黑洞洞的空间</strong>，也被用来堆放各种用不上的旧东西。</p>
+                <p>走廊右手边有两个房间：一个是书房，比较小；另一个是大房间，进门是客厅，左手是我的卧室，右手是父母的卧室，还有卫生间和一间<strong class="text-highlight">门总是关着的杂物间</strong>，透着一股霉味。</p>
+            </div>
+            <p>我把台式电脑带回了老家，放在书房里，因为卧室不太方便装。</p>
+            <button id="roomLightToggleBtn" class="action-button global-light-toggle hidden"><span class="material-icons-outlined">lightbulb</span>房间灯</button>
+            <button class="next-scene-btn" data-next="scene2"><span class="material-icons-outlined">arrow_forward</span>夜色渐浓</button>
+        </section>
+
+        <section id="scene2" class="scene corridor-scene">
+            <h2><span class="material-icons-outlined">visibility_off</span>走廊暗影</h2>
+            <p>大概晚上十点钟，我打算从书房出来回卧室，躺床上玩手机。 </p>
+            <div class="corridor-interaction">
+                <p>外面的走廊很黑，死一般的寂静。父母应该已经睡了，大房间的灯是关的。我准备先走到走廊上把走廊灯打开。</p>
+                <button id="openStudyDoorBtn" class="action-button"><span class="material-icons-outlined">meeting_room</span>推开书房门...</button>
+                
+                <div id="corridor-view-container" class="visual-element-container hidden">
+                    <div id="corridor-light-effect"></div>
+                    <div id="white-figure" class="hidden"></div>
+                    <img id="corridor-image-content" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="漆黑的走廊" style="opacity:0;">
                 </div>
-                <div class="input-group">
-                    <label for="name2"><span class="material-icons-outlined">share_location</span>TA的神秘代号：</label>
-                    <input type="text" id="name2" placeholder="例如：宇宙无敌小可爱">
-                </div>
-                <button class="styled-button" onclick="calculateLove()"><span class="material-icons-outlined">flare</span>启动命运齿轮！</button>
-                <div id="love-result-area" class="result-area">🔮 请虔诚输入双方信息，月老在线摇签中...</div>
-            </div>
 
-            <div class="feature-box">
-                <h3><span class="material-icons-outlined">speaker_notes</span>土味情话·星际广播站</h3>
-                <p>词穷了？尴尬了？月老牌<strong style="color:#ff7043;">“土味情话加特林”</strong>已装填完毕，一键发射，保证TA又麻又爱！</p>
-                <button class="styled-button" onclick="generateCheesyLine()"><span class="material-icons-outlined">wifi_calling_3</span>来点土的，上头！</button>
-                <div id="cheesy-line-area" class="result-area">💌 点击查收今日份土味心动（暴击）...</div>
+                <p id="corridor-text-scare" class="hidden text-danger" style="font-size: 1.3em; text-align: center; margin-top:20px; line-height:1.6;">
+                    就在我探出头的一瞬间，我感觉有什么东西在走廊尽头的方向<strong class="text-danger text-white-shadow glitch-text">看着我</strong>！
+                    我悚然回头，借着书房门里漏出来的一点光，赫然看见一个<strong class="text-white-shadow" style="font-size:1.2em; letter-spacing:1px;">白色的影子</strong>，静静地站在走廊尽头！它的白色被我的书房灯照耀着，却又在黑夜里染了些说不出的暗沉，看着<strong class="text-danger">十分诡异</strong>。
+                </p>
+                <button id="turnOnCorridorLightBtn" class="action-button hidden"><span class="material-icons-outlined">lightbulb</span>打开走廊灯！</button>
+                <p id="corridor-text-reveal" class="hidden" style="margin-top:20px;">
+                    我瞬间被吓傻了，几乎是凭着本能，哆哆嗦嗦地按下了走廊灯的开关。“啪”的一声，老式的灯泡亮了起来，发出<strong class="text-highlight">昏黄的光</strong>，有种怀旧之感。
+                    灯光下，我终于看清了走廊尽头是什么东西——不过是一大块<strong class="text-highlight">灰色的塑料布</strong>，原本是用来遮挡阳光，免得把书架上的书晒褪色的。
+                </p>
             </div>
-            
-            <div class="feature-box">
-                <h3><span class="material-icons-outlined">history_edu</span>三行情诗·灵感批发机 Deluxe</h3>
-                <p>还在为三行情书抓耳挠腮？赛博诗仙旗舰店盛大开业，<strong style="color:#26a69a;">“意识流·朦胧美·赛博格风”</strong>三行情诗，一键生成，包君满意！</p>
-                <button class="styled-button" onclick="generatePoem()"><span class="material-icons-outlined">auto_fix_high</span>吟来！批发诗意！</button>
-                <div id="poem-area" class="result-area">📜 诗兴大发按钮已激活，佳句天成待领取...</div>
-            </div>
-
-            <div class="feature-box">
-                <h3><span class="material-icons-outlined">diamond</span>今日运势·爱情盲盒扭蛋</h3>
-                <p>今天的爱情小船是<strong style="color:#ffee58;">“乘风破浪”</strong>还是<strong style="color:#ab47bc;">“原地打转”</strong>？扭一发爱情运势盲盒，看看月老今天给你发了什么糖！</p>
-                <button class="styled-button" onclick="getFortune()"><span class="material-icons-outlined">generating_tokens</span>开！今日份桃花运！</button>
-                <div id="fortune-area" class="result-area">✨ 玄学能量汇聚中，一点即刻开奖...</div>
-            </div>
-
-            <div class="feature-box">
-                <h3><span class="material-icons-outlined">spatial_audio_off</span>心意直达·次元传音筒 (信号玄学版)</h3>
-                <p>有些话，憋在心里会发芽（然后变成表情包）！用这个<strong style="color:#66bb6a;">“量子传音螺MAX”</strong>，把你的心意（和沙雕）打包发射！<br><small>(严正声明：信号质量取决于宇宙暗物质浓度及您的人品值，月老不提供售后三包服务！)</small></p>
-                <div class="input-group">
-                    <label for="confessionMessage"><span class="material-icons-outlined">settings_voice</span>您的肺腑之言/宇宙黑话：</label>
-                    <input type="text" id="confessionMessage" placeholder="例如：整个宇宙都想和你贴贴！(づ｡◕‿‿◕｡)づ">
-                </div>
-                <button class="styled-button" onclick="sendConfession()"><span class="material-icons-outlined">satellite_alt</span>发射心动の电波！</button>
-                <div id="confession-status-area" class="result-area">📡 宇宙信号基站待命，请指示！</div>
-            </div>
-            
-            <p class="footer-text">
-                <span class="material-icons-outlined">copyright</span> 2024 · 赛博月老™ 荣誉出品 · 解释权、版权、及发糖权均归月老所有<br>
-                <span id="fireworks-trigger-text" class="hidden-trigger" title="听说虔诚地多点几次，会有宇宙级的浪漫降临哦！">点我查看今日宇宙天气预报（雾）</span>
-                <span class="material-icons-outlined">auto_awesome_motion</span>
+            <p id="corridor-aftermath" class="hidden">
+                也是，我白天还看见过呢。我定了定神，只觉得是那块塑料布的问题，尽管它是灰色的，但或许在我书房光线的特定角度下就是会变成白色。
+                无论如何，我也不打算再试试看把走廊灯关了，那块布的样子会是怎么样了。我连忙把书房灯一关，窜进另一间房间。
+                <button id="livingRoomLightOnBtn" class="action-button" style="margin:5px 0;">打开客厅灯</button>
+                <span id="livingRoomLightStatus" class="hidden narrative-emphasis">客厅的灯亮了，驱散了些许黑暗。</span>
+                然后我才在门口伸手出来，摸到走廊灯开关，往下一按。
+                走廊昏黄的灯光“啪”的一下就熄灭了，外面一片死寂。
             </p>
-        </div>
-    </div>
+            <button id="toBedroomBtn" class="next-scene-btn hidden" data-next="scene3"><span class="material-icons-outlined">arrow_forward</span>回到卧室</button>
+        </section>
 
-    <div id="fireworks-page">
-        <div class="fireworks-title">这份<span style="color:#f48fb1">赛博烟花</span>，为你独家绽放!</div>
-        <canvas id="fireworks-canvas"></canvas>
-        <button id="back-to-main-button" onclick="hideFireworks()">返回月老办事处</button>
+        <section id="scene3" class="scene bedroom-scene">
+            <h2><span class="material-icons-outlined">volume_up</span>窗外叩门</h2>
+            <p>我回到了自己的卧室，<button id="bedroomLivingRoomLightOffBtn" class="action-button" style="font-size:0.95em; padding: 8px 15px;">随手关掉客厅的灯</button>。一切似乎都过去了，只是方才看错了罢了。我躺在床上继续玩着手机，有点迷迷糊糊的。</p>
+            <div id="curtain-image-container" class="visual-element-container">
+                <div id="curtain-image" alt="微微飘动的窗帘"></div>
+            </div>
+            <p style="text-align: center; margin-top:20px;">应该是十一点过的时候，我在半睡半醒之间被一阵清晰的<strong class="text-danger" style="font-size:1.3em;">“咚！咚！咚！”</strong>敲窗户的声音吵醒了！</p>
+            <button id="triggerKnock1" class="action-button" style="margin:10px auto; display:block;"><span class="material-icons-outlined">hearing</span>谁？！</button>
+            <p id="window-context" class="hidden narrative-emphasis">是的，敲窗户，但我的卧室在<strong class="text-highlight">三楼</strong>！窗外根本不可能有人！我一下子鸡皮疙瘩就起来了。窗户被窗帘遮住了，那窗帘，此刻正<strong class="text-danger">微微地飘动着</strong>，角度很小，我看不见帘子后面的情况。</p>
+            <p id="knock-again-text" class="hidden text-danger" style="font-size: 1.2em; text-align:center;">我等了一会儿，感觉没什么后续，才稍稍安心一点，觉得是自己听错了。然而就在这时，我再次真真切切地听见了，“<strong class="glitch-text">咚！咚！咚！</strong>”的声音从窗户方向传来，<strong class="text-white-shadow">一次比一次清晰</strong>！我毛骨悚然，紧盯着窗户的方向。敲击声又停下了。</p>
+            <button class="next-scene-btn" data-next="scene4" id="toNoisesBtn" class="hidden"><span class="material-icons-outlined">arrow_forward</span>更诡异的...</button>
+        </section>
+
+        <section id="scene4" class="scene">
+            <h2><span class="material-icons-outlined">record_voice_over</span>夜半异响</h2>
+            <p>我感觉自己有点精神不太正常了，打算和同学聊聊天安慰一下自己。</p>
+            <p>然而聊着聊着，窗户外面突然传来一些嘈杂的声音，像是女人的<strong class="text-danger">尖叫</strong>，又像是男人<strong class="text-danger">压抑的笑声</strong>，混乱而扭曲，在这死寂的夜里格外清晰。</p>
+            <button id="playChaoticSoundBtn" class="action-button" style="margin:15px auto; display:block;"><span class="material-icons-outlined">play_circle_filled</span>窗外到底是什么... (点击听)</button>
+            <p id="recording-result" class="hidden" style="margin-top:20px;" class="narrative-emphasis">我当即打开了手机录音，打算录下来。确实，我录下来了。只不过后来听起来，录音里<strong class="text-highlight">只是一片混乱嘈杂的噪音</strong>，根本分辨不出什么尖叫和笑声，完全不像是深夜三楼一间卧室外该有的动静。或许是手机太旧的缘故罢。</p>
+            <button class="next-scene-btn" data-next="scene5" id="toVideoCallBtn" class="hidden"><span class="material-icons-outlined">arrow_forward</span>必须去书房</button>
+        </section>
+
+        <section id="scene5" class="scene">
+            <h2><span class="material-icons-outlined">video_chat</span>求助无援</h2>
+            <p>我当时十分害怕，又突然想起来有个东西（忘记是什么了）忘在了书房，必须要去拿。我直接一个QQ视频通话打给了同学，让他陪我在线去书房拿东西。</p>
+            <div class="chat-simulation">
+                <p><strong>我：</strong>（压低声音）喂，你...你有没有听见什么笑声？或者别的声音？</p>
+                <p><strong>同学：</strong>（迷糊地）没有啊，怎么了？就听见你那边很吵，呼呼的，什么声音啊？</p>
+                <p><strong>我：</strong>（心一沉）我...我想让你帮我看看窗外，我不敢。</p>
+                <p><strong>同学：</strong>（有些好奇）行吧，你把手机摄像头对着外面。</p>
+            </div>
+            <button id="peekWindowBtn" class="action-button" style="margin:15px auto; display:block;"><span class="material-icons-outlined">visibility</span>把手机镜头对准窗外...</button>
+            <div id="window-peek-view" class="hidden visual-element-container">
+                <p>（你把手机从窗帘缝隙中塞进去，摄像头对准窗外，来回移了移。屏幕上<strong class="text-danger glitch-text">只有一片漆黑</strong>，和一些干扰的雪花点。）</p>
+            </div>
+            <p id="classmate-response" class="hidden" style="margin-top:20px;" class="narrative-emphasis"><strong>同学：</strong>（视频那头）看见什么东西吗？我这边看你镜头里<strong class="text-highlight">一片漆黑，什么都没有啊</strong>。</p>
+            <p id="after-peek" class="hidden">有个人陪着，后面倒是一切正常，我顺利地拿完了东西，回到了卧室挂掉电话。打算睡觉。</p>
+            <button class="next-scene-btn" data-next="scene6" id="toFinalScareBtn" class="hidden"><span class="material-icons-outlined">arrow_forward</span>试图入睡</button>
+        </section>
+
+        <section id="scene6" class="scene">
+            <h2><span class="material-icons-outlined">airline_seat_individual_suite</span>柜顶之物</h2>
+            <p>我强迫自己闭上眼睛，想把这一切都当成噩梦。后来，不知是梦还是什么，我总感觉有个东西<strong class="text-purple-haze">佝偻着身子</strong>，站在卧室里的衣柜顶上。</p>
+            <div class="visual-element-container" style="background-color: #0a0807;">
+                <div class="wardrobe-container">
+                    <div id="wardrobe-hunched-figure">
+                        <div class="head"></div>
+                        <div class="body"></div>
+                    </div>
+                </div>
+            </div>
+            <p class="narrative-emphasis">它就那么<strong class="text-danger glitch-text">静静地蹲着</strong>，与黑暗融为一体。我每次仔细想看它，却总也看不真切，眼皮越来越沉，又迷迷糊糊地睡去了。或者说，是昏过去了。</p>
+            <button class="next-scene-btn" data-next="conclusion"><span class="material-icons-outlined">arrow_forward</span>那一夜的终末...</button>
+        </section>
+
+        <section id="conclusion" class="scene">
+            <h2><span class="material-icons-outlined">help_outline</span>无解的夜</h2>
+            <p>我不知道那一晚到底发生了什么。走廊上的白影，窗外的敲击，那些怪异的声响，还有最后衣柜上的那个“东西”……</p>
+            <p style="font-size: 1.4em; color: var(--accent-color); text-align:center; font-weight:bold; letter-spacing: 1px;" class="glitch-text">或许，我也永远不会知道了。</p>
+            <p style="text-align:center; font-size: 1.1em; color: var(--text-secondary-color-dark);">有些事，不如就让它烂在黑暗里吧。</p>
+            <button id="restartStoryBtn" class="action-button" style="background-color: var(--highlight-color); color: var(--bg-color-dark); margin: 20px auto; display:block;"><span class="material-icons-outlined">replay</span>重温旧魇</button>
+        </section>
     </div>
+    <div id="horror-overlay"></div>
+
+    <audio id="sound-light-switch" src="https://cdn.freesound.org/previews/277/277761_3234367-lq.mp3" preload="auto"></audio>
+    <audio id="sound-window-knock" src="https://cdn.freesound.org/previews/415/415727_6142149-lq.mp3" preload="auto"></audio>
+    <audio id="sound-chaotic-noise" src="https://cdn.freesound.org/previews/670/670850_12689420-lq.mp3" preload="auto"></audio> <!-- Screams and ambience -->
+    <audio id="sound-heartbeat" src="https://cdn.freesound.org/previews/342/342839_5840490-lq.mp3" preload="auto" loop></audio>
+    <audio id="sound-door-creak" src="https://cdn.freesound.org/previews/17/17027_109923-lq.mp3" preload="auto"></audio>
+    <audio id="sound-figure-appear" src="https://cdn.freesound.org/previews/403/403007_5121236-lq.mp3" preload="auto"></audio>
+
 
     <script>
-    // --- Text Content Arrays (Vastly Expanded) ---
-    const loveCalculatorMessages = {
-        s95: [
-            "警报！警报！检测到宇宙级灵魂共振！月老红线已用502焊死，民政局正以亚光速空降！",
-            "我的天！你们的CP感比刚出锅的糖炒栗子还甜糯！建议立即、马上、原地灵魂绑定，钥匙我扔马里亚纳海沟了！",
-            "探测器爆表！缘分溢出！你们就是命中注定的双黄蛋，比宇宙大爆炸还壮观的爱！",
-            "系统提示：三观匹配度100%，灵魂契合度100%，搞笑程度100%！天选CP，锁死！",
-            "月老掐指一算，你俩的红线是用钢丝绳做的，还打了蝴蝶结，太稳了！",
-            "不得了！探测仪显示你们的爱情能量可以点亮整个银河系！快去创造宇宙吧！",
-            "恭喜触发隐藏剧情：【天作之合MAX】！奖励：月老亲自盖章认证的幸福证书一份！",
-            "你们的缘分，是刻在DNA双螺旋上的那种，解都解不开！",
-            "何止是般配，简直是宇宙为你们量身定制的剧本！快，导演喊你们发糖了！",
-            "这种级别的匹配，月老我几千年才见一次！赶紧的，份子钱我都准备好了！"
-        ],
-        s80: [
-            "绝配认证！你们的爱情火花比夏日限定烟花还绚烂！红线已牵，月老认证，童叟无欺！",
-            "灵魂伴侣警告！你们的磁场强度堪比超强力吸铁石，一旦靠近，再难分离！",
-            "高甜预警！你们的互动模式是“糖分超标Pro Max版”，请注意控制，以免甜晕路人！",
-            "月老认证：优质CP股！潜力无限，升值空间巨大，建议长期持有，坐等发糖！",
-            "你们的默契度，让身经百战的月老都忍不住拍案叫绝！太合拍了！",
-            "探测到强烈的双向奔赴信号！这波稳了，月老我说的，耶稣也拦不住！",
-            "缘分雷达“哔哔哔”作响！你们就是对方人生寻宝图上的终极宝藏！",
-        ],
-        s60: [
-            "有点东西！你们的缘分频道已成功对接，可以开始播放甜甜的连续剧了！",
-            "曖昧指数UP UP！你们的磁场像是在跳探戈，你进我退，火花四溅！",
-            "恋爱雷达已锁定！你们的故事像一本刚开头的悬疑小说，引人入胜，结局令人期待！",
-            "月老提示：前方是心动区域，请系好安全带，准备迎接爱情的过山车！",
-            "你们的化学反应良好，只需一点催化剂（比如一句“我喜欢你”），就能产生爆炸性效果！",
-            "缘分正在悄悄发酵，像一坛好酒，越品越香醇。耐心一点，惊喜就在后头！",
-        ],
-        s40: [
-            "量子纠缠初级阶段！你们的缘分像薛定谔的猫，不A上去永远不知道是惊喜还是“再接再厉”！",
-            "友情之上，恋人未满？你们的匹配度就像一杯“七分糖去冰”的奶茶，味道刚好，但总觉得还能再甜一点！",
-            "火候未到！月老建议多互动、多聊天、多一起发现共同的沙雕爱好，缘分值++！",
-            "你们的缘分像神秘的乐高积木，零件都齐了，就差个人把它们拼起来！",
-            "探测到微弱的心动信号，像小猫爪子在挠痒痒。勇敢一点，万一挠中了呢！",
-        ],
-        s0: [
-            "emmm...月老看了看，你们的共同点可能是……都需要呼吸？别急，万一TA就吃这款呢！",
-            "友情提示：强扭的瓜不甜，但……万一就解渴了呢！或者，要不咱换个人测测？",
-            "信号微弱，可能是隔壁老王家的WiFi信号太强，干扰了月老的红线基站。建议重启人生（不是）。",
-            "月老寻思着，你们可能是失散多年的……最佳损友？这种缘分也很珍贵嘛！",
-            "当前匹配模式：PVP（Player VS Player）。月老建议：打不过就加入？或者……先加个微信？",
-            "缘分探测仪显示：[数据删除]。可能需要您充值VIP解锁更多隐藏信息（开玩笑的）。",
-        ]
-    };
+        document.addEventListener('DOMContentLoaded', () => {
+            const scenes = document.querySelectorAll('.scene');
+            const nextSceneButtons = document.querySelectorAll('.next-scene-btn');
+            const horrorOverlay = document.getElementById('horror-overlay');
+            const bodyElement = document.body;
+            const roomLightToggleBtn = document.getElementById('roomLightToggleBtn');
 
-    const cheesyLines = [
-        "你知道我想吃什么吗？痴痴地望着你。", "我的超能力你猜是什么？超喜欢你。",
-        "你是什么血型？你是我的理想型。", "你走路要小心哦，免得撞进我心里。",
-        "我觉得你是一款我超想玩的游戏，我的世界。", "甜有100种方式，吃糖，蛋糕，还有每天98次的想你。",
-        "不要抱怨，抱我。", "近朱者赤，近你者甜。", "猜猜我的心在哪边？左边？不对，在你那边。",
-        "你最近是不是又胖了？没有啊，那为什么在我心里的分量越来越重了？",
-        "我们来玩个游戏吧，谁先动谁就输了。… …糟糕，我心动了。",
-        "你有没有闻到什么烧焦的味道？是我的心在为你燃烧呀。", "你知道我最喜欢什么神吗？你的眼神。",
-        "遇见你之后，我再也没吃过糖了。为什么？因为你太甜了。", "我想买一块地。什么地？你的死心塌地。",
-        "你知道我和唐僧的区别吗？唐僧取经，我娶你。", "我缺了一样生活必需品，缺你。",
-        "你猜我什么星座？为你量身定做。", "我现在火气好大，因为你，我的心都燃起来了。",
-        "你是什么时候瞎的？在我爱上你的时候。", "你为什么乱动我东西？我动你什么了？我的心。",
-        "我给你备注为“一行”，因为干一行，爱一行。", "你会弹吉他吗？那你为什么能拨动我的心弦？",
-        "我的手被划了一道口子，你也划一下吧，这样我们就是两口子了。", "我点的东西怎么还没来？什么东西？我们的未来。",
-        "你脸上有点东西。什么东西？有点漂亮。", "你是哪里人？你是我的心上人。",
-        "我最近在找一家店。什么店？你的来电。", "你能不能闭嘴？我没有说话啊。那为什么我满脑子都是你的声音？"
-    ];
-
-    const poemLines1 = [
-        "夜幕垂，星光碎，", "风微醺，月朦胧，", "键盘声，心湖漾，", "宇宙中，尘埃你，", "时间河，浪花淘，",
-        "灯影下，思绪飘，", "人海里，一眼你，", "梦境边，呢喃语，", "日常里，小确幸，", "指尖温，暖心田，",
-        "眉眼弯，胜星河，", "诗与歌，皆为你，", "春风软，夏雨急，", "秋叶落，冬雪寂，", "心之所向，素履以往，"
-    ];
-    const poemLines2 = [
-        "世界突然安静，只剩心跳回音，", "我的宇宙，因你而有了颜色，", "想念是会呼吸的痛，它活在我身上所有角落，",
-        "你的微笑，是开在我心尖的蔷薇，", "遇见你，像夏夜萤火撞入我梦里，", "灵魂的拼图，终于找到了遗失的那一块，",
-        "我的字典里，从此多了“牵挂”二字，", "时间为媒，星辰为聘，", "三千世界，不及你眉间一点朱砂，",
-        "我的喜怒哀乐，从此有了具体的形状，", "你是北大西洋暖流，我是摩尔曼斯克港，", "所有晦暗都留给过往，从遇见你开始，凛冬散尽，星河长明。",
-        "我跋涉万里，只为与你相遇在字里行间。", "我的心房，是你专属的停机坪。", "你眼中的星海，是我此生不愿醒来的梦。"
-    ];
-    const poemLines3 = [
-        "所以，520，请签收这份心动通知书！", "余生，请多多指教，我的心上人！", "我的世界，欢迎你的永久入驻！",
-        "往后，风花雪月是你，柴米油盐也是你！", "这颗心，今天正式宣布归你所有！", "那么，今晚月色真美，不是吗？",
-        "所以，要不要一起建设浪漫主义新宇宙？", "答案写在风中，也写在我看你的眼神里。", "我的未来，每一个场景都有你。",
-        "所以，做我星河里最亮的那颗星吧！", "一起去看细水长流，好吗？", "以爱为名，判你无期徒刑，在我心里执行！",
-        "世界那么大，我的心却只为你预留了VIP席位。", "所以，我的告白，你听到了吗？", "宇宙的温柔，是晚霞是微风，也是遇见你。"
-    ];
-    
-    const fortunes = [
-        {gua: "桃花朵朵开", text: "今日魅力值MAX，宇宙中心非你莫属！丘比特已为你开启“精准狙击”模式！", lucky: "粉水晶手链", icon:"filter_vintage"},
-        {gua: "天降奇缘", text: "你的专属缘分已打包发货，请注意查收来自宇宙的惊喜快递！", lucky: "一张旧电影票", icon:"local_post_office"},
-        {gua: "心想事成符", text: "恭喜！今天宜表白、宜牵手、宜拥抱！大胆冲，月老在背后为你摇旗呐喊！成功率 <span class='math-formula'>99.999\\%</span>！", lucky: "手写情书", icon:"verified"},
-        {gua: "拨云见日", text: "恭喜！爱情运势柳暗花明，前方高能预警，甜蜜即将抵达！宜主动出击，捕获爱情！", lucky: "彩虹色饰品", icon:"wb_cloudy"},
-        {gua: "宜佛系躺平", text: "今日宇宙能量场提示：宜静养心，喝杯奶茶，看看剧。真爱也许会在你不经意间出现哦！", lucky: "舒适的毛毯", icon:"self_improvement"},
-        {gua: "灵魂共振", text: "和心仪对象的脑电波已达到量子纠缠级别！一个眼神，TA就懂！建议：趁热打铁！", lucky: "同款歌单", icon:"spatial_audio"},
-        {gua: "小确幸爆棚", text: "今天可能会收获意想不到的小惊喜，比如TA的一个微笑，一句关心，或者一杯热饮！", lucky: "可爱的便利贴", icon:"emoji_emotions"},
-        {gua: "红鸾星动", text: "月老观察到你的红鸾星正在闪耀！正缘可能就在你身边，请仔细观察，别错过了哦！", lucky: "红色元素的物品", icon:"favorite_border"},
-        {gua: "贵人相助", text: "今天可能会有“爱情丘比特”在暗中相助，帮你捅破那层窗户纸！留意身边的朋友哦！", lucky: "分享零食给朋友", icon:"diversity_3"},
-        {gua: "灵感迸发", text: "今天特别适合用创意的方式表达爱意，写首诗、画幅画，或者做顿饭，都能打动TA的心！", lucky: "一支新笔", icon:"palette"},
-        {gua: "情话技能UP", text: "今日你的情话天赋被动激活！随便说点啥都可能甜到对方心坎里，快去试试！", lucky: "一本诗集", icon:"sms_failed"},
-        {gua: "破冰之旅", text: "如果你和某人关系有点僵，今天是打破僵局，让关系回暖的好时机！主动一点，会有好结果！", lucky: "温暖的笑容", icon:"ac_unit"}
-    ];
-
-    // --- Love Calculator ---
-    function calculateLove() {
-        const name1 = document.getElementById('name1').value.trim();
-        const name2 = document.getElementById('name2').value.trim();
-        const resultArea = document.getElementById('love-result-area');
-
-        if (!name1 || !name2) {
-            resultArea.innerHTML = "💔 报告月老！信息不全，红线系统无法启动！请务必输入双方代号，否则缘分雷达会罢工的！";
-            return;
-        }
-        resultArea.innerHTML = `<div style="text-align:center;"><span class="material-icons-outlined" style="font-size:2em; animation: spin 1s linear infinite;">hourglass_top</span><br>月老正在连接星际数据库，玩命推算中...</div>`;
-
-
-        setTimeout(() => {
-            let hash = 0;
-            const str = name1.toUpperCase() + name2.toUpperCase() + "520ULTRAOMEGA"; // Enhanced salt
-            for (let i = 0; i < str.length; i++) {
-                const char = str.charCodeAt(i);
-                hash = ((hash << 5) - hash) + char * (i + 1) * Math.sin(i); // More "complex" hashing
-                hash = hash & hash; 
-            }
-            const score = Math.abs(hash % 101);
-
-            let messagesPool = [];
-            let icon = "flare";
-            if (score > 95) { messagesPool = loveCalculatorMessages.s95; icon = "local_fire_department"; }
-            else if (score > 80) { messagesPool = loveCalculatorMessages.s80; icon = "stars"; }
-            else if (score > 60) { messagesPool = loveCalculatorMessages.s60; icon = "auto_awesome"; }
-            else if (score > 40) { messagesPool = loveCalculatorMessages.s40; icon = "interests"; }
-            else { messagesPool = loveCalculatorMessages.s0; icon = "psychology_alt"; }
+            const audioLightSwitch = document.getElementById('sound-light-switch');
+            const audioWindowKnock = document.getElementById('sound-window-knock');
+            const audioChaoticNoise = document.getElementById('sound-chaotic-noise');
+            const audioHeartbeat = document.getElementById('sound-heartbeat');
+            const audioDoorCreak = document.getElementById('sound-door-creak');
+            const audioFigureAppear = document.getElementById('sound-figure-appear');
             
-            const abstractMessage = messagesPool[Math.floor(Math.random() * messagesPool.length)];
-            
-            resultArea.innerHTML = `<span class="material-icons-outlined" style="color:var(--primary-color); font-size:1.8em;">${icon}</span> 经九天九夜、九九八十一道<strong style="color:var(--accent-color)">“赛博占星术”</strong>推算：<br><strong style="color:var(--primary-color);">${name1}</strong> 与 <strong style="color:var(--primary-color);">${name2}</strong> 的命运交织指数为：<span class='math-formula'>\\( ${score} \\)%</span> <br>${abstractMessage}<br><small>(本结果由月老办事处人工智能<strong style="color:var(--secondary-color)">“红娘GPT-520”</strong>倾情演算，仅供娱乐，如有雷同，纯属天意！)</small>`;
-            if (typeof MathJax !== 'undefined' && MathJax.typeset) { MathJax.typesetPromise([resultArea]); }
-        }, 1500);
-    }
-
-    // --- Cheesy Pickup Line Generator ---
-    function generateCheesyLine() {
-        const lineArea = document.getElementById('cheesy-line-area');
-        const randomLine = cheesyLines[Math.floor(Math.random() * cheesyLines.length)];
-        lineArea.innerHTML = `😉 月老牌·土味心动广播为您播报：<br><strong style="color:var(--secondary-color); font-style:italic; font-size:1.15em; display:block; margin:10px 0;">“${randomLine}”</strong><br><small>(温馨提示：土到极致便是潮，潮过头被揍月老概不负责~)</small>`;
-    }
-
-    // --- Poem Generator ---
-    function generatePoem() {
-        const poemArea = document.getElementById('poem-area');
-        const p1 = poemLines1[Math.floor(Math.random() * poemLines1.length)];
-        const p2 = poemLines2[Math.floor(Math.random() * poemLines2.length)];
-        const p3 = poemLines3[Math.floor(Math.random() * poemLines3.length)];
-        poemArea.innerHTML = `<div style="font-family: 'ZCOOL XiaoWei', serif; line-height:2;">
-                                <span style="font-size: 1.3em; color: var(--heading-color); display:block;">${p1}</span>
-                                <em style="color: var(--text-color); font-size: 1.15em; display:block; margin-left:20px;">${p2}</em>
-                                <strong style="font-size: 1.25em; color: var(--primary-color); display:block; text-align:right;">${p3}</strong>
-                             </div>
-                             <small>(月老灵感一闪，新作问世！品，你细品，是不是那个味儿？)</small>`;
-    }
-
-    // --- Fortune Teller ---
-    function getFortune() {
-        const fortuneArea = document.getElementById('fortune-area');
-        const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-        fortuneArea.innerHTML = `
-            <div style="text-align:center; margin-bottom:12px;">
-                <span class="material-icons-outlined" style="font-size: 2.8em; color:var(--secondary-color); filter: drop-shadow(0 0 8px var(--secondary-color));">${randomFortune.icon}</span>
-                <h4 style="margin:8px 0 5px; color:var(--heading-color); justify-content:center; font-size:1.4em; font-family:'ZCOOL XiaoWei', serif;">今日爱情卦象：<strong style="color:var(--primary-color);">${randomFortune.gua}</strong></h4>
-            </div>
-            <p style="font-size:1.1em;">${randomFortune.text}</p>
-            <p><strong>今日开运buff：</strong><span style="background-image:linear-gradient(135deg, var(--accent-color) 0%, #00e5ff 100%); color:#000; font-weight:bold; padding:3px 10px; border-radius:5px; box-shadow: 0 2px 5px rgba(0,188,212,0.4);">${randomFortune.lucky}</span></p>
-            <small>(本运势由月老夜观天象、结合塔罗牌与周易八卦演算得出，准确率高达...你猜？)</small>`;
-        if (typeof MathJax !== 'undefined' && MathJax.typeset) { MathJax.typesetPromise([fortuneArea]); }
-    }
-
-    // --- Confession Sender ---
-    function sendConfession() {
-        const message = document.getElementById('confessionMessage').value.trim();
-        const statusArea = document.getElementById('confession-status-area');
-
-        if (!message) {
-            statusArea.innerHTML = "💌 喂喂喂！传音筒是空的，月老也无能为力啊！快输入你的心声，别让爱意石沉大海！";
-            return;
-        }
-        
-        statusArea.innerHTML = `发射程序启动... <div class="loading-bar-container"><div class="loading-bar" id="confession-loading-bar"></div></div><div id="loading-text" class="small-note">正在校准宇宙信标，请稍候...</div>`;
-        const loadingBar = document.getElementById('confession-loading-bar');
-        const loadingText = document.getElementById('loading-text');
-        let progress = 0;
-        const stages = [
-            "正在将您的心意转化为量子比特流...",
-            "连接银河系520专属通讯卫星...",
-            "进行时空折跃参数校准...",
-            "目标锁定！正在穿越虫洞...",
-            "信号已送达！等待对方脑电波签收..."
-        ];
-        let stageIndex = 0;
-
-        const interval = setInterval(() => {
-            progress += Math.floor(Math.random() * 10) + 5; // Slower, more stages
-            if (progress > 100) progress = 100;
-            loadingBar.style.width = progress + '%';
-            
-            if (progress >= (stageIndex + 1) * (100 / stages.length) && stageIndex < stages.length) {
-                 loadingText.innerText = stages[stageIndex];
-                 stageIndex++;
-            }
-
-            if (progress >= 100) {
-                clearInterval(interval);
-                const successRate = Math.floor(Math.random() * 60 + 41); // 41% to 100%
-                statusArea.innerHTML = `🚀 <strong style="color:var(--accent-color);">心动光波已成功发射！</strong><br>您的肺腑之言 <code style="background-color:rgba(240,98,146,0.15); color:var(--primary-color); padding:2px 5px; border-radius:4px;">“${message.substring(0,25)}...”</code> 已通过<strong style="color:var(--accent-color);">高维时空隧道</strong>送达！<br>对方心动雷达预计接收概率：<span class='math-formula'>\\( ${successRate} \\)%</span>！<br><small>(友情提示：发送成功不代表对方一定能get到，月老尽力了，剩下的看缘分和你的魅力值啦！)</small>`;
-                if (typeof MathJax !== 'undefined' && MathJax.typeset) { MathJax.typesetPromise([statusArea]); }
-            }
-        }, 400);
-    }
-    
-    // --- Fireworks Trigger and Page ---
-    const mainContentWrapper = document.getElementById('main-content-wrapper');
-    const fireworksPage = document.getElementById('fireworks-page');
-    const fireworksTriggerText = document.getElementById('fireworks-trigger-text');
-    const mainTitle = document.getElementById('main-title');
-    let titleClickCount = 0;
-
-    function showFireworks() {
-        mainContentWrapper.style.display = 'none';
-        fireworksPage.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-        initFireworks(); 
-    }
-
-    function hideFireworks() {
-        mainContentWrapper.style.display = 'block';
-        fireworksPage.style.display = 'none';
-        document.body.style.overflow = 'auto';
-        if (typeof stopFireworks === "function") {
-             stopFireworks(); 
-        }
-    }
-    
-    mainTitle.addEventListener('click', () => {
-        titleClickCount++;
-        if (titleClickCount >= 5) {
-            showFireworks();
-            titleClickCount = 0; 
-        }
-    });
-    fireworksTriggerText.addEventListener('click', showFireworks);
-
-    // --- Enhanced Canvas Fireworks ---
-    let fireworksCanvas, ctx, fireworks = [], particles = [], stars = [], animationFrameId;
-    const FIREWORK_PALETTES = [
-        ['#FF1744', '#FF5252', '#FF8A80', '#FFCDD2'], // Reds
-        ['#D500F9', '#E040FB', '#EA80FC', '#F3E5F5'], // Purples
-        ['#3D5AFE', '#536DFE', '#8C9EFF', '#C5CAE9'], // Blues
-        ['#00BFA5', '#1DE9B6', '#64FFDA', '#A7FFEB'], // Teals
-        ['#FFD600', '#FFEA00', '#FFFF00', '#FFF9C4'], // Yellows
-        ['#FF6D00', '#FF9100', '#FFAB40', '#FFE0B2'], // Oranges
-        ['#FFFFFF', '#F5F5F5', '#EEEEEE', '#E0E0E0']  // Whites/Silvers
-    ];
-
-    function createStars() {
-        stars = [];
-        const starCount = Math.floor(window.innerWidth * window.innerHeight / 5000); // Adjust density
-        for (let i = 0; i < starCount; i++) {
-            stars.push({
-                x: Math.random() * fireworksCanvas.width,
-                y: Math.random() * fireworksCanvas.height * 0.8, // Concentrate stars in upper part
-                radius: Math.random() * 1.2 + 0.3,
-                alpha: Math.random() * 0.5 + 0.3, // Initial alpha
-                twinkleSpeed: Math.random() * 0.02 + 0.005, // How fast it twinkles
-                twinkleDirection: 1
-            });
-        }
-    }
-
-    function drawStars() {
-        stars.forEach(star => {
-            star.alpha += star.twinkleSpeed * star.twinkleDirection;
-            if (star.alpha > 0.8 || star.alpha < 0.2) {
-                star.twinkleDirection *= -1;
-            }
-            ctx.beginPath();
-            ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(255, 255, 230, ${star.alpha})`; // Soft yellow-white
-            ctx.fill();
-        });
-    }
-
-    function initFireworks() {
-        fireworksCanvas = document.getElementById('fireworks-canvas');
-        ctx = fireworksCanvas.getContext('2d');
-        fireworksCanvas.width = window.innerWidth;
-        fireworksCanvas.height = window.innerHeight;
-        fireworks = []; particles = []; stars = []; // Reset
-        
-        createStars();
-        
-        function launchRandomFirework() {
-             if (fireworks.length < 15) { // Max concurrent fireworks
-                const launchX = Math.random() * fireworksCanvas.width * 0.8 + fireworksCanvas.width * 0.1; // Avoid edges
-                const targetY = Math.random() * fireworksCanvas.height * 0.3 + fireworksCanvas.height * 0.1; // Explode in upper half
-                const angleToTarget = Math.atan2(targetY - fireworksCanvas.height, launchX - launchX); // Simplified for upward launch
-                const speed = Math.random() * 7 + 13; // Launch speed
-                
-                const palette = FIREWORK_PALETTES[Math.floor(Math.random() * FIREWORK_PALETTES.length)];
-                const type = ['standard', 'multi_burst', 'fountain', 'ring'][Math.floor(Math.random() * 4)];
-
-                fireworks.push(new Firework(
-                    launchX, fireworksCanvas.height, 
-                    (Math.random() - 0.5) * 4, // Slight horizontal velocity
-                    -(speed + Math.random() * 3), // Vertical velocity
-                    palette, targetY, type
-                ));
-            }
-        }
-        for(let i=0; i<5; i++) launchRandomFirework(); // Initial burst
-        
-        const launchInterval = setInterval(launchRandomFirework, Math.random() * 800 + 600); // Varied launch interval
-
-        function animate() {
-            animationFrameId = requestAnimationFrame(animate);
-            ctx.fillStyle = 'rgba(0, 0, 10, 0.12)'; // Darker, slightly less opaque trail for richer colors
-            ctx.fillRect(0, 0, fireworksCanvas.width, fireworksCanvas.height);
-            
-            drawStars();
-
-            fireworks.forEach((firework, index) => {
-                if (firework.update()) { // True if exploded
-                    fireworks.splice(index, 1);
-                } else {
-                    firework.draw();
-                }
-            });
-
-            particles.forEach((particle, index) => {
-                if (particle.update()) { // True if faded
-                    particles.splice(index, 1);
-                } else {
-                    particle.draw();
-                }
-            });
-        }
-        animate();
-        fireworksPage.dataset.launchIntervalId = launchInterval;
-    }
-    
-    function stopFireworks() {
-        cancelAnimationFrame(animationFrameId);
-        const launchIntervalId = fireworksPage.dataset.launchIntervalId;
-        if (launchIntervalId) clearInterval(parseInt(launchIntervalId));
-        if(ctx) ctx.clearRect(0,0, fireworksCanvas.width, fireworksCanvas.height);
-        fireworks = []; particles = []; stars = [];
-    }
-
-    window.addEventListener('resize', () => {
-        if (fireworksPage.style.display === 'block') {
-            fireworksCanvas.width = window.innerWidth;
-            fireworksCanvas.height = window.innerHeight;
-            createStars(); // Recreate stars for new dimensions
-        }
-    });
-
-    class Firework {
-        constructor(x, y, vx, vy, palette, targetY, type = 'standard') {
-            this.x = x; this.y = y;
-            this.vx = vx; this.vy = vy;
-            this.palette = palette;
-            this.color = palette[0];
-            this.targetY = targetY;
-            this.type = type;
-            this.gravity = 0.15; // Slightly less floaty
-            this.trail = [];
-            this.tailLength = 8;
-            this.brightness = Math.random() * 50 + 200; // For glow
-        }
-
-        update() {
-            this.trail.push({ x: this.x, y: this.y, alpha: 1 });
-            if (this.trail.length > this.tailLength) this.trail.shift();
-            for(let i=0; i < this.trail.length; i++) this.trail[i].alpha -= 1/this.tailLength;
+            audioHeartbeat.volume = 0.20; // Quieter heartbeat
+            audioDoorCreak.volume = 0.35;
+            audioFigureAppear.volume = 0.25;
+            audioChaoticNoise.volume = 0.4;
+            audioWindowKnock.volume = 0.6;
 
 
-            this.x += this.vx;
-            this.y += this.vy;
-            this.vy += this.gravity;
+            function switchScene(targetSceneId) {
+                scenes.forEach(scene => scene.classList.remove('active'));
+                const targetScene = document.getElementById(targetSceneId);
+                if (targetScene) {
+                    targetScene.classList.add('active');
+                    const yOffset = -20; 
+                    const y = targetScene.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({top: y, behavior: 'smooth'});
 
-            if (this.y <= this.targetY) {
-                this.explode();
-                return true; // Exploded
-            }
-            return false;
-        }
-
-        draw() {
-            ctx.beginPath();
-            if (this.trail.length > 1) {
-                ctx.moveTo(this.trail[0].x, this.trail[0].y);
-                for (let i = 1; i < this.trail.length; i++) {
-                     ctx.lineTo(this.trail[i].x, this.trail[i].y);
-                }
-            } else {
-                 ctx.moveTo(this.x - this.vx, this.y - this.vy); //Approximate previous point
-                 ctx.lineTo(this.x, this.y);
-            }
-            
-            const grad = ctx.createLinearGradient(this.x - this.vx * this.tailLength, this.y - this.vy * this.tailLength, this.x, this.y);
-            grad.addColorStop(0, `rgba(${hexToRgb(this.color).r}, ${hexToRgb(this.color).g}, ${hexToRgb(this.color).b}, 0)`);
-            grad.addColorStop(1, `rgba(${hexToRgb(this.color).r}, ${hexToRgb(this.color).g}, ${hexToRgb(this.color).b}, 0.8)`);
-            ctx.strokeStyle = grad;
-            ctx.lineWidth = 3;
-            ctx.stroke();
-            
-            // Glow at head
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
-            const glowGrad = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, 6);
-            glowGrad.addColorStop(0, `rgba(${this.brightness}, ${this.brightness}, ${this.brightness - 50 > 0 ? this.brightness - 50 : 0}, 0.8)`); // Brighter center
-            glowGrad.addColorStop(1, `rgba(${hexToRgb(this.color).r}, ${hexToRgb(this.color).g}, ${hexToRgb(this.color).b}, 0)`);
-            ctx.fillStyle = glowGrad;
-            ctx.fill();
-        }
-
-        explode() {
-            const numParticles = this.type === 'fountain' ? Math.floor(Math.random() * 80) + 150 : Math.floor(Math.random() * 150) + 120;
-            for (let i = 0; i < numParticles; i++) {
-                particles.push(new Particle(this.x, this.y, this.palette, this.type));
-            }
-            if (this.type === 'multi_burst' && Math.random() < 0.5) { // Chance for secondary smaller bursts
-                for(let j=0; j < Math.floor(Math.random()*2)+2; j++) {
-                    setTimeout(() => {
-                        const newPalette = FIREWORK_PALETTES[Math.floor(Math.random() * FIREWORK_PALETTES.length)];
-                        for (let k = 0; k < 50; k++) { // Fewer particles for secondary
-                            particles.push(new Particle(this.x + (Math.random()-0.5)*20, this.y + (Math.random()-0.5)*20, newPalette, 'standard'));
+                    if (['scene2', 'scene3', 'scene4', 'scene5', 'scene6'].includes(targetSceneId)) {
+                         audioHeartbeat.play().catch(e => {});
+                    } else {
+                         audioHeartbeat.pause();
+                         audioHeartbeat.currentTime = 0;
+                    }
+                    // Show/hide global light toggle button
+                    if (['scene1', 'scene2', 'scene3', 'scene4', 'scene5', 'scene6'].includes(targetSceneId) && targetSceneId !== 'intro' && targetSceneId !== 'conclusion' && targetSceneId !== 'scene2' /* scene2 has its own lights */ ) {
+                         roomLightToggleBtn.classList.remove('hidden');
+                    } else if (targetSceneId !== 'scene2') { // Keep it if page is lit potentially
+                        if (!bodyElement.classList.contains('page-is-lit')) {
+                            roomLightToggleBtn.classList.add('hidden');
                         }
-                    }, Math.random() * 300 + 100);
+                    }
+                     if (targetSceneId === 'scene6') { // Trigger wardrobe figure animation
+                        const wardrobeFigure = document.getElementById('wardrobe-hunched-figure');
+                        if (wardrobeFigure) {
+                            wardrobeFigure.style.animation = 'none'; // Reset animation
+                            wardrobeFigure.offsetHeight; // Trigger reflow
+                            wardrobeFigure.style.animation = 'figureAppearAndLoom 5s ease-out forwards, figureSubtleShift 7s infinite ease-in-out 5s alternate';
+                        }
+                    }
+
                 }
             }
-        }
-    }
 
-    class Particle {
-        constructor(x, y, palette, fireworkType) {
-            this.x = x; this.y = y;
-            this.palette = palette;
-            this.color = palette[Math.floor(Math.random() * palette.length)];
-            this.fireworkType = fireworkType;
-            
-            let angle, speed;
-            if (fireworkType === 'fountain') {
-                angle = (Math.random() - 0.5) * Math.PI * 0.5 - Math.PI / 2; // Upwards cone
-                speed = Math.random() * 8 + 4;
-            } else if (fireworkType === 'ring') {
-                angle = Math.random() * Math.PI * 2;
-                const radiusFromCenter = Math.random() * 2 + 1; // Make them form a ring slightly
-                speed = Math.random() * 3 + 2;
-                this.vx = Math.cos(angle) * speed * radiusFromCenter;
-                this.vy = Math.sin(angle) * speed * radiusFromCenter -1; // Slight upward bias
-            } else { // standard or multi_burst
-                angle = Math.random() * Math.PI * 2;
-                speed = Math.random() * 7 + 1; 
-                this.vx = Math.cos(angle) * speed;
-                this.vy = Math.sin(angle) * speed;
+            nextSceneButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const nextScene = button.dataset.next;
+                    if (nextScene) {
+                        switchScene(nextScene);
+                    }
+                });
+            });
+
+            function playSound(audioElement, volume = 1) {
+                if (audioElement) {
+                    audioElement.currentTime = 0;
+                    audioElement.volume = volume;
+                    audioElement.play().catch(e => console.error("Audio play failed for " + audioElement.id + ":", e));
+                }
             }
             
-            this.gravity = 0.08; // More floaty particles
-            this.drag = 0.98; // Air resistance
-            this.alpha = 1;
-            this.life = Math.random() * 60 + 80; // Frames to live
-            this.decay = 1 / this.life;
-            this.trail = [];
-            this.trailLength = 5;
-            this.canSparkle = Math.random() < 0.1;
-            this.sparkleTimer = 0;
-        }
-
-        update() {
-            this.trail.push({ x: this.x, y: this.y, alpha: this.alpha });
-            if (this.trail.length > this.trailLength) this.trail.shift();
-            for(let i=0; i < this.trail.length; i++) this.trail[i].alpha -= 1/this.trailLength;
-
-            this.x += this.vx;
-            this.y += this.vy;
-            this.vx *= this.drag;
-            this.vy *= this.drag;
-            this.vy += this.gravity;
-            this.alpha -= this.decay;
-            
-            if (this.canSparkle) {
-                this.sparkleTimer++;
-                if (this.sparkleTimer % 5 === 0) this.alpha = Math.min(1, this.alpha + 0.5); // Flash
-            }
-
-            return this.alpha <= 0; // Faded
-        }
-
-        draw() {
-            ctx.beginPath();
-            if (this.trail.length > 1 && this.alpha > 0.1) { // Draw trail only if somewhat visible
-                 ctx.moveTo(this.trail[0].x, this.trail[0].y);
-                 for(let i=1; i < this.trail.length; i++) {
-                    ctx.lineTo(this.trail[i].x, this.trail[i].y);
-                 }
-                 ctx.lineTo(this.x, this.y); // Connect to current position
-                 const currentAlpha = Math.max(0, this.trail[this.trail.length-1]?.alpha || this.alpha);
-                 ctx.strokeStyle = `rgba(${hexToRgb(this.color).r}, ${hexToRgb(this.color).g}, ${hexToRgb(this.color).b}, ${currentAlpha * 0.6})`;
-                 ctx.lineWidth = Math.random() * 1.5 + 0.5; // Varied trail width
-                 ctx.stroke();
+            function quickFlash(duration = 150, intensity = 0.35) {
+                horrorOverlay.style.opacity = intensity;
+                setTimeout(() => { horrorOverlay.style.opacity = 0; }, duration);
             }
             
-            // Main particle dot
-            ctx.fillStyle = `rgba(${hexToRgb(this.color).r}, ${hexToRgb(this.color).g}, ${hexToRgb(this.color).b}, ${this.alpha})`;
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, Math.max(0.5, 2.5 * this.alpha), 0, Math.PI * 2); // Size shrinks with alpha
-            ctx.fill();
-        }
-    }
-    function hexToRgb(hex) { 
-        let r = 0, g = 0, b = 0;
-        if (hex.length == 4) {
-            r = parseInt(hex[1] + hex[1], 16); g = parseInt(hex[2] + hex[2], 16); b = parseInt(hex[3] + hex[3], 16);
-        } else if (hex.length == 7) {
-            r = parseInt(hex[1] + hex[2], 16); g = parseInt(hex[3] + hex[4], 16); b = parseInt(hex[5] + hex[6], 16);
-        }
-        return {r, g, b};
-    }
+            function applyScreenShake(duration = 300) {
+                bodyElement.classList.add('screen-shake-effect');
+                setTimeout(() => { bodyElement.classList.remove('screen-shake-effect'); }, duration);
+            }
+
+            // Global Room Light Toggle
+            if (roomLightToggleBtn) {
+                roomLightToggleBtn.addEventListener('click', () => {
+                    playSound(audioLightSwitch, 0.5);
+                    bodyElement.classList.toggle('page-is-lit');
+                    if (bodyElement.classList.contains('page-is-lit')) {
+                        roomLightToggleBtn.innerHTML = `<span class="material-icons-outlined">dark_mode</span>关灯`;
+                    } else {
+                        roomLightToggleBtn.innerHTML = `<span class="material-icons-outlined">lightbulb</span>开灯`;
+                    }
+                });
+            }
+            
+            // Specific light buttons
+            const livingRoomLightOnBtn = document.getElementById('livingRoomLightOnBtn');
+            const livingRoomLightStatus = document.getElementById('livingRoomLightStatus');
+            const bedroomLivingRoomLightOffBtn = document.getElementById('bedroomLivingRoomLightOffBtn');
+
+            if(livingRoomLightOnBtn && livingRoomLightStatus){
+                livingRoomLightOnBtn.addEventListener('click', () => {
+                    playSound(audioLightSwitch, 0.5);
+                    bodyElement.classList.add('page-is-lit');
+                    roomLightToggleBtn.innerHTML = `<span class="material-icons-outlined">dark_mode</span>关灯`;
+                    roomLightToggleBtn.classList.remove('hidden'); // Ensure global toggle is visible
+                    livingRoomLightStatus.classList.remove('hidden');
+                    livingRoomLightOnBtn.classList.add('hidden');
+                });
+            }
+            if(bedroomLivingRoomLightOffBtn){
+                bedroomLivingRoomLightOffBtn.addEventListener('click', () => {
+                     playSound(audioLightSwitch, 0.5);
+                     bodyElement.classList.remove('page-is-lit');
+                     roomLightToggleBtn.innerHTML = `<span class="material-icons-outlined">lightbulb</span>开灯`;
+                     bedroomLivingRoomLightOffBtn.textContent = "客厅灯已关";
+                     bedroomLivingRoomLightOffBtn.disabled = true;
+                });
+            }
+
+
+            // Scene 2: Corridor Scare (mostly same as your good version)
+            const openStudyDoorBtn = document.getElementById('openStudyDoorBtn');
+            const corridorViewContainer = document.getElementById('corridor-view-container');
+            const whiteFigure = document.getElementById('white-figure');
+            const corridorTextScare = document.getElementById('corridor-text-scare');
+            const turnOnCorridorLightBtn = document.getElementById('turnOnCorridorLightBtn');
+            const corridorTextReveal = document.getElementById('corridor-text-reveal');
+            const corridorAftermath = document.getElementById('corridor-aftermath');
+            const toBedroomBtn = document.getElementById('toBedroomBtn');
+            const corridorLightEffect = document.getElementById('corridor-light-effect');
+
+            if (openStudyDoorBtn) {
+                openStudyDoorBtn.addEventListener('click', () => {
+                    playSound(audioDoorCreak);
+                    openStudyDoorBtn.classList.add('hidden');
+                    corridorViewContainer.classList.remove('hidden');
+                    
+                    setTimeout(() => {
+                        playSound(audioFigureAppear);
+                        whiteFigure.classList.remove('hidden');
+                        whiteFigure.classList.add('visible');
+                        corridorTextScare.classList.remove('hidden');
+                        quickFlash(200, 0.45);
+                        applyScreenShake(350);
+                    }, 1300); 
+
+                    setTimeout(() => {
+                        turnOnCorridorLightBtn.classList.remove('hidden');
+                    }, 3000); 
+                });
+            }
+
+            if (turnOnCorridorLightBtn) {
+                turnOnCorridorLightBtn.addEventListener('click', () => {
+                    playSound(audioLightSwitch);
+                    corridorViewContainer.classList.add('lit');
+                    corridorLightEffect.classList.add('on');
+                    whiteFigure.classList.add('revealed-as-sheet'); // This class also hides pseudo-elements
+                    
+                    corridorTextScare.classList.add('hidden'); 
+                    corridorTextReveal.classList.remove('hidden');
+                    turnOnCorridorLightBtn.classList.add('hidden');
+                    
+                    setTimeout(() => {
+                        corridorAftermath.classList.remove('hidden');
+                        toBedroomBtn.classList.remove('hidden');
+                         // After corridor, protagonist turns on living room light, so page should be lit
+                        if(!bodyElement.classList.contains('page-is-lit')) {
+                            livingRoomLightOnBtn.classList.remove('hidden'); // Show button to turn on living room light
+                        } else {
+                             livingRoomLightStatus.classList.remove('hidden'); // If already lit, just show status
+                        }
+
+                    }, 1500);
+                });
+            }
+
+            // Scene 3: Window Knock
+            const triggerKnock1 = document.getElementById('triggerKnock1');
+            const windowContext = document.getElementById('window-context');
+            const knockAgainText = document.getElementById('knock-again-text');
+            const toNoisesBtn = document.getElementById('toNoisesBtn');
+
+            if (triggerKnock1) {
+                triggerKnock1.addEventListener('click', () => {
+                    playSound(audioWindowKnock);
+                    quickFlash(120, 0.3);
+                    applyScreenShake(250);
+                    triggerKnock1.classList.add('hidden');
+                    windowContext.classList.remove('hidden');
+                    
+                    setTimeout(() => {
+                        knockAgainText.classList.remove('hidden');
+                        playSound(audioWindowKnock, 0.8); 
+                        quickFlash(180, 0.35);
+                        applyScreenShake(300);
+                         setTimeout(() => { toNoisesBtn.classList.remove('hidden'); }, 1200);
+                    }, 3800 + Math.random() * 1800); 
+                });
+            }
+            
+            // Scene 4: Chaotic Sound
+            const playChaoticSoundBtn = document.getElementById('playChaoticSoundBtn');
+            const recordingResult = document.getElementById('recording-result');
+            const toVideoCallBtn = document.getElementById('toVideoCallBtn');
+            if(playChaoticSoundBtn) {
+                playChaoticSoundBtn.addEventListener('click', () => {
+                    playSound(audioChaoticNoise);
+                    quickFlash(600, 0.25); 
+                    applyScreenShake(600);
+                    playChaoticSoundBtn.disabled = true;
+                    playChaoticSoundBtn.innerHTML = `<span class="material-icons-outlined">volume_up</span>播放中...`;
+                    
+                    // Estimate duration or use actual if possible
+                    const chaoticNoiseDuration = audioChaoticNoise.duration && !isNaN(audioChaoticNoise.duration) ? audioChaoticNoise.duration * 1000 : 5000;
+
+                    setTimeout(() => {
+                         recordingResult.classList.remove('hidden');
+                         playChaoticSoundBtn.classList.add('hidden');
+                         toVideoCallBtn.classList.remove('hidden');
+                    }, chaoticNoiseDuration - 1000 > 0 ? chaoticNoiseDuration - 1000 : chaoticNoiseDuration);
+                });
+            }
+
+            // Scene 5: Video Call (mostly same)
+            const peekWindowBtn = document.getElementById('peekWindowBtn');
+            const windowPeekView = document.getElementById('window-peek-view');
+            const classmateResponse = document.getElementById('classmate-response');
+            const afterPeek = document.getElementById('after-peek');
+            const toFinalScareBtn = document.getElementById('toFinalScareBtn');
+
+            if (peekWindowBtn) {
+                peekWindowBtn.addEventListener('click', () => {
+                    peekWindowBtn.disabled = true;
+                    peekWindowBtn.innerHTML = `<span class="material-icons-outlined">phonelink_ring</span>窥视窗外...`;
+                    windowPeekView.classList.remove('hidden');
+                    setTimeout(() => {
+                        classmateResponse.classList.remove('hidden');
+                        peekWindowBtn.classList.add('hidden');
+                        afterPeek.classList.remove('hidden');
+                        toFinalScareBtn.classList.remove('hidden');
+                    }, 4200 + Math.random() * 1200); 
+                });
+            }
+            
+            // Scene 6 wardrobe figure is handled by IntersectionObserver in switchScene for re-triggering animation
+
+            // Restart Story
+            const restartStoryBtn = document.getElementById('restartStoryBtn');
+            if (restartStoryBtn) {
+                restartStoryBtn.addEventListener('click', () => {
+                    audioHeartbeat.pause(); audioHeartbeat.currentTime = 0;
+                    bodyElement.classList.remove('page-is-lit'); // Reset global light
+                    roomLightToggleBtn.innerHTML = `<span class="material-icons-outlined">lightbulb</span>开灯`;
+                    roomLightToggleBtn.classList.add('hidden');
+
+                    // Reset Scene 2
+                    openStudyDoorBtn.classList.remove('hidden');
+                    turnOnCorridorLightBtn.classList.add('hidden');
+                    corridorViewContainer.classList.add('hidden'); corridorViewContainer.classList.remove('lit');
+                    corridorLightEffect.classList.remove('on');
+                    whiteFigure.classList.add('hidden'); whiteFigure.classList.remove('visible', 'revealed-as-sheet');
+                    corridorTextScare.classList.add('hidden'); corridorTextReveal.classList.add('hidden');
+                    corridorAftermath.classList.add('hidden'); toBedroomBtn.classList.add('hidden');
+                    livingRoomLightOnBtn.classList.remove('hidden'); livingRoomLightOnBtn.disabled = false;
+                    livingRoomLightStatus.classList.add('hidden');
+
+
+                    // Reset Scene 3
+                    triggerKnock1.classList.remove('hidden');
+                    windowContext.classList.add('hidden'); knockAgainText.classList.add('hidden');
+                    toNoisesBtn.classList.add('hidden');
+                    bedroomLivingRoomLightOffBtn.textContent = "随手关掉客厅的灯"; bedroomLivingRoomLightOffBtn.disabled = false;
+
+
+                    // Reset Scene 4
+                    playChaoticSoundBtn.classList.remove('hidden'); playChaoticSoundBtn.disabled = false;
+                    playChaoticSoundBtn.innerHTML = `<span class="material-icons-outlined">play_circle_filled</span>窗外到底是什么... (点击听)`;
+                    recordingResult.classList.add('hidden'); toVideoCallBtn.classList.add('hidden');
+                    
+                    // Reset Scene 5
+                    peekWindowBtn.classList.remove('hidden'); peekWindowBtn.disabled = false;
+                    peekWindowBtn.innerHTML = '<span class="material-icons-outlined">visibility</span>把手机镜头对准窗外...';
+                    windowPeekView.classList.add('hidden'); classmateResponse.classList.add('hidden');
+                    afterPeek.classList.add('hidden'); toFinalScareBtn.classList.add('hidden');
+
+                    // Reset Scene 6 wardrobe figure animation
+                    const wardrobeFigure = document.getElementById('wardrobe-hunched-figure');
+                    if (wardrobeFigure) { wardrobeFigure.style.animation = 'none'; wardrobeFigure.style.opacity = 0; }
+
+
+                    switchScene('intro');
+                });
+            }
+             // Initialize first scene correctly
+            if(scenes.length > 0) {
+                const firstScene = scenes[0];
+                if(firstScene.id === 'intro') {
+                     audioHeartbeat.pause();
+                     audioHeartbeat.currentTime = 0;
+                     roomLightToggleBtn.classList.add('hidden');
+                }
+            }
+        });
     </script>
 </body>
 </html>
