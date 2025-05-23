@@ -21,7 +21,6 @@
             --font-serif: 'Noto Serif SC', 'ZCOOL XiaoWei', serif;
             --font-sans: 'Inter', sans-serif;
             --font-horror: 'Creepster', cursive;
-            --light-color: #ffdd77; /* 走廊灯泡颜色 */
         }
 
         html, body {
@@ -178,97 +177,10 @@
         .visual-element-container img { max-width: 90%; max-height: 400px; height: auto; border-radius: 4px; display: block; border: 1px solid #555; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
         
         /* Corridor specific styling from previous version - mostly good */
-        #corridor-view-container { background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAPDw8QEA8QDw8PDw8PDw8PDw8PDw8PFREWFhURFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIALMAWgMBIgACEQEDEQH/xAAYAAEBAQEBAAAAAAAAAAAAAAAAAQIDBf/EABgQAQEBAQEAAAAAAAAAAAAAAAABEQIS/9oADAMBAAIQAxAAAAHqAAAAAAAACVWQCFQSiLKgAAAAAAAB//xAAbEAEBAAEFAAAAAAAAAAAAAAABAAIREBITIv/aAAgBAQABBQJ5Rk8oyeVHgf/EABQRAQAAAAAAAAAAAAAAAAAAAGD/2gAIAQMBAT8Bf//EABQRAQAAAAAAAAAAAAAAAAAAAGD/2gAIAQIBAT8Bf//EABoQAAICAwAAAAAAAAAAAAAAAAARASAhMED/2gAIAQEABj8C8VSYf//EABwQAQEAAgMBAAAAAAAAAAAAAAERACExQWGBkf/aAAgBAQABPyEcCHAh0g+PcN9PvhwgjwEPeAj3DxA8P//aAAwDAQACAAMAAAAQAAAAAAAADCBAA8EAAAAAAAD//xAAUEQEAAAAAAAAAAAAAAAAAAABg/9oACAEDAQE/EGL/xAAUEQEAAAAAAAAAAAAAAAAAAABg/9oACAECAQE/EGL/xAAdEAEBAAICAwEAAAAAAAAAAAABEQAhMUEQUWFx/9oACAEBAAE/EDwjwjwQPhB4hD44nIg+DzCHuYfch4fOEHAg8EHgg8EHzCEPiH//2Q==') center center / cover no-repeat; filter: brightness(0.15); transition: filter 1s ease-in-out; position: relative; }
+        #corridor-view-container { background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAPDw8QEA8QDw8PDw8PDw8PDw8PDw8PFREWFhURFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIALMAWgMBIgACEQEDEQH/xAAYAAEBAQEBAAAAAAAAAAAAAAAAAQIDBf/EABgQAQEBAQEAAAAAAAAAAAAAAAABEQIS/9oADAMBAAIQAxAAAAHqAAAAAAAACVWQCFQSiLKgAAAAAAAB//xAAbEAEBAAEFAAAAAAAAAAAAAAABAAIREBITIv/aAAgBAQABBQJ5Rk8oyeVHgf/EABQRAQAAAAAAAAAAAAAAAAAAAGD/2gAIAQMBAT8Bf//EABQRAQAAAAAAAAAAAAAAAAAAAGD/2gAIAQIBAT8Bf//EABoQAAICAwAAAAAAAAAAAAAAAAARASAhMED/2gAIAQEABj8C8VSYf//EABwQAQEAAgMBAAAAAAAAAAAAAAERACExQWGBkf/aAAgBAQABPyEcCHAh0g+PcN9PvhwgjwEPeAj3DxA8P//aAAwDAQACAAMAAAAQAAAAAAAADCBAA8EAAAAAAAD//xAAUEQEAAAAAAAAAAAAAAAAAAABg/9oACAEDAQE/EGL/xAAUEQEAAAAAAAAAAAAAAAAAAABg/9oACAECAQE/EGL/xAAdEAEBAAICAwEAAAAAAAAAAAABEQAhMUEQUWFx/9oACAEBAAE/EDwjwjwQPhB4hD44nIg+DzCHuYfch4fOEHAg8EHgg8EHzCEPiH//2Q==') center center / cover no-repeat; filter: brightness(0.15); transition: filter 1s ease-in-out; }
         #corridor-view-container.lit { filter: brightness(0.4); }
         #corridor-light-effect { position: absolute; top: 0; left: 50%; width: 200%; height: 300px; background: radial-gradient(ellipse at 50% 0%, rgba(255, 223, 100, 0.35) 0%, rgba(255, 223, 100, 0.2) 30%, transparent 70%); transform: translateX(-50%); opacity: 0; transition: opacity 0.7s ease-out; pointer-events: none; }
         #corridor-light-effect.on { opacity: 1; }
-        
-        /* 走廊灯泡效果 - 参考提供的代码优化 */
-        .corridor-light-bulb {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--light-color);
-            transition: all 0.3s ease;
-            opacity: 0;
-        }
-        
-        .corridor-light-bulb::before {
-            content: '';
-            position: absolute;
-            width: 22px;
-            height: 50px;
-            border-radius: 6px;
-            background: var(--light-color);
-            left: 50%;
-            top: -32px;
-            transform: translateX(-50%);
-            border-top: 20px solid #333;
-        }
-        
-        .corridor-light-bulb span:nth-child(1) {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: transparent;
-            box-shadow: 13px 13px 0 6px var(--light-color);
-            border-bottom-right-radius: 25px;
-            left: -3px;
-            top: -10px;
-            transform: rotate(342deg);
-        }
-        
-        .corridor-light-bulb span:nth-child(2) {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background: transparent;
-            box-shadow: -13px 13px 0 6px var(--light-color);
-            border-bottom-left-radius: 25px;
-            right: -3px;
-            top: -10px;
-            transform: rotate(16deg);
-        }
-        
-        .corridor-light-bulb::after {
-            position: absolute;
-            content: '';
-            width: 90px;
-            height: 90px;
-            background: var(--light-color);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            filter: blur(25px);
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 8px var(--light-color), 0 0 20px var(--light-color), 0 0 40px var(--light-color), 0 0 80px var(--light-color);
-            z-index: -1;
-        }
-        
-        .corridor-light-bulb.on {
-            opacity: 1;
-            background-color: #fff;
-        }
-        
-        .corridor-light-bulb.on::before {
-            background: #fff;
-        }
-        
-        .corridor-light-bulb.on span:nth-child(1) {
-            box-shadow: 13px 13px 0 6px #fff;
-        }
-        
-        .corridor-light-bulb.on span:nth-child(2) {
-            box-shadow: -13px 13px 0 6px #fff;
-        }
-        
-        .corridor-light-bulb.on::after {
-            background: #fff;
-            box-shadow: 0 0 8px #fff, 0 0 20px #fff, 0 0 40px #fff, 0 0 80px #fff;
-        }
 
         #white-figure { /* Enhanced white figure */
             position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
@@ -307,36 +219,34 @@
         #curtain-image-container { 
             min-height: 320px; 
             position: relative; 
-            background-color: #1a1a1a; /* 更暗的背景 */
+            background-color: #253237;
             border: 10px solid #fff;
             overflow: hidden;
             width: 270px;
             margin: 0 auto;
         }
         
-        /* 山坡和楼房剪影 - 完全无灯光 */
+        /* City view background */
         #curtain-image-container::before {
             content: "";
             position: absolute;
-            width: 45px;
-            height: 80px;
-            background-color: #0d0d0d; /* 极暗的建筑剪影 */
-            top: 250px;
-            left: 20px;
-            box-shadow: 25px 25px #0d0d0d, 55px -10px #0d0d0d, 100px 15px #0d0d0d, 140px -3px #0d0d0d, 180px 30px #0d0d0d, 160px -25px #111111, 120px -15px #111111, 90px 8px #111111, 65px -8px #111111, 30px -20px #111111;
+            width: 60px;
+            height: 100px;
+            background-color: #242423;
+            top: 240px;
+            box-shadow: 30px 30px #242423, 70px -15px #242423, 130px 20px #242423, 180px -5px #242423, 240px 40px #242423, 220px -40px #333533, 170px -20px #333533, 130px 10px #333533, 90px -10px #333533, 40px -30px #333533, 10px -5px #333533;
         }
         
-        /* 山坡轮廓 */
+        /* City lights */
         #curtain-image-container::after {
             position: absolute;
             content: "";
-            background-color: #080808; /* 极暗的山坡 */
-            width: 270px;
-            height: 70px;
-            bottom: 0;
-            left: 0;
-            border-radius: 40% 40% 0 0 / 25% 25% 0 0;
-            box-shadow: inset 0 8px 15px rgba(0,0,0,0.7);
+            background-color: #b69121;
+            width: 10px;
+            height: 15px;
+            top: 250px;
+            left: 10px;
+            box-shadow: 17px 0 #926c15, 34px 0 #805b10, 85px -15px #926c15, 103px -15px #b69121, 155px 15px #805b10, 175px -10px #926c15, 190px -10px #b69121, 240px -40px #76520e, 40px -35px #76520e;
         }
         
         /* Rain effect */
@@ -429,17 +339,17 @@
             box-shadow: 190px 0 rgba(255, 255, 255, 0.03);
         }
         
-        /* Blind/Curtain - 修改为从底部开始遮住整个窗户 */
+        /* Blind/Curtain */
         .blind {
             position: absolute;
             width: 290px;
-            height: 340px; /* 初始状态完全遮住窗户 */
+            height: 50px;
             background-color: #9db4c0;
             left: 0;
-            bottom: 0; /* 从底部开始 */
+            top: 0;
             z-index: 2;
-            transition: height 0.8s ease;
-            box-shadow: inset 0 7px rgba(0, 0, 0, 0.1), 0 -10px 10px rgba(0, 0, 0, 0.15);
+            transition: height 0.5s ease;
+            box-shadow: inset 0 -7px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.15);
             cursor: pointer;
         }
         
@@ -449,7 +359,7 @@
             background-color: #333;
             width: 2px;
             height: 130px;
-            bottom: 0;
+            top: 0;
             left: 300px;
         }
         
@@ -460,13 +370,13 @@
             height: 25px;
             border-radius: 20px;
             background-color: #333;
-            top: 10px; /* 拉绳在窗帘顶部 */
+            top: 130px;
             left: 296px;
             cursor: pointer;
         }
         
         .blind.open {
-            height: 50px; /* 拉开后只露出底部 */
+            height: 340px;
         }
         
         /* Roll at top */
@@ -514,109 +424,93 @@
         .wardrobe-container::before { left: 1.5%; }
         .wardrobe-container::after { right: 1.5%; }
 
-        /* 重新设计衣柜人影为蹲着的人形 */
         #wardrobe-hunched-figure {
-            width: 80px; height: 100px;
-            position: absolute; top: -75px;
+            width: 90px; height: 120px;
+            position: absolute; top: -80px; /* Positioned on top, slightly forward */
             left: 50%; transform: translateX(-50%);
-            opacity: 0;
-            filter: blur(0.8px) contrast(1.8) brightness(0.25);
+            opacity: 0; /* Initially hidden */
+            filter: blur(0.5px) contrast(1.5) brightness(0.3);
             animation: figureAppearAndLoom 5s ease-out forwards, figureSubtleShift 7s infinite ease-in-out 5s alternate;
         }
-        
-        /* 头部 */
         #wardrobe-hunched-figure .head {
-            width: 25px; height: 25px;
-            background: linear-gradient(135deg, #0f0f0f 0%, #2a2a2a 30%, #1a1a1a 60%, #050505 100%);
-            border-radius: 50%;
-            margin: 0 auto;
-            box-shadow: 0 0 8px rgba(255, 255, 255, 0.1), inset 0 0 4px rgba(0,0,0,0.9);
+            width: 45px; height: 40px; 
+            background: linear-gradient(135deg, #1a1a1a 0%, #3a3a3a 30%, #2a2a2a 60%, #0a0a0a 100%);
+            border-radius: 50% 50% 25% 25% / 65% 65% 35% 35%;
+            margin: 0 auto; transform: rotate(-12deg) translateY(3px); /* Tilted head */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15), inset 0 0 8px rgba(0,0,0,0.9), 2px 2px 4px rgba(0,0,0,0.8);
             position: relative;
         }
-        
         #wardrobe-hunched-figure .head::before {
             content: '';
             position: absolute;
-            width: 4px; height: 4px;
-            background: radial-gradient(circle, #333 0%, #000 70%);
+            width: 8px; height: 8px;
+            background: radial-gradient(circle, #444 0%, #111 70%);
             border-radius: 50%;
-            top: 8px; left: 6px;
-            box-shadow: 10px 0 0 0 #000;
+            top: 12px; left: 10px;
+            box-shadow: 20px 0 #333, 20px 0 0 -2px #111;
         }
-        
-        /* 身体（蹲着的姿势）*/
-        #wardrobe-hunched-figure .torso {
-            width: 50px; height: 45px;
-            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 50%, #050505 100%);
-            border-radius: 25px 25px 15px 15px;
-            margin: 5px auto 0;
-            box-shadow: 0 0 6px rgba(255, 255, 255, 0.08), inset 0 0 4px rgba(0,0,0,0.9);
+        #wardrobe-hunched-figure .body {
+            width: 100%; height: 80px; 
+            background: linear-gradient(180deg, #1f1f1f 0%, #2f2f2f 20%, #1a1a1a 50%, #0a0a0a 100%);
+            border-radius: 45% 45% 65% 65% / 35% 35% 75% 75%; /* Hunched back */
+            margin-top: -15px; transform: scaleY(1.3) skewX(-8deg); /* Hunched */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.12), inset 0 0 12px rgba(0,0,0,0.95), 3px 3px 8px rgba(0,0,0,0.7);
             position: relative;
-            transform: translateY(-5px);
         }
-        
-        /* 手臂（蹲着时抱膝的姿势）*/
-        #wardrobe-hunched-figure .arms {
-            position: absolute; top: 10px; left: -8px; right: -8px;
-            height: 30px;
+        #wardrobe-hunched-figure .body::before {
+            content: '';
+            position: absolute;
+            width: 15px; height: 25px;
+            background: linear-gradient(45deg, #222 0%, #111 100%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            top: 10px; left: -8px;
+            transform: rotate(-20deg);
+            box-shadow: 0 0 5px rgba(0,0,0,0.8);
         }
-        
-        #wardrobe-hunched-figure .arms::before, #wardrobe-hunched-figure .arms::after {
-            content: ''; position: absolute; width: 15px; height: 25px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 50%, #050505 100%);
-            border-radius: 8px;
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.06);
+        #wardrobe-hunched-figure .body::after {
+            content: '';
+            position: absolute;
+            width: 12px; height: 20px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border-radius: 20% 80% 80% 20% / 20% 20% 80% 80%;
+            top: 15px; right: -5px;
+            transform: rotate(15deg);
+            box-shadow: 0 0 3px rgba(0,0,0,0.6);
         }
-        
-        #wardrobe-hunched-figure .arms::before { left: 0; transform: rotate(-25deg) translateY(5px); }
-        #wardrobe-hunched-figure .arms::after { right: 0; transform: rotate(25deg) translateY(5px); }
-        
-        /* 腿部（蹲着的姿势）*/
-        #wardrobe-hunched-figure .legs {
-            position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
-            width: 45px; height: 25px;
-        }
-        
-        #wardrobe-hunched-figure .legs::before, #wardrobe-hunched-figure .legs::after {
-            content: ''; position: absolute; width: 18px; height: 20px;
-            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 50%, #050505 100%);
-            border-radius: 10px 10px 5px 5px;
-            box-shadow: 0 0 3px rgba(255, 255, 255, 0.04);
-        }
-        
-        #wardrobe-hunched-figure .legs::before { left: 2px; transform: rotate(-15deg); }
-        #wardrobe-hunched-figure .legs::after { right: 2px; transform: rotate(15deg); }
-        
         #wardrobe-hunched-figure::before {
             content: '';
             position: absolute;
-            top: -5px; left: -5px; right: -5px; bottom: -5px;
-            background: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(200,200,200,0.02) 40%, transparent 80%);
+            top: -8px; left: -8px; right: -8px; bottom: -8px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.08) 0%, rgba(200,200,200,0.03) 40%, transparent 80%);
             border-radius: inherit;
             z-index: -1;
         }
-        
         #wardrobe-hunched-figure::after {
             content: '';
             position: absolute;
             top: 50%; left: 50%;
-            width: 100px; height: 100px;
-            background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, transparent 70%);
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, transparent 70%);
             transform: translate(-50%, -50%);
             z-index: -2;
         }
         @keyframes figureAppearAndLoom {
-            0% { opacity: 0; transform: translateX(-50%) scale(0.6) translateY(25px); }
-            25% { opacity: 0.2; transform: translateX(-50%) scale(0.75) translateY(15px); }
-            50% { opacity: 0.4; transform: translateX(-50%) scale(0.9) translateY(8px); }
-            75% { opacity: 0.6; transform: translateX(-50%) scale(0.95) translateY(3px); }
-            100% { opacity: 0.85; transform: translateX(-50%) scale(1) translateY(0); }
+            0% { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.8); filter: blur(2px) contrast(1); }
+            30% { opacity: 0.3; transform: translateX(-50%) translateY(10px) scale(0.9); filter: blur(1.5px) contrast(1.1); }
+            60% { opacity: 0.7; transform: translateX(-50%) translateY(0) scale(1); filter: blur(1px) contrast(1.2); }
+            100% { opacity: 0.65; transform: translateX(-50%) translateY(0) scale(1); filter: blur(0.8px) contrast(1.3); } /* Settle */
         }
         @keyframes figureSubtleShift {
-            0% { transform: translateX(-50%) scale(1) translateY(0) rotate(-1deg); }
-            33% { transform: translateX(-48%) scale(1.01) translateY(-2px) rotate(0.5deg); }
-            66% { transform: translateX(-52%) scale(0.99) translateY(1px) rotate(-0.5deg); }
-            100% { transform: translateX(-50%) scale(1) translateY(0) rotate(1deg); }
+            from { 
+                filter: blur(0.8px) brightness(0.85) contrast(1.3); 
+                transform: translateX(-50%) translateY(0px) rotateZ(-0.5deg); 
+                box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
+            }
+            to { 
+                filter: blur(1.2px) brightness(0.75) contrast(1.4); 
+                transform: translateX(-48%) translateY(-3px) rotateZ(0.5deg); 
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.08);
+            }
         }
 
 
@@ -755,10 +649,7 @@
                 <div class="wardrobe-container">
                     <div id="wardrobe-hunched-figure">
                         <div class="head"></div>
-                        <div class="torso">
-                            <div class="arms"></div>
-                        </div>
-                        <div class="legs"></div>
+                        <div class="body"></div>
                     </div>
                 </div>
             </div>
@@ -985,51 +876,6 @@
                 });
             }
 
-            // 最后一页的诡异音乐
-            function playFinalHorrorMusic() {
-                if (!audioContext) return;
-                
-                // 创建持续的恐怖旋律
-                const melody = [
-                    {freq: 220, duration: 2, delay: 0},     // A3
-                    {freq: 207.65, duration: 1.5, delay: 1.5}, // G#3
-                    {freq: 196, duration: 2, delay: 2.8},   // G3
-                    {freq: 174.61, duration: 1.8, delay: 4.5}, // F3
-                    {freq: 164.81, duration: 2.5, delay: 6}, // E3
-                    {freq: 146.83, duration: 3, delay: 8},  // D3
-                    {freq: 130.81, duration: 4, delay: 10.5} // C3
-                ];
-                
-                // 播放主旋律
-                melody.forEach(note => {
-                    setTimeout(() => {
-                        playTone(note.freq, note.duration, 0.08, 'triangle');
-                        // 添加和声
-                        playTone(note.freq * 0.5, note.duration, 0.04, 'sawtooth');
-                        playTone(note.freq * 1.5, note.duration * 0.7, 0.03, 'sine');
-                    }, note.delay * 1000);
-                });
-                
-                // 添加低频嗡鸣
-                setTimeout(() => {
-                    for (let i = 0; i < 8; i++) {
-                        setTimeout(() => {
-                            playTone(55 + Math.random() * 20, 2, 0.06, 'sawtooth');
-                        }, i * 1800);
-                    }
-                }, 2000);
-                
-                // 添加随机的诡异音效
-                setTimeout(() => {
-                    for (let i = 0; i < 12; i++) {
-                        setTimeout(() => {
-                            const freq = 300 + Math.random() * 800;
-                            playTone(freq, 0.3, 0.02, 'square');
-                        }, i * 1200 + Math.random() * 500);
-                    }
-                }, 5000);
-            }
-
 
             // Blind toggle function
             function toggleBlind(blindElement) {
@@ -1047,21 +893,19 @@
                     const y = targetScene.getBoundingClientRect().top + window.pageYOffset + yOffset;
                     window.scrollTo({top: y, behavior: 'smooth'});
 
-                    // 根据场景播放相应的Web Audio API音效（减少重复）
+                    // 根据场景播放相应的Web Audio API音效
                     initAudioContext();
                     if (targetSceneId === 'scene1') {
                         setTimeout(() => startAmbientHorror(), 1000);
                     } else if (targetSceneId === 'scene3') {
                         setTimeout(() => playEerieWhisper(), 2000);
                     } else if (targetSceneId === 'scene4') {
-                        setTimeout(() => playKnockingSound(), 1500);
+                        setTimeout(() => playHorrorChord(), 1500);
                     } else if (targetSceneId === 'scene6') {
-                        setTimeout(() => playScreamingWind(), 2000);
-                    } else if (targetSceneId === 'conclusion') {
                         setTimeout(() => {
-                            playFinalHorrorMusic();
-                            startAmbientHorror();
-                        }, 1500);
+                            playHorrorChord();
+                            playHeartbeat();
+                        }, 2000);
                     }
 
                     if (['scene2', 'scene3', 'scene4', 'scene5', 'scene6'].includes(targetSceneId)) {
