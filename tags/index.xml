@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Tags on Small_fireworks的小站</title>
+        <link>https://smallfireworks.github.io/tags/</link>
+        <description>Recent content in Tags on Small_fireworks的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Small_fireworks</copyright>
+        <lastBuildDate>Mon, 30 Jun 2025 22:10:41 +0800</lastBuildDate><atom:link href="https://smallfireworks.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>数论</title>
+        <link>https://smallfireworks.github.io/tags/%E6%95%B0%E8%AE%BA/</link>
+        <pubDate>Mon, 30 Jun 2025 22:10:41 +0800</pubDate>
+        
+        <guid>https://smallfireworks.github.io/tags/%E6%95%B0%E8%AE%BA/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>数学</title>
+        <link>https://smallfireworks.github.io/tags/%E6%95%B0%E5%AD%A6/</link>
+        <pubDate>Mon, 30 Jun 2025 22:10:41 +0800</pubDate>
+        
+        <guid>https://smallfireworks.github.io/tags/%E6%95%B0%E5%AD%A6/</guid>
+        <description></description>
+        </item>
+        
+    </channel>
+</rss>

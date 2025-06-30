@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-cn" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="初来乍到，发一个高中的发现的定理。\n定理 设 \\(p\\) 为一个奇素数，\\(a\\) 为一个整数且 \\(1 \\le a < p\\)。记 \\(N\\) 为满足以下两个条件的整数 \\(x\\) 的数量：\n\\(x\\) 是模 \\(p\\) 的二次剩余。 \\(x-a\\) 也是模 \\(p\\) 的二次剩余。 其中 \\(x\\) 的取值范围是 \\(\\{1, 2, \\dots, p-1\\}\\)。\n">
+<title>初来乍到</title>
+
+<link rel='canonical' href='https://smallfireworks.github.io/p/%E5%88%9D%E6%9D%A5%E4%B9%8D%E5%88%B0/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="初来乍到">
+<meta property='og:description' content="初来乍到，发一个高中的发现的定理。\n定理 设 \\(p\\) 为一个奇素数，\\(a\\) 为一个整数且 \\(1 \\le a < p\\)。记 \\(N\\) 为满足以下两个条件的整数 \\(x\\) 的数量：\n\\(x\\) 是模 \\(p\\) 的二次剩余。 \\(x-a\\) 也是模 \\(p\\) 的二次剩余。 其中 \\(x\\) 的取值范围是 \\(\\{1, 2, \\dots, p-1\\}\\)。\n">
+<meta property='og:url' content='https://smallfireworks.github.io/p/%E5%88%9D%E6%9D%A5%E4%B9%8D%E5%88%B0/'>
+<meta property='og:site_name' content='Small_fireworks的小站'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='数学' /><meta property='article:tag' content='数论' /><meta property='article:published_time' content='2025-06-30T22:10:41&#43;08:00'/><meta property='article:modified_time' content='2025-06-30T22:10:41&#43;08:00'/>
+<meta name="twitter:title" content="初来乍到">
+<meta name="twitter:description" content="初来乍到，发一个高中的发现的定理。\n定理 设 \\(p\\) 为一个奇素数，\\(a\\) 为一个整数且 \\(1 \\le a < p\\)。记 \\(N\\) 为满足以下两个条件的整数 \\(x\\) 的数量：\n\\(x\\) 是模 \\(p\\) 的二次剩余。 \\(x-a\\) 也是模 \\(p\\) 的二次剩余。 其中 \\(x\\) 的取值范围是 \\(\\{1, 2, \\dots, p-1\\}\\)。\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="切换菜单">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_114cc3d6d1d235f8.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Small_fireworks的小站</a></h1>
+            <h2 class="site-description">记录学习与生活</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='mailto:small_fireworks@163.com'
+                        target="_blank"
+                        title="email"
+                        rel="me"
+                    >
+                        
+                        
+                            <?xml version="1.0" ?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg fill="#000000" width="800px" height="800px" viewBox="0 0 100.354 100.354" id="Layer_1" version="1.1" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M93.09,76.224c0.047-0.145,0.079-0.298,0.079-0.459V22.638c0-0.162-0.032-0.316-0.08-0.462  c-0.007-0.02-0.011-0.04-0.019-0.06c-0.064-0.171-0.158-0.325-0.276-0.46c-0.008-0.009-0.009-0.02-0.017-0.029  c-0.005-0.005-0.011-0.007-0.016-0.012c-0.126-0.134-0.275-0.242-0.442-0.323c-0.013-0.006-0.023-0.014-0.036-0.02  c-0.158-0.071-0.33-0.111-0.511-0.123c-0.018-0.001-0.035-0.005-0.053-0.005c-0.017-0.001-0.032-0.005-0.049-0.005H8.465  c-0.017,0-0.033,0.004-0.05,0.005c-0.016,0.001-0.032,0.004-0.048,0.005c-0.183,0.012-0.358,0.053-0.518,0.125  c-0.01,0.004-0.018,0.011-0.028,0.015c-0.17,0.081-0.321,0.191-0.448,0.327c-0.005,0.005-0.011,0.006-0.016,0.011  c-0.008,0.008-0.009,0.019-0.017,0.028c-0.118,0.135-0.213,0.29-0.277,0.461c-0.008,0.02-0.012,0.04-0.019,0.061  c-0.048,0.146-0.08,0.3-0.08,0.462v53.128c0,0.164,0.033,0.32,0.082,0.468c0.007,0.02,0.011,0.039,0.018,0.059  c0.065,0.172,0.161,0.327,0.28,0.462c0.007,0.008,0.009,0.018,0.016,0.026c0.006,0.007,0.014,0.011,0.021,0.018  c0.049,0.051,0.103,0.096,0.159,0.14c0.025,0.019,0.047,0.042,0.073,0.06c0.066,0.046,0.137,0.083,0.21,0.117  c0.018,0.008,0.034,0.021,0.052,0.028c0.181,0.077,0.38,0.121,0.589,0.121h83.204c0.209,0,0.408-0.043,0.589-0.121  c0.028-0.012,0.054-0.03,0.081-0.044c0.062-0.031,0.124-0.063,0.181-0.102c0.03-0.021,0.057-0.048,0.086-0.071  c0.051-0.041,0.101-0.082,0.145-0.129c0.008-0.008,0.017-0.014,0.025-0.022c0.008-0.009,0.01-0.021,0.018-0.03  c0.117-0.134,0.211-0.288,0.275-0.458C93.078,76.267,93.083,76.246,93.09,76.224z M9.965,26.04l25.247,23.061L9.965,72.346V26.04z   M61.711,47.971c-0.104,0.068-0.214,0.125-0.301,0.221c-0.033,0.036-0.044,0.083-0.073,0.121l-11.27,10.294L12.331,24.138h75.472  L61.711,47.971z M37.436,51.132l11.619,10.613c0.287,0.262,0.649,0.393,1.012,0.393s0.725-0.131,1.011-0.393l11.475-10.481  l25.243,23.002H12.309L37.436,51.132z M64.778,49.232L90.169,26.04v46.33L64.778,49.232z"/></svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://github.com/smallfireworks'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>主页</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E6%90%9C%E7%B4%A2/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>链接</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>暗色模式</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">目录</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#定理">定理</a></li>
+        <li><a href="#证明">证明</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/%E9%AB%98%E4%B8%AD%E6%8B%BE%E9%81%97/" >
+                高中拾遗
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/%E5%88%9D%E6%9D%A5%E4%B9%8D%E5%88%B0/">初来乍到</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jun 30, 2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    阅读时长: 3 分钟
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>初来乍到，发一个高中的发现的定理。</p>
+<h3 id="定理">定理
+</h3><p>设 \(p\) 为一个奇素数，\(a\) 为一个整数且 \(1 \le a < p\)。记 \(N\) 为满足以下两个条件的整数 \(x\) 的数量：</p>
+<ol>
+<li>\(x\) 是模 \(p\) 的二次剩余。</li>
+<li>\(x-a\) 也是模 \(p\) 的二次剩余。</li>
+</ol>
+<p>其中 \(x\) 的取值范围是 \(\{1, 2, \dots, p-1\}\)。</p>
+<p>那么 \(N\) 的值可以根据 \(p\) 和 \(a\) 的性质确定：</p>
+<ul>
+<li>
+<p><strong>情况一：当 \(p \equiv 1 \pmod 4\)</strong></p>
+<ul>
+<li>若 \(a\) 是模 \(p\) 的二次剩余，则 \(N = \frac{p-5}{4}\)。</li>
+<li>若 \(a\) 是模 \(p\) 的二次非剩余，则 \(N = \frac{p-1}{4}\)。</li>
+</ul>
+</li>
+<li>
+<p><strong>情况二：当 \(p \equiv 3 \pmod 4\)</strong></p>
+<ul>
+<li>无论 \(a\) 是二次剩余还是非剩余，均有 \(N = \frac{p-3}{4}\)。</li>
+</ul>
+</li>
+</ul>
+<h3 id="证明">证明
+</h3><p>我们的核心工具是<strong>勒让德符号</strong> \(\left(\frac{n}{p}\right)\)。对于 \(n \not\equiv 0 \pmod p\)，我们知道：
+</p>
+\[
+\frac{1 + \left(\frac{n}{p}\right)}{2} = 
+\begin{cases} 
+1 & \text{如果 } n \text{ 是二次剩余} \\
+0 & \text{如果 } n \text{ 是二次非剩余}
+\end{cases}
+\]<p>利用这个性质，我们可以将 \(N\) 表示为一个和式。注意求和时需要排除 \(x=a\) 的情况，因为此时 \(x-a=0\)，不满足条件2。
+</p>
+\[ N = \sum_{\substack{x=1 \\ x \ne a}}^{p-1} \left( \frac{1 + \left(\frac{x}{p}\right)}{2} \right) \left( \frac{1 + \left(\frac{x-a}{p}\right)}{2} \right) \]<p>为了简化计算，我们先计算一个相关的和 \(S\)，其求和范围为完整的 \(\{1, 2, \dots, p-1\}\)：
+</p>
+\[ S = \sum_{x=1}^{p-1} \left( \frac{1 + \left(\frac{x}{p}\right)}{2} \right) \left( \frac{1 + \left(\frac{x-a}{p}\right)}{2} \right) \]<p>
+展开得：
+</p>
+\[ 4S = \sum_{x=1}^{p-1} \left( 1 + \left(\frac{x}{p}\right) + \left(\frac{x-a}{p}\right) + \left(\frac{x(x-a)}{p}\right) \right) \]<p>
+</p>
+\[ 4S = \sum_{x=1}^{p-1} 1 + \sum_{x=1}^{p-1} \left(\frac{x}{p}\right) + \sum_{x=1}^{p-1} \left(\frac{x-a}{p}\right) + \sum_{x=1}^{p-1} \left(\frac{x(x-a)}{p}\right) \]<p>现在我们逐项计算这四个和：</p>
+<ol>
+<li>\(\sum_{x=1}^{p-1} 1 = p-1\)。</li>
+<li>\(\sum_{x=1}^{p-1} \left(\frac{x}{p}\right) = 0\)。 (在一个完整剩余系中，二次剩余与非剩余数量相等)</li>
+<li>\(\sum_{x=1}^{p-1} \left(\frac{x-a}{p}\right)\)。当 \(x\) 遍历 \(\{1, \dots, p-1\}\) 时，\(x-a\) 遍历 \(\{1-a, \dots, p-1-a\}\)，这个集合模 \(p\) 后恰好是 \(\{0, 1, \dots, p-1\}\) 中去掉了 \(-a\)。所以和为 \(\sum_{y=0}^{p-1}\left(\frac{y}{p}\right) - \left(\frac{-a}{p}\right) = 0 - \left(\frac{-a}{p}\right) = -\left(\frac{-a}{p}\right)\)。</li>
+<li>\(\sum_{x=1}^{p-1} \left(\frac{x(x-a)}{p}\right) = -1\)。这是一个经典的特征和结论。其简要证明如下：
+\[ \sum_{x=1}^{p-1} \left(\frac{x(x-a)}{p}\right) = \sum_{x=1}^{p-1} \left(\frac{x^2(1-ax^{-1})}{p}\right) = \sum_{x=1}^{p-1} \left(\frac{1-ax^{-1}}{p}\right) \]
+令 \(y = x^{-1}\)，当 \(x\) 遍历 \(\{1, \dots, p-1\}\) 时，\(y\) 也遍历该集合。上式变为：
+\[ \sum_{y=1}^{p-1} \left(\frac{1-ay}{p}\right) \]
+令 \(z = 1-ay\)，\(z\) 会遍历 \(\{1, \dots, p-1\}\) 中除 \(1\) 以外的所有元素。因此和为 \(\sum_{z=1}^{p-1}\left(\frac{z}{p}\right) - \left(\frac{1}{p}\right) = 0-1 = -1\)。</li>
+</ol>
+<p>将以上结果代入 \(4S\) 的表达式：
+</p>
+\[ 4S = (p-1) + 0 - \left(\frac{-a}{p}\right) + (-1) = p - 2 - \left(\frac{-a}{p}\right) \]<p>和 \(S\) 包含了 \(x=a\) 这一项的贡献，而我们要求的 \(N\) 并不包含。当 \(x=a\) 时，\(\left(\frac{x-a}{p}\right) = 0\)，该项对 \(S\) 的贡献是：
+</p>
+\[ \left( \frac{1 + \left(\frac{a}{p}\right)}{2} \right) \left( \frac{1 + 0}{2} \right) = \frac{1 + \left(\frac{a}{p}\right)}{4} \]<p>
+所以，\(S = N + \frac{1 + \left(\frac{a}{p}\right)}{4}\)。由此可得 \(N\):
+</p>
+\[ N = S - \frac{1 + \left(\frac{a}{p}\right)}{4} = \frac{p - 2 - \left(\frac{-a}{p}\right)}{4} - \frac{1 + \left(\frac{a}{p}\right)}{4} \]<p>
+</p>
+\[ N = \frac{p - 3 - \left(\frac{a}{p}\right) - \left(\frac{-a}{p}\right)}{4} \]<p>这是 \(N\) 的通用表达式。现在我们分情况讨论：</p>
+<ul>
+<li>
+<p><strong>当 \(p \equiv 1 \pmod 4\)</strong>，有 \(\left(\frac{-1}{p}\right) = 1\)，因此 \(\left(\frac{-a}{p}\right) = \left(\frac{a}{p}\right)\)。
+</p>
+\[ N = \frac{p - 3 - 2\left(\frac{a}{p}\right)}{4} \]<ul>
+<li>若 \(a\) 是二次剩余，\(\left(\frac{a}{p}\right)=1\)，则 \(N = \frac{p-3-2}{4} = \frac{p-5}{4}\)。</li>
+<li>若 \(a\) 是二次非剩余，\(\left(\frac{a}{p}\right)=-1\)，则 \(N = \frac{p-3+2}{4} = \frac{p-1}{4}\)。</li>
+</ul>
+</li>
+<li>
+<p><strong>当 \(p \equiv 3 \pmod 4\)</strong>，有 \(\left(\frac{-1}{p}\right) = -1\)，因此 \(\left(\frac{-a}{p}\right) = -\left(\frac{a}{p}\right)\)。
+</p>
+\[ N = \frac{p - 3 - \left(\frac{a}{p}\right) - (-\left(\frac{a}{p}\right))}{4} = \frac{p-3}{4} \]</li>
+</ul>
+<p>所有情况均已得到验证。证明完毕。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/%E6%95%B0%E5%AD%A6/">数学</a>
+        
+            <a href="/tags/%E6%95%B0%E8%AE%BA/">数论</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+        <link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+	const mainArticleElement = document.querySelector(".main-article");
+        renderMathInElement(mainArticleElement, {
+            delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\(", right: "\\)", display: false },
+                { left: "\\[", right: "\\]", display: true }
+            ],
+            ignoredClasses: ["gist"]
+        });})
+</script>
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 Small_fireworks
+    </section>
+    
+    <section class="powerby">
+        使用 <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> 构建 <br />
+        主题 <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> 由 <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a> 设计
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
