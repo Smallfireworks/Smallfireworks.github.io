@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大年初三的那一夜</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;700&family=Inter:wght@400;500;700&family=Creepster&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color-dark: #060606;
+            --bg-color-lit: #f0e8d8; /* A dim, old paper lit color */
+            --text-color-dark: #b8b8b8;
+            --text-color-lit: #4a3b3b;
+            --text-secondary-color-dark: #707070;
+            --text-secondary-color-lit: #6d5f5f;
+            --accent-color: #8A0707; /* Deep, blood red for Chinese horror */
+            --highlight-color: #D4AC0D;
+            --lantern-glow-color: rgba(255, 30, 30, 0.6);
+            --lantern-core-color: #FF4136;
+            --font-serif: 'Noto Serif SC', 'ZCOOL XiaoWei', serif;
+            --font-sans: 'Inter', sans-serif;
+            --font-horror: 'Creepster', cursive;
+            --light-color: #ffdd77; /* 走廊灯泡颜色 */
+        }
+
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: var(--font-serif);
+            background-color: var(--bg-color-dark);
+            color: var(--text-color-dark);
+            line-height: 1.9;
+            overflow-x: hidden;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent-color) var(--bg-color-dark);
+            transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out;
+        }
+
+        body.page-is-lit {
+            background-color: var(--bg-color-lit);
+            color: var(--text-color-lit);
+        }
+        body.page-is-lit .scene {
+            background-color: rgba(220, 210, 190, 0.6); /* Lighter scene bg when page is lit */
+            border: 1px solid #d8c8b8;
+            box-shadow: 0 0 25px rgba(0,0,0,0.2), inset 0 0 10px rgba(0,0,0,0.1);
+        }
+        body.page-is-lit h1, body.page-is-lit h2 {
+            color: #7a0606; /* Darker red for titles when lit */
+             text-shadow: 0 0 8px #7a0606;
+        }
+        body.page-is-lit .text-danger { color: #A02C2C; text-shadow: 0 0 3px #A02C2C; }
+        body.page-is-lit .text-highlight { color: #b8860b; text-shadow: 0 0 3px #b8860b; }
+        body.page-is-lit .text-white-shadow { color: #503030; text-shadow: 0 0 5px rgba(0,0,0,0.3); }
+
+
+        .story-container {
+            width: 100%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 25px;
+            box-sizing: border-box;
+        }
+
+        .scene {
+            display: none;
+            padding: 35px 25px;
+            border-radius: 10px;
+            background-color: rgba(10, 10, 10, 0.7); /* Slightly more opaque */
+            margin-bottom: 35px;
+            animation: fadeInScene 1s ease-in-out;
+            border: 1px solid #1f1f1f;
+            box-shadow: 0 0 35px rgba(0,0,0,0.7), inset 0 0 15px rgba(0,0,0,0.4);
+            position: relative;
+        }
+        .scene.active { display: block; }
+
+        @keyframes fadeInScene {
+            from { opacity: 0; transform: translateY(25px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes screenShakeStrong {
+            0%, 100% { transform: translateX(0) rotate(0); }
+            10%, 90% { transform: translateX(-5px) rotate(-0.5deg); }
+            30%, 70% { transform: translateX(5px) rotate(0.5deg); }
+            50% { transform: translateX(-3px) rotate(-0.3deg); }
+        }
+        .screen-shake-effect { animation: screenShakeStrong 0.35s linear; }
+        @keyframes textGlitchStrong {
+            0% { text-shadow: 1.5px 0 var(--accent-color), -1.5px 0 var(--highlight-color); opacity: 0.8; transform: skewX(-2deg);}
+            25% { text-shadow: -1.5px 0 var(--accent-color), 1.5px 0 var(--highlight-color); opacity: 1; transform: skewX(2deg);}
+            50% { text-shadow: 1px 1px var(--accent-color), -1px -1px var(--highlight-color); opacity: 0.75; transform: skewX(-1deg);}
+            75% { text-shadow: -1px 1px var(--accent-color), 1px -1px var(--highlight-color); opacity: 1; transform: skewX(1deg);}
+            100% { text-shadow: 1.5px 0 var(--accent-color), -1.5px 0 var(--highlight-color); opacity: 0.8; transform: skewX(-2deg);}
+        }
+        .glitch-text { animation: textGlitchStrong 0.15s infinite alternate; display: inline-block; }
+
+        h1, h2 {
+            font-family: var(--font-horror);
+            font-weight: normal;
+            text-align: center;
+            margin-bottom: 1.5em;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            letter-spacing: 1.5px; /* Wider spacing for horror font */
+        }
+        h1 { font-size: 3.2rem; text-shadow: 0 0 12px var(--accent-color), 0 0 6px var(--highlight-color); }
+        h2 { font-size: 2.6rem; text-shadow: 0 0 10px var(--accent-color); }
+
+        h1 .material-icons-outlined, h2 .material-icons-outlined {
+            margin-right: 15px; font-size: 1.3em; color: var(--highlight-color);
+            filter: drop-shadow(0 0 4px var(--highlight-color));
+        }
+
+        p { margin-bottom: 1.6em; font-size: 1.15rem; }
+        .text-danger { color: var(--accent-color); font-weight: bold; text-shadow: 0 0 6px var(--accent-color); }
+        .text-highlight { color: var(--highlight-color); font-weight: 500; text-shadow: 0 0 6px var(--highlight-color); }
+        .text-white-shadow { color: #ddd; text-shadow: 0 0 8px rgba(0,0,0,0.7), 0 0 5px #1C2833, 0 0 2px #fff; font-weight: bold;}
+        .text-purple-haze { color: #c5aeda; font-style: italic; text-shadow: 0 0 5px #c5aeda; }
+        .narrative-emphasis { font-style: italic; color: #a3adc2; }
+
+        /* Lanterns for Intro */
+        .lantern-container { display: flex; justify-content: center; gap: 30px; margin-bottom: 20px; }
+        .lantern {
+            width: 50px; height: 70px; background-color: var(--lantern-core-color);
+            border-radius: 40% 40% 30% 30% / 50% 50% 40% 40%;
+            position: relative;
+            box-shadow: 0 0 15px 5px var(--lantern-glow-color), inset 0 0 10px rgba(255,255,100,0.3);
+            animation: lanternSway 7s infinite ease-in-out, lanternGlowPulse 3s infinite alternate;
+        }
+        .lantern::before { /* Tassel */
+            content: ''; position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+            width: 5px; height: 20px; background: gold;
+        }
+        @keyframes lanternSway {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+        @keyframes lanternGlowPulse {
+            0% { box-shadow: 0 0 15px 5px var(--lantern-glow-color), inset 0 0 10px rgba(255,255,100,0.3); opacity: 0.85; }
+            50% { box-shadow: 0 0 25px 10px var(--lantern-glow-color), inset 0 0 15px rgba(255,255,100,0.4); opacity: 1; }
+            100% { box-shadow: 0 0 15px 5px var(--lantern-glow-color), inset 0 0 10px rgba(255,255,100,0.3); opacity: 0.85; }
+        }
+
+
+        button, .action-button { /* Styles from previous good version */
+            font-family: var(--font-sans); background-color: #2C3E50; color: #fff; border: 1px solid #555;
+            padding: 13px 28px; border-radius: 6px; cursor: pointer; font-size: 1.05rem;
+            transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 10px;
+            margin-top: 12px; box-shadow: 0 3px 8px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.1);
+        }
+        button:hover, .action-button:hover { background-color: #3B5369; transform: translateY(-3px) scale(1.02); box-shadow: 0 5px 12px rgba(0,0,0,0.5), inset 0 1px 1px rgba(255,255,255,0.1); border-color: var(--highlight-color); }
+        button:active, .action-button:active { transform: translateY(0px) scale(1); }
+        .next-scene-btn { display: block; margin: 25px auto 0; background-color: var(--accent-color); }
+        .next-scene-btn:hover { background-color: #600000; } /* Darker red hover */
+        .global-light-toggle {
+            position: fixed; bottom: 20px; right: 20px; z-index: 1000;
+            background-color: rgba(40,40,40,0.8); border: 1px solid #666;
+            color: #eee; padding: 10px 15px;
+            backdrop-filter: blur(5px);
+        }
+        body.page-is-lit .global-light-toggle {
+            background-color: rgba(230,220,200,0.8); color: #333; border-color: #aaa;
+        }
+
+
+        .hidden { display: none !important; }
+        .visual-element-container { /* Styles from previous good version */
+            margin: 20px auto; padding: 10px; background-color: rgba(0,0,0,0.3);
+            border: 1px dashed #333; border-radius: 5px; display: flex;
+            justify-content: center; align-items: center; min-height: 250px;
+            position: relative; overflow: hidden;
+        }
+        .visual-element-container img { max-width: 90%; max-height: 400px; height: auto; border-radius: 4px; display: block; border: 1px solid #555; box-shadow: 0 0 15px rgba(0,0,0,0.5); }
+        
+        /* Corridor specific styling from previous version - mostly good */
+        #corridor-view-container { background: url('data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxAPDw8QEA8QDw8PDw8PDw8PDw8PDw8PFREWFhURFRUYHSggGBolGxUVITEhJSkrLi4uFx8zODMsNygtLisBCgoKBQUFDgUFDisZExkrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrKysrK//AABEIALMAWgMBIgACEQEDEQH/xAAYAAEBAQEBAAAAAAAAAAAAAAAAAQIDBf/EABgQAQEBAQEAAAAAAAAAAAAAAAABEQIS/9oADAMBAAIQAxAAAAHqAAAAAAAACVWQCFQSiLKgAAAAAAAB//xAAbEAEBAAEFAAAAAAAAAAAAAAABAAIREBITIv/aAAgBAQABBQJ5Rk8oyeVHgf/EABQRAQAAAAAAAAAAAAAAAAAAAGD/2gAIAQMBAT8Bf//EABQRAQAAAAAAAAAAAAAAAAAAAGD/2gAIAQIBAT8Bf//EABoQAAICAwAAAAAAAAAAAAAAAAARASAhMED/2gAIAQEABj8C8VSYf//EABwQAQEAAgMBAAAAAAAAAAAAAAERACExQWGBkf/aAAgBAQABPyEcCHAh0g+PcN9PvhwgjwEPeAj3DxA8P//aAAwDAQACAAMAAAAQAAAAAAAADCBAA8EAAAAAAAD//xAAUEQEAAAAAAAAAAAAAAAAAAABg/9oACAEDAQE/EGL/xAAUEQEAAAAAAAAAAAAAAAAAAABg/9oACAECAQE/EGL/xAAdEAEBAAICAwEAAAAAAAAAAAABEQAhMUEQUWFx/9oACAEBAAE/EDwjwjwQPhB4hD44nIg+DzCHuYfch4fOEHAg8EHgg8EHzCEPiH//2Q==') center center / cover no-repeat; filter: brightness(0.15); transition: filter 1s ease-in-out; position: relative; }
+        #corridor-view-container.lit { filter: brightness(0.4); }
+        #corridor-light-effect { position: absolute; top: 0; left: 50%; width: 200%; height: 300px; background: radial-gradient(ellipse at 50% 0%, rgba(255, 223, 100, 0.35) 0%, rgba(255, 223, 100, 0.2) 30%, transparent 70%); transform: translateX(-50%); opacity: 0; transition: opacity 0.7s ease-out; pointer-events: none; }
+        #corridor-light-effect.on { opacity: 1; }
+        
+        /* 走廊灯泡效果 - 参考提供的代码优化 */
+        .corridor-light-bulb {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--light-color);
+            transition: all 0.3s ease;
+            opacity: 0;
+        }
+        
+        .corridor-light-bulb::before {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 50px;
+            border-radius: 6px;
+            background: var(--light-color);
+            left: 50%;
+            top: -32px;
+            transform: translateX(-50%);
+            border-top: 20px solid #333;
+        }
+        
+        .corridor-light-bulb span:nth-child(1) {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            box-shadow: 13px 13px 0 6px var(--light-color);
+            border-bottom-right-radius: 25px;
+            left: -3px;
+            top: -10px;
+            transform: rotate(342deg);
+        }
+        
+        .corridor-light-bulb span:nth-child(2) {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+            box-shadow: -13px 13px 0 6px var(--light-color);
+            border-bottom-left-radius: 25px;
+            right: -3px;
+            top: -10px;
+            transform: rotate(16deg);
+        }
+        
+        .corridor-light-bulb::after {
+            position: absolute;
+            content: '';
+            width: 90px;
+            height: 90px;
+            background: var(--light-color);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            filter: blur(25px);
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 8px var(--light-color), 0 0 20px var(--light-color), 0 0 40px var(--light-color), 0 0 80px var(--light-color);
+            z-index: -1;
+        }
+        
+        .corridor-light-bulb.on {
+            opacity: 1;
+            background-color: #fff;
+        }
+        
+        .corridor-light-bulb.on::before {
+            background: #fff;
+        }
+        
+        .corridor-light-bulb.on span:nth-child(1) {
+            box-shadow: 13px 13px 0 6px #fff;
+        }
+        
+        .corridor-light-bulb.on span:nth-child(2) {
+            box-shadow: -13px 13px 0 6px #fff;
+        }
+        
+        .corridor-light-bulb.on::after {
+            background: #fff;
+            box-shadow: 0 0 8px #fff, 0 0 20px #fff, 0 0 40px #fff, 0 0 80px #fff;
+        }
+
+        #white-figure { /* Enhanced white figure */
+            position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
+            width: 55px; height: 170px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out, background-color 1s linear, box-shadow 1s linear, filter 0.5s ease;
+            filter: blur(2.5px);
+            animation: figureSway 6s infinite ease-in-out alternate;
+        }
+        #white-figure::before { /* Head/Shoulder part */
+            content: ''; display: block; width: 45px; height: 50px; margin: 0 auto;
+            background-color: rgba(235, 235, 245, 0.55);
+            border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%; /* Headish shape */
+            box-shadow: 0 0 12px 4px rgba(255, 255, 255, 0.25);
+        }
+        #white-figure::after { /* Body part */
+            content: ''; display: block; width: 100%; height: 120px; margin-top: -10px; /* Overlap slightly */
+            background-color: rgba(225, 225, 235, 0.5);
+            border-radius: 30% 30% 5px 5px / 40% 40% 10% 10%; /* Torso/gown shape */
+            box-shadow: 0 0 18px 6px rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes figureSway {
+            from { transform: translateX(-50%) scale(0.9) translateY(0px) rotateZ(-1deg); filter: blur(3px); }
+            to { transform: translateX(-45%) scale(0.95) translateY(-7px) rotateZ(1deg); filter: blur(2px); }
+        }
+        #white-figure.visible { opacity: 0.75; transform: translateX(-50%) scale(1); }
+        #white-figure.revealed-as-sheet { /* Keep this good effect */
+            background-color: rgba(180, 180, 170, 0.8); height: 200px; width: 100px;
+            border-radius: 5px; box-shadow: 0 0 5px rgba(150,150,150,0.5);
+            filter: blur(0.5px); animation: none; transform: translateX(-50%) scale(1) rotate(-5deg);
+        }
+        #white-figure.revealed-as-sheet::before, #white-figure.revealed-as-sheet::after { display:none; } /* Hide pseudo elements when it's a sheet */
+
+        /* Enhanced Curtain/Blind Animation */
+        #curtain-image-container { 
+            min-height: 320px; 
+            position: relative; 
+            background-color: #1a1a1a; /* 更暗的背景 */
+            border: 10px solid #fff;
+            overflow: hidden;
+            width: 270px;
+            margin: 0 auto;
+        }
+        
+        /* 山坡和楼房剪影 - 完全无灯光 */
+        #curtain-image-container::before {
+            content: "";
+            position: absolute;
+            width: 45px;
+            height: 80px;
+            background-color: #0d0d0d; /* 极暗的建筑剪影 */
+            top: 250px;
+            left: 20px;
+            box-shadow: 25px 25px #0d0d0d, 55px -10px #0d0d0d, 100px 15px #0d0d0d, 140px -3px #0d0d0d, 180px 30px #0d0d0d, 160px -25px #111111, 120px -15px #111111, 90px 8px #111111, 65px -8px #111111, 30px -20px #111111;
+        }
+        
+        /* 山坡轮廓 */
+        #curtain-image-container::after {
+            position: absolute;
+            content: "";
+            background-color: #080808; /* 极暗的山坡 */
+            width: 270px;
+            height: 70px;
+            bottom: 0;
+            left: 0;
+            border-radius: 40% 40% 0 0 / 25% 25% 0 0;
+            box-shadow: inset 0 8px 15px rgba(0,0,0,0.7);
+        }
+        
+        /* Rain effect */
+        .rain {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .rain::before {
+            position: absolute;
+            content: "";
+            width: 270px;
+            height: 10px;
+            background-color: #fff;
+            top: 160px;
+        }
+        
+        .rain::after {
+            position: absolute;
+            content: "";
+            border-radius: 20px 20px 0 0;
+            width: 30px;
+            height: 5px;
+            background-color: #b2b2b2;
+            top: 155px;
+            left: 120px;
+        }
+        
+        .droplet {
+            position: absolute;
+            background-color: #fff;
+            height: 15px;
+            width: 1px;
+            transform: rotate(25deg);
+            box-shadow: -50px -50px #fff, 50px -270px #fff, 60px -100px #fff, -40px -130px #fff, -80px -250px #fff;
+        }
+        
+        .droplet:nth-child(1) {
+            left: 200px;
+            animation: rain 1.3s linear infinite;
+        }
+        
+        .droplet:nth-child(2) {
+            top: -20px;
+            left: 100px;
+            animation: rain 0.8s linear infinite 0.5s;
+        }
+        
+        .droplet:nth-child(3) {
+            top: -50px;
+            left: 50px;
+            animation: rain 1.2s linear infinite 1s;
+        }
+        
+        .droplet:nth-child(4) {
+            top: -70px;
+            left: 150px;
+            animation: rain 1s linear infinite 1.3s;
+        }
+        
+        .droplet:nth-child(5) {
+            top: -50px;
+            left: 230px;
+            animation: rain 1.1s linear infinite 1.7s;
+        }
+        
+        @keyframes rain {
+            0% {
+                opacity: 0.9;
+                top: -100px;
+                transform: rotate(25deg) translateX(0);
+            }
+            100% {
+                opacity: 0;
+                top: 600px;
+                transform: rotate(25deg) translateX(-150px);
+            }
+        }
+        
+        /* Window shine effect */
+        .shine {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.03);
+            width: 70px;
+            height: 290px;
+            top: 40px;
+            left: 20px;
+            transform: skew(-30deg);
+            box-shadow: 190px 0 rgba(255, 255, 255, 0.03);
+        }
+        
+        /* Blind/Curtain - 修改为从底部开始遮住整个窗户 */
+        .blind {
+            position: absolute;
+            width: 290px;
+            height: 340px; /* 初始状态完全遮住窗户 */
+            background-color: #9db4c0;
+            left: 0;
+            bottom: 0; /* 从底部开始 */
+            z-index: 2;
+            transition: height 0.8s ease;
+            box-shadow: inset 0 7px rgba(0, 0, 0, 0.1), 0 -10px 10px rgba(0, 0, 0, 0.15);
+            cursor: pointer;
+        }
+        
+        .blind::before {
+            content: "";
+            position: absolute;
+            background-color: #333;
+            width: 2px;
+            height: 130px;
+            bottom: 0;
+            left: 300px;
+        }
+        
+        .blind::after {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 25px;
+            border-radius: 20px;
+            background-color: #333;
+            top: 10px; /* 拉绳在窗帘顶部 */
+            left: 296px;
+            cursor: pointer;
+        }
+        
+        .blind.open {
+            height: 50px; /* 拉开后只露出底部 */
+        }
+        
+        /* Roll at top */
+        .roll {
+            position: absolute;
+            z-index: 10;
+            background-color: #333;
+            width: 320px;
+            height: 15px;
+            border-radius: 20px 20px 0 0;
+            left: -15px;
+            top: -10px;
+        }
+        
+        .roll::before {
+            position: absolute;
+            width: 350px;
+            content: "";
+            background-color: #fff;
+            height: 15px;
+            left: -15px;
+            top: 350px;
+            box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        #window-peek-view { /* From previous, good */
+            text-align: center; padding: 50px 25px; background: repeating-linear-gradient( 45deg, #010101, #010101 5px, #030303 5px, #030303 10px );
+            color: #333; margin: 20px 0; border-radius: 5px; font-style: italic; border: 1px solid #222; box-shadow: inset 0 0 15px #000;
+        }
+        
+        /* Wardrobe and Figure */
+        .wardrobe-container {
+            width: 250px; height: 350px;
+            background-color: #2a1a0f; /* Dark wood color */
+            border: 3px solid #1e120a;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.7), 0 5px 10px rgba(0,0,0,0.5);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            margin: 30px auto;
+        }
+        .wardrobe-container::before, .wardrobe-container::after { /* Doors */
+            content: ''; position: absolute; top: 5px; bottom: 5px; width: 48%;
+            background-color: #382214; border: 1px solid #1a0f08;
+        }
+        .wardrobe-container::before { left: 1.5%; }
+        .wardrobe-container::after { right: 1.5%; }
+
+        /* 重新设计衣柜人影为蹲着的人形 */
+        #wardrobe-hunched-figure {
+            width: 80px; height: 100px;
+            position: absolute; top: -75px;
+            left: 50%; transform: translateX(-50%);
+            opacity: 0;
+            filter: blur(0.8px) contrast(1.8) brightness(0.25);
+            animation: figureAppearAndLoom 5s ease-out forwards, figureSubtleShift 7s infinite ease-in-out 5s alternate;
+        }
+        
+        /* 头部 */
+        #wardrobe-hunched-figure .head {
+            width: 25px; height: 25px;
+            background: linear-gradient(135deg, #0f0f0f 0%, #2a2a2a 30%, #1a1a1a 60%, #050505 100%);
+            border-radius: 50%;
+            margin: 0 auto;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.1), inset 0 0 4px rgba(0,0,0,0.9);
+            position: relative;
+        }
+        
+        #wardrobe-hunched-figure .head::before {
+            content: '';
+            position: absolute;
+            width: 4px; height: 4px;
+            background: radial-gradient(circle, #333 0%, #000 70%);
+            border-radius: 50%;
+            top: 8px; left: 6px;
+            box-shadow: 10px 0 0 0 #000;
+        }
+        
+        /* 身体（蹲着的姿势）*/
+        #wardrobe-hunched-figure .torso {
+            width: 50px; height: 45px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 50%, #050505 100%);
+            border-radius: 25px 25px 15px 15px;
+            margin: 5px auto 0;
+            box-shadow: 0 0 6px rgba(255, 255, 255, 0.08), inset 0 0 4px rgba(0,0,0,0.9);
+            position: relative;
+            transform: translateY(-5px);
+        }
+        
+        /* 手臂（蹲着时抱膝的姿势）*/
+        #wardrobe-hunched-figure .arms {
+            position: absolute; top: 10px; left: -8px; right: -8px;
+            height: 30px;
+        }
+        
+        #wardrobe-hunched-figure .arms::before, #wardrobe-hunched-figure .arms::after {
+            content: ''; position: absolute; width: 15px; height: 25px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 50%, #050505 100%);
+            border-radius: 8px;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.06);
+        }
+        
+        #wardrobe-hunched-figure .arms::before { left: 0; transform: rotate(-25deg) translateY(5px); }
+        #wardrobe-hunched-figure .arms::after { right: 0; transform: rotate(25deg) translateY(5px); }
+        
+        /* 腿部（蹲着的姿势）*/
+        #wardrobe-hunched-figure .legs {
+            position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%);
+            width: 45px; height: 25px;
+        }
+        
+        #wardrobe-hunched-figure .legs::before, #wardrobe-hunched-figure .legs::after {
+            content: ''; position: absolute; width: 18px; height: 20px;
+            background: linear-gradient(180deg, #1a1a1a 0%, #0f0f0f 50%, #050505 100%);
+            border-radius: 10px 10px 5px 5px;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.04);
+        }
+        
+        #wardrobe-hunched-figure .legs::before { left: 2px; transform: rotate(-15deg); }
+        #wardrobe-hunched-figure .legs::after { right: 2px; transform: rotate(15deg); }
+        
+        #wardrobe-hunched-figure::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: -5px; right: -5px; bottom: -5px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.06) 0%, rgba(200,200,200,0.02) 40%, transparent 80%);
+            border-radius: inherit;
+            z-index: -1;
+        }
+        
+        #wardrobe-hunched-figure::after {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 100px; height: 100px;
+            background: radial-gradient(circle, rgba(0,0,0,0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -2;
+        }
+        @keyframes figureAppearAndLoom {
+            0% { opacity: 0; transform: translateX(-50%) scale(0.6) translateY(25px); }
+            25% { opacity: 0.2; transform: translateX(-50%) scale(0.75) translateY(15px); }
+            50% { opacity: 0.4; transform: translateX(-50%) scale(0.9) translateY(8px); }
+            75% { opacity: 0.6; transform: translateX(-50%) scale(0.95) translateY(3px); }
+            100% { opacity: 0.85; transform: translateX(-50%) scale(1) translateY(0); }
+        }
+        @keyframes figureSubtleShift {
+            0% { transform: translateX(-50%) scale(1) translateY(0) rotate(-1deg); }
+            33% { transform: translateX(-48%) scale(1.01) translateY(-2px) rotate(0.5deg); }
+            66% { transform: translateX(-52%) scale(0.99) translateY(1px) rotate(-0.5deg); }
+            100% { transform: translateX(-50%) scale(1) translateY(0) rotate(1deg); }
+        }
+
+
+        #horror-overlay { /* From previous, good */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--accent-color);
+            opacity: 0; z-index: 9999; pointer-events: none; transition: opacity 0.05s ease-out;
+        }
+        #horror-overlay.flash { opacity: 0.35; }
+        
+        .material-icons-outlined { vertical-align: middle; }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; } h2 { font-size: 2rem; } p { font-size: 1.05rem; }
+            button, .action-button { padding: 11px 22px; font-size: 0.95rem;}
+            .story-container { padding: 15px; } .scene { padding: 25px 20px; }
+            .lantern-container { gap: 15px; } .lantern { width: 40px; height: 60px; }
+            .wardrobe-container { width: 200px; height: 300px; }
+            #wardrobe-hunched-figure { top: -50px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="story-container">
+        <section id="intro" class="scene active">
+            <div class="lantern-container">
+                <div class="lantern"></div>
+                <div class="lantern"></div>
+            </div>
+            <h1><span class="material-icons-outlined">flare</span>大年初三的那一夜</h1>
+            <p class="narrative-emphasis" style="text-align:center; font-size: 1.2em;">年节的喧嚣犹在耳畔，红灯笼摇曳着<strong class="text-danger">诡异的光</strong>。然而，喜庆的表象之下，有什么东西，正悄然苏醒...</p>
+            <p>那个夜晚，沉甸甸地压在我心头，像一块墓碑。它并非寻常的黑暗，而是一种冰冷、黏稠，带着<strong class="text-danger">铁锈味</strong>的恐惧，至今仍在我的记忆深处<strong class="glitch-text">蠢蠢欲动</strong>。</p>
+            <button class="next-scene-btn" data-next="scene1" autofocus><span class="material-icons-outlined">play_arrow</span>开始讲述</button>
+        </section>
+
+        <section id="scene1" class="scene">
+            <h2><span class="material-icons-outlined">holiday_village</span>异样的老宅</h2>
+            <p>那是2022年的大年初三，高一的寒假。我如往年一样，在除夕前一天回到了乡下老宅。空气里有鞭炮的硝烟味，也有一些不易察觉的、<strong class="text-highlight">老房子特有的陈旧气息</strong>。</p>
+            <p>过年那几天，我几乎是黑白颠倒，每天玩到凌晨才睡，中午时分才慢吞吞起床。父母即便在过年期间，也常要外出忙碌，甚至除夕也不例外。这一点，总让我心里有些不是滋味。</p>
+            <div>
+                <p>老宅是一栋三层的自建房。我和父母住在三层，祖父母在一层。二楼，很久没人住了，渐渐变成了堆放杂物的地方，<strong class="text-highlight">暗沉沉的，少有人去</strong>。</p>
+                <p>三楼上来是一条长长的走廊，尽头是上四楼屋顶的楼梯。屋顶原本是露天的，但后来搭了个瓦片顶，原来的平台和新屋顶之间就夹出了一片<strong class="text-danger">黑洞洞的空间</strong>，也被用来堆放各种用不上的旧东西。</p>
+                <p>走廊右手边有两个房间：一个是书房，比较小；另一个是大房间，进门是客厅，左手是我的卧室，右手是父母的卧室，还有卫生间和一间<strong class="text-highlight">门总是关着的杂物间</strong>，透着一股霉味。</p>
+            </div>
+            <p>我把台式电脑带回了老家，放在书房里，因为卧室不太方便装。</p>
+            <button id="roomLightToggleBtn" class="action-button global-light-toggle hidden"><span class="material-icons-outlined">lightbulb</span>房间灯</button>
+            <button class="next-scene-btn" data-next="scene2"><span class="material-icons-outlined">arrow_forward</span>夜色渐浓</button>
+        </section>
+
+        <section id="scene2" class="scene corridor-scene">
+            <h2><span class="material-icons-outlined">visibility_off</span>走廊暗影</h2>
+            <p>大概晚上十点钟，我打算从书房出来回卧室，躺床上玩手机。 </p>
+            <div class="corridor-interaction">
+                <p>外面的走廊很黑，死一般的寂静。父母应该已经睡了，大房间的灯是关的。我准备先走到走廊上把走廊灯打开。</p>
+                <button id="openStudyDoorBtn" class="action-button"><span class="material-icons-outlined">meeting_room</span>推开书房门...</button>
+                
+                <div id="corridor-view-container" class="visual-element-container hidden">
+                    <div id="corridor-light-effect"></div>
+                    <div id="white-figure" class="hidden"></div>
+                    <img id="corridor-image-content" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="漆黑的走廊" style="opacity:0;">
+                </div>
+
+                <p id="corridor-text-scare" class="hidden text-danger" style="font-size: 1.3em; text-align: center; margin-top:20px; line-height:1.6;">
+                    就在我探出头的一瞬间，我感觉有什么东西在走廊尽头的方向<strong class="text-danger text-white-shadow glitch-text">看着我</strong>！
+                    我悚然回头，借着书房门里漏出来的一点光，赫然看见一个<strong class="text-white-shadow" style="font-size:1.2em; letter-spacing:1px;">白色的影子</strong>，静静地站在走廊尽头！它的白色被我的书房灯照耀着，却又在黑夜里染了些说不出的暗沉，看着<strong class="text-danger">十分诡异</strong>。
+                </p>
+                <button id="turnOnCorridorLightBtn" class="action-button hidden"><span class="material-icons-outlined">lightbulb</span>打开走廊灯！</button>
+                <p id="corridor-text-reveal" class="hidden" style="margin-top:20px;">
+                    我瞬间被吓傻了，几乎是凭着本能，哆哆嗦嗦地按下了走廊灯的开关。“啪”的一声，老式的灯泡亮了起来，发出<strong class="text-highlight">昏黄的光</strong>，有种怀旧之感。
+                    灯光下，我终于看清了走廊尽头是什么东西——不过是一大块<strong class="text-highlight">灰色的塑料布</strong>，原本是用来遮挡阳光，免得把书架上的书晒褪色的。
+                </p>
+            </div>
+            <p id="corridor-aftermath" class="hidden">
+                也是，我白天还看见过呢。我定了定神，只觉得是那块塑料布的问题，尽管它是灰色的，但或许在我书房光线的特定角度下就是会变成白色。
+                无论如何，我也不打算再试试看把走廊灯关了，那块布的样子会是怎么样了。我连忙把书房灯一关，窜进另一间房间。
+                <button id="livingRoomLightOnBtn" class="action-button" style="margin:5px 0;">打开客厅灯</button>
+                <span id="livingRoomLightStatus" class="hidden narrative-emphasis">客厅的灯亮了，驱散了些许黑暗。</span>
+                然后我才在门口伸手出来，摸到走廊灯开关，往下一按。
+                走廊昏黄的灯光“啪”的一下就熄灭了，外面一片死寂。
+            </p>
+            <button id="toBedroomBtn" class="next-scene-btn hidden" data-next="scene3"><span class="material-icons-outlined">arrow_forward</span>回到卧室</button>
+        </section>
+
+        <section id="scene3" class="scene bedroom-scene">
+            <h2><span class="material-icons-outlined">volume_up</span>窗外叩门</h2>
+            <p>我回到了自己的卧室，<button id="bedroomLivingRoomLightOffBtn" class="action-button" style="font-size:0.95em; padding: 8px 15px;">随手关掉客厅的灯</button>。一切似乎都过去了，只是方才看错了罢了。我躺在床上继续玩着手机，有点迷迷糊糊的。</p>
+            <div id="curtain-image-container" class="visual-element-container">
+                <div class="rain">
+                    <div class="droplet"></div>
+                    <div class="droplet"></div>
+                    <div class="droplet"></div>
+                    <div class="droplet"></div>
+                    <div class="droplet"></div>
+                </div>
+                <div class="shine"></div>
+                <div class="blind" onclick="toggleBlind(this)"></div>
+                <div class="roll"></div>
+            </div>
+            <p style="text-align: center; margin-top:20px;">应该是十一点过的时候，我在半睡半醒之间被一阵清晰的<strong class="text-danger" style="font-size:1.3em;">“咚！咚！咚！”</strong>敲窗户的声音吵醒了！</p>
+            <button id="triggerKnock1" class="action-button" style="margin:10px auto; display:block;"><span class="material-icons-outlined">hearing</span>谁？！</button>
+            <p id="window-context" class="hidden narrative-emphasis">是的，敲窗户，但我的卧室在<strong class="text-highlight">三楼</strong>！窗外根本不可能有人！我一下子鸡皮疙瘩就起来了。窗户被窗帘遮住了，那窗帘，此刻正<strong class="text-danger">微微地飘动着</strong>，角度很小，我看不见帘子后面的情况。</p>
+            <p id="knock-again-text" class="hidden text-danger" style="font-size: 1.2em; text-align:center;">我等了一会儿，感觉没什么后续，才稍稍安心一点，觉得是自己听错了。然而就在这时，我再次真真切切地听见了，“<strong class="glitch-text">咚！咚！咚！</strong>”的声音从窗户方向传来，<strong class="text-white-shadow">一次比一次清晰</strong>！我毛骨悚然，紧盯着窗户的方向。敲击声又停下了。</p>
+            <button class="next-scene-btn" data-next="scene4" id="toNoisesBtn" class="hidden"><span class="material-icons-outlined">arrow_forward</span>更诡异的...</button>
+        </section>
+
+        <section id="scene4" class="scene">
+            <h2><span class="material-icons-outlined">record_voice_over</span>夜半异响</h2>
+            <p>我感觉自己有点精神不太正常了，打算和同学聊聊天安慰一下自己。</p>
+            <p>然而聊着聊着，窗户外面突然传来一些嘈杂的声音，像是女人的<strong class="text-danger">尖叫</strong>，又像是男人<strong class="text-danger">压抑的笑声</strong>，混乱而扭曲，在这死寂的夜里格外清晰。</p>
+            <button id="playChaoticSoundBtn" class="action-button" style="margin:15px auto; display:block;"><span class="material-icons-outlined">play_circle_filled</span>窗外到底是什么... (点击听)</button>
+            <p id="recording-result" class="hidden" style="margin-top:20px;" class="narrative-emphasis">我当即打开了手机录音，打算录下来。确实，我录下来了。只不过后来听起来，录音里<strong class="text-highlight">只是一片混乱嘈杂的噪音</strong>，根本分辨不出什么尖叫和笑声，完全不像是深夜三楼一间卧室外该有的动静。或许是手机太旧的缘故罢。</p>
+            <button class="next-scene-btn" data-next="scene5" id="toVideoCallBtn" class="hidden"><span class="material-icons-outlined">arrow_forward</span>必须去书房</button>
+        </section>
+
+        <section id="scene5" class="scene">
+            <h2><span class="material-icons-outlined">video_chat</span>求助无援</h2>
+            <p>我当时十分害怕，又突然想起来有个东西（忘记是什么了）忘在了书房，必须要去拿。我直接一个QQ视频通话打给了同学，让他陪我在线去书房拿东西。</p>
+            <div class="chat-simulation">
+                <p><strong>我：</strong>（压低声音）喂，你...你有没有听见什么笑声？或者别的声音？</p>
+                <p><strong>同学：</strong>（迷糊地）没有啊，怎么了？就听见你那边很吵，呼呼的，什么声音啊？</p>
+                <p><strong>我：</strong>（心一沉）我...我想让你帮我看看窗外，我不敢。</p>
+                <p><strong>同学：</strong>（有些好奇）行吧，你把手机摄像头对着外面。</p>
+            </div>
+            <button id="peekWindowBtn" class="action-button" style="margin:15px auto; display:block;"><span class="material-icons-outlined">visibility</span>把手机镜头对准窗外...</button>
+            <div id="window-peek-view" class="hidden visual-element-container">
+                <p>（你把手机从窗帘缝隙中塞进去，摄像头对准窗外，来回移了移。屏幕上<strong class="text-danger glitch-text">只有一片漆黑</strong>，和一些干扰的雪花点。）</p>
+            </div>
+            <p id="classmate-response" class="hidden" style="margin-top:20px;" class="narrative-emphasis"><strong>同学：</strong>（视频那头）看见什么东西吗？我这边看你镜头里<strong class="text-highlight">一片漆黑，什么都没有啊</strong>。</p>
+            <p id="after-peek" class="hidden">有个人陪着，后面倒是一切正常，我顺利地拿完了东西，回到了卧室挂掉电话。打算睡觉。</p>
+            <button class="next-scene-btn" data-next="scene6" id="toFinalScareBtn" class="hidden"><span class="material-icons-outlined">arrow_forward</span>试图入睡</button>
+        </section>
+
+        <section id="scene6" class="scene">
+            <h2><span class="material-icons-outlined">airline_seat_individual_suite</span>柜顶之物</h2>
+            <p>我强迫自己闭上眼睛，想把这一切都当成噩梦。后来，不知是梦还是什么，我总感觉有个东西<strong class="text-purple-haze">佝偻着身子</strong>，站在卧室里的衣柜顶上。</p>
+            <div class="visual-element-container" style="background-color: #0a0807;">
+                <div class="wardrobe-container">
+                    <div id="wardrobe-hunched-figure">
+                        <div class="head"></div>
+                        <div class="torso">
+                            <div class="arms"></div>
+                        </div>
+                        <div class="legs"></div>
+                    </div>
+                </div>
+            </div>
+            <p class="narrative-emphasis">它就那么<strong class="text-danger glitch-text">静静地蹲着</strong>，与黑暗融为一体。我每次仔细想看它，却总也看不真切，眼皮越来越沉，又迷迷糊糊地睡去了。或者说，是昏过去了。</p>
+            <button class="next-scene-btn" data-next="conclusion"><span class="material-icons-outlined">arrow_forward</span>那一夜的终末...</button>
+        </section>
+
+        <section id="conclusion" class="scene">
+            <h2><span class="material-icons-outlined">help_outline</span>无解的夜</h2>
+            <p>我不知道那一晚到底发生了什么。走廊上的白影，窗外的敲击，那些怪异的声响，还有最后衣柜上的那个“东西”……</p>
+            <p style="font-size: 1.4em; color: var(--accent-color); text-align:center; font-weight:bold; letter-spacing: 1px;" class="glitch-text">或许，我也永远不会知道了。</p>
+            <p style="text-align:center; font-size: 1.1em; color: var(--text-secondary-color-dark);">有些事，不如就让它烂在黑暗里吧。</p>
+            <button id="restartStoryBtn" class="action-button" style="background-color: var(--highlight-color); color: var(--bg-color-dark); margin: 20px auto; display:block;"><span class="material-icons-outlined">replay</span>重温旧魇</button>
+        </section>
+    </div>
+    <div id="horror-overlay"></div>
+
+    <audio id="sound-light-switch" src="https://cdn.freesound.org/previews/277/277761_3234367-lq.mp3" preload="auto"></audio>
+    <audio id="sound-window-knock" src="https://cdn.freesound.org/previews/415/415727_6142149-lq.mp3" preload="auto"></audio>
+    <audio id="sound-chaotic-noise" src="https://cdn.freesound.org/previews/670/670850_12689420-lq.mp3" preload="auto"></audio> <!-- Screams and ambience -->
+    <audio id="sound-heartbeat" src="https://cdn.freesound.org/previews/342/342839_5840490-lq.mp3" preload="auto" loop></audio>
+    <audio id="sound-door-creak" src="https://cdn.freesound.org/previews/17/17027_109923-lq.mp3" preload="auto"></audio>
+    <audio id="sound-figure-appear" src="https://cdn.freesound.org/previews/403/403007_5121236-lq.mp3" preload="auto"></audio>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scenes = document.querySelectorAll('.scene');
+            const nextSceneButtons = document.querySelectorAll('.next-scene-btn');
+            const horrorOverlay = document.getElementById('horror-overlay');
+            const bodyElement = document.body;
+            const roomLightToggleBtn = document.getElementById('roomLightToggleBtn');
+
+            const audioLightSwitch = document.getElementById('sound-light-switch');
+            const audioWindowKnock = document.getElementById('sound-window-knock');
+            const audioChaoticNoise = document.getElementById('sound-chaotic-noise');
+            const audioHeartbeat = document.getElementById('sound-heartbeat');
+            const audioDoorCreak = document.getElementById('sound-door-creak');
+            const audioFigureAppear = document.getElementById('sound-figure-appear');
+            
+            audioHeartbeat.volume = 0.20; // Quieter heartbeat
+            audioDoorCreak.volume = 0.35;
+            audioFigureAppear.volume = 0.25;
+            audioChaoticNoise.volume = 0.4;
+            audioWindowKnock.volume = 0.6;
+
+            // Enhanced Web Audio API for horror sound effects
+            let audioContext;
+            let isAudioInitialized = false;
+            let ambientNoiseGain;
+            let heartbeatOscillator;
+
+            function initAudioContext() {
+                if (!isAudioInitialized) {
+                    try {
+                        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                        isAudioInitialized = true;
+                        createAmbientNoise();
+                    } catch (e) {
+                        console.warn('Web Audio API not supported');
+                    }
+                }
+            }
+
+            function createAmbientNoise() {
+                if (!audioContext) return;
+                
+                // 创建低频环境噪音
+                const bufferSize = audioContext.sampleRate * 2;
+                const noiseBuffer = audioContext.createBuffer(1, bufferSize, audioContext.sampleRate);
+                const output = noiseBuffer.getChannelData(0);
+                
+                for (let i = 0; i < bufferSize; i++) {
+                    output[i] = (Math.random() * 2 - 1) * 0.1;
+                }
+                
+                const whiteNoise = audioContext.createBufferSource();
+                whiteNoise.buffer = noiseBuffer;
+                whiteNoise.loop = true;
+                
+                const bandpass = audioContext.createBiquadFilter();
+                bandpass.type = 'bandpass';
+                bandpass.frequency.value = 60;
+                bandpass.Q.value = 1;
+                
+                ambientNoiseGain = audioContext.createGain();
+                ambientNoiseGain.gain.value = 0;
+                
+                whiteNoise.connect(bandpass);
+                bandpass.connect(ambientNoiseGain);
+                ambientNoiseGain.connect(audioContext.destination);
+                
+                whiteNoise.start();
+            }
+
+            function playTone(frequency, duration, volume = 0.1, type = 'sine') {
+                if (!audioContext) return;
+                
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+                oscillator.type = type;
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(volume, audioContext.currentTime + 0.01);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            }
+
+            function playHorrorChord() {
+                if (!audioContext) return;
+                // 更加不和谐的和弦，营造恐怖氛围
+                playTone(55, 3, 0.12, 'sawtooth'); // A1 - 低频嗡鸣
+                playTone(73.42, 2.5, 0.08, 'triangle'); // D2
+                playTone(103.83, 2, 0.06, 'square'); // G#2
+                playTone(146.83, 1.5, 0.04, 'sawtooth'); // D3
+                
+                // 添加随机噪音
+                setTimeout(() => {
+                    for (let i = 0; i < 3; i++) {
+                        playTone(200 + Math.random() * 300, 0.1, 0.03, 'square');
+                    }
+                }, 500);
+            }
+
+            function playEerieWhisper() {
+                if (!audioContext) return;
+                // 模拟更诡异的耳语声和呼吸声
+                for (let i = 0; i < 8; i++) {
+                    setTimeout(() => {
+                        const freq = 60 + Math.random() * 80;
+                        playTone(freq, 0.4, 0.02 + Math.random() * 0.02, 'sawtooth');
+                        // 添加高频刺耳声
+                        if (Math.random() > 0.7) {
+                            playTone(2000 + Math.random() * 1000, 0.05, 0.01, 'square');
+                        }
+                    }, i * 300 + Math.random() * 200);
+                }
+            }
+
+            function playKnockingSound() {
+                if (!audioContext) return;
+                // 模拟敲击声
+                for (let i = 0; i < 3; i++) {
+                    setTimeout(() => {
+                        playTone(150, 0.1, 0.15, 'square');
+                        playTone(300, 0.05, 0.1, 'triangle');
+                    }, i * 400);
+                }
+            }
+
+            function playHeartbeat() {
+                if (!audioContext || heartbeatOscillator) return;
+                
+                function beat() {
+                    playTone(60, 0.2, 0.08, 'sine');
+                    setTimeout(() => playTone(80, 0.1, 0.05, 'sine'), 100);
+                }
+                
+                beat();
+                const heartbeatInterval = setInterval(beat, 1200);
+                
+                setTimeout(() => {
+                    clearInterval(heartbeatInterval);
+                    heartbeatOscillator = null;
+                }, 10000);
+                
+                heartbeatOscillator = heartbeatInterval;
+            }
+
+            function playScreamingWind() {
+                if (!audioContext) return;
+                // 模拟尖叫般的风声
+                const duration = 2;
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                const filter = audioContext.createBiquadFilter();
+                
+                oscillator.type = 'sawtooth';
+                filter.type = 'highpass';
+                filter.frequency.value = 800;
+                
+                oscillator.connect(filter);
+                filter.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(400, audioContext.currentTime);
+                oscillator.frequency.linearRampToValueAtTime(1200, audioContext.currentTime + duration);
+                
+                gainNode.gain.setValueAtTime(0, audioContext.currentTime);
+                gainNode.gain.linearRampToValueAtTime(0.06, audioContext.currentTime + 0.1);
+                gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            }
+
+            function startAmbientHorror() {
+                if (ambientNoiseGain) {
+                    ambientNoiseGain.gain.linearRampToValueAtTime(0.03, audioContext.currentTime + 2);
+                }
+            }
+
+            function stopAmbientHorror() {
+                if (ambientNoiseGain) {
+                    ambientNoiseGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + 1);
+                }
+            }
+
+            function playCreepyAmbient() {
+                if (!audioContext) return;
+                // 营造诡异环境音
+                const frequencies = [55, 73.42, 98, 130.81];
+                frequencies.forEach((freq, index) => {
+                    setTimeout(() => {
+                        playTone(freq, 3, 0.04, 'triangle');
+                    }, index * 500);
+                });
+            }
+
+            // 最后一页的诡异音乐
+            function playFinalHorrorMusic() {
+                if (!audioContext) return;
+                
+                // 创建持续的恐怖旋律
+                const melody = [
+                    {freq: 220, duration: 2, delay: 0},     // A3
+                    {freq: 207.65, duration: 1.5, delay: 1.5}, // G#3
+                    {freq: 196, duration: 2, delay: 2.8},   // G3
+                    {freq: 174.61, duration: 1.8, delay: 4.5}, // F3
+                    {freq: 164.81, duration: 2.5, delay: 6}, // E3
+                    {freq: 146.83, duration: 3, delay: 8},  // D3
+                    {freq: 130.81, duration: 4, delay: 10.5} // C3
+                ];
+                
+                // 播放主旋律
+                melody.forEach(note => {
+                    setTimeout(() => {
+                        playTone(note.freq, note.duration, 0.08, 'triangle');
+                        // 添加和声
+                        playTone(note.freq * 0.5, note.duration, 0.04, 'sawtooth');
+                        playTone(note.freq * 1.5, note.duration * 0.7, 0.03, 'sine');
+                    }, note.delay * 1000);
+                });
+                
+                // 添加低频嗡鸣
+                setTimeout(() => {
+                    for (let i = 0; i < 8; i++) {
+                        setTimeout(() => {
+                            playTone(55 + Math.random() * 20, 2, 0.06, 'sawtooth');
+                        }, i * 1800);
+                    }
+                }, 2000);
+                
+                // 添加随机的诡异音效
+                setTimeout(() => {
+                    for (let i = 0; i < 12; i++) {
+                        setTimeout(() => {
+                            const freq = 300 + Math.random() * 800;
+                            playTone(freq, 0.3, 0.02, 'square');
+                        }, i * 1200 + Math.random() * 500);
+                    }
+                }, 5000);
+            }
+
+
+            // Blind toggle function
+            function toggleBlind(blindElement) {
+                blindElement.classList.toggle('open');
+                initAudioContext();
+                playTone(200, 0.2, 0.05, 'triangle'); // 百叶窗开合音效
+            }
+
+            function switchScene(targetSceneId) {
+                scenes.forEach(scene => scene.classList.remove('active'));
+                const targetScene = document.getElementById(targetSceneId);
+                if (targetScene) {
+                    targetScene.classList.add('active');
+                    const yOffset = -20; 
+                    const y = targetScene.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                    window.scrollTo({top: y, behavior: 'smooth'});
+
+                    // 根据场景播放相应的Web Audio API音效（减少重复）
+                    initAudioContext();
+                    if (targetSceneId === 'scene1') {
+                        setTimeout(() => startAmbientHorror(), 1000);
+                    } else if (targetSceneId === 'scene3') {
+                        setTimeout(() => playEerieWhisper(), 2000);
+                    } else if (targetSceneId === 'scene4') {
+                        setTimeout(() => playKnockingSound(), 1500);
+                    } else if (targetSceneId === 'scene6') {
+                        setTimeout(() => playScreamingWind(), 2000);
+                    } else if (targetSceneId === 'conclusion') {
+                        setTimeout(() => {
+                            playFinalHorrorMusic();
+                            startAmbientHorror();
+                        }, 1500);
+                    }
+
+                    if (['scene2', 'scene3', 'scene4', 'scene5', 'scene6'].includes(targetSceneId)) {
+                         audioHeartbeat.play().catch(e => {});
+                    } else {
+                         audioHeartbeat.pause();
+                         audioHeartbeat.currentTime = 0;
+                    }
+                    // Show/hide global light toggle button
+                    if (['scene1', 'scene2', 'scene3', 'scene4', 'scene5', 'scene6'].includes(targetSceneId) && targetSceneId !== 'intro' && targetSceneId !== 'conclusion' && targetSceneId !== 'scene2' /* scene2 has its own lights */ ) {
+                         roomLightToggleBtn.classList.remove('hidden');
+                    } else if (targetSceneId !== 'scene2') { // Keep it if page is lit potentially
+                        if (!bodyElement.classList.contains('page-is-lit')) {
+                            roomLightToggleBtn.classList.add('hidden');
+                        }
+                    }
+                     if (targetSceneId === 'scene6') { // Trigger wardrobe figure animation
+                        const wardrobeFigure = document.getElementById('wardrobe-hunched-figure');
+                        if (wardrobeFigure) {
+                            wardrobeFigure.style.animation = 'none'; // Reset animation
+                            wardrobeFigure.offsetHeight; // Trigger reflow
+                            wardrobeFigure.style.animation = 'figureAppearAndLoom 5s ease-out forwards, figureSubtleShift 7s infinite ease-in-out 5s alternate';
+                            // 播放恐怖音效
+                            setTimeout(() => {
+                                initAudioContext();
+                                playHorrorChord();
+                                playEerieWhisper();
+                            }, 2000);
+                            setTimeout(() => {
+                                playCreepyAmbient();
+                            }, 4000);
+                        }
+                    }
+
+                }
+            }
+
+            nextSceneButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const nextScene = button.dataset.next;
+                    if (nextScene) {
+                        switchScene(nextScene);
+                    }
+                });
+            });
+
+            function playSound(audioElement, volume = 1) {
+                if (audioElement) {
+                    audioElement.currentTime = 0;
+                    audioElement.volume = volume;
+                    audioElement.play().catch(e => console.error("Audio play failed for " + audioElement.id + ":", e));
+                }
+            }
+            
+            function quickFlash(duration = 150, intensity = 0.35) {
+                horrorOverlay.style.opacity = intensity;
+                setTimeout(() => { horrorOverlay.style.opacity = 0; }, duration);
+                // 添加音效增强恐怖感
+                initAudioContext();
+                playTone(220, 0.1, 0.05, 'square');
+            }
+            
+            function applyScreenShake(duration = 300) {
+                bodyElement.classList.add('screen-shake-effect');
+                setTimeout(() => { bodyElement.classList.remove('screen-shake-effect'); }, duration);
+            }
+
+            // Global Room Light Toggle
+            if (roomLightToggleBtn) {
+                roomLightToggleBtn.addEventListener('click', () => {
+                    playSound(audioLightSwitch, 0.5);
+                    bodyElement.classList.toggle('page-is-lit');
+                    if (bodyElement.classList.contains('page-is-lit')) {
+                        roomLightToggleBtn.innerHTML = `<span class="material-icons-outlined">dark_mode</span>关灯`;
+                    } else {
+                        roomLightToggleBtn.innerHTML = `<span class="material-icons-outlined">lightbulb</span>开灯`;
+                    }
+                });
+            }
+            
+            // Specific light buttons
+            const livingRoomLightOnBtn = document.getElementById('livingRoomLightOnBtn');
+            const livingRoomLightStatus = document.getElementById('livingRoomLightStatus');
+            const bedroomLivingRoomLightOffBtn = document.getElementById('bedroomLivingRoomLightOffBtn');
+
+            if(livingRoomLightOnBtn && livingRoomLightStatus){
+                livingRoomLightOnBtn.addEventListener('click', () => {
+                    playSound(audioLightSwitch, 0.5);
+                    bodyElement.classList.add('page-is-lit');
+                    roomLightToggleBtn.innerHTML = `<span class="material-icons-outlined">dark_mode</span>关灯`;
+                    roomLightToggleBtn.classList.remove('hidden'); // Ensure global toggle is visible
+                    livingRoomLightStatus.classList.remove('hidden');
+                    livingRoomLightOnBtn.classList.add('hidden');
+                });
+            }
+            if(bedroomLivingRoomLightOffBtn){
+                bedroomLivingRoomLightOffBtn.addEventListener('click', () => {
+                     playSound(audioLightSwitch, 0.5);
+                     bodyElement.classList.remove('page-is-lit');
+                     roomLightToggleBtn.innerHTML = `<span class="material-icons-outlined">lightbulb</span>开灯`;
+                     bedroomLivingRoomLightOffBtn.textContent = "客厅灯已关";
+                     bedroomLivingRoomLightOffBtn.disabled = true;
+                });
+            }
+
+
+            // Scene 2: Corridor Scare (mostly same as your good version)
+            const openStudyDoorBtn = document.getElementById('openStudyDoorBtn');
+            const corridorViewContainer = document.getElementById('corridor-view-container');
+            const whiteFigure = document.getElementById('white-figure');
+            const corridorTextScare = document.getElementById('corridor-text-scare');
+            const turnOnCorridorLightBtn = document.getElementById('turnOnCorridorLightBtn');
+            const corridorTextReveal = document.getElementById('corridor-text-reveal');
+            const corridorAftermath = document.getElementById('corridor-aftermath');
+            const toBedroomBtn = document.getElementById('toBedroomBtn');
+            const corridorLightEffect = document.getElementById('corridor-light-effect');
+
+            if (openStudyDoorBtn) {
+                openStudyDoorBtn.addEventListener('click', () => {
+                    playSound(audioDoorCreak);
+                    openStudyDoorBtn.classList.add('hidden');
+                    corridorViewContainer.classList.remove('hidden');
+                    
+                    setTimeout(() => {
+                    playSound(audioFigureAppear);
+                    whiteFigure.classList.remove('hidden');
+                    whiteFigure.classList.add('visible');
+                    corridorTextScare.classList.remove('hidden');
+                    quickFlash(200, 0.45);
+                    applyScreenShake(350);
+                    // 添加恐怖和弦
+                    initAudioContext();
+                    playHorrorChord();
+                }, 1300); 
+
+                    setTimeout(() => {
+                        turnOnCorridorLightBtn.classList.remove('hidden');
+                    }, 3000); 
+                });
+            }
+
+            if (turnOnCorridorLightBtn) {
+                turnOnCorridorLightBtn.addEventListener('click', () => {
+                    playSound(audioLightSwitch);
+                    corridorViewContainer.classList.add('lit');
+                    corridorLightEffect.classList.add('on');
+                    whiteFigure.classList.add('revealed-as-sheet'); // This class also hides pseudo-elements
+                    
+                    corridorTextScare.classList.add('hidden'); 
+                    corridorTextReveal.classList.remove('hidden');
+                    turnOnCorridorLightBtn.classList.add('hidden');
+                    
+                    setTimeout(() => {
+                        corridorAftermath.classList.remove('hidden');
+                        toBedroomBtn.classList.remove('hidden');
+                         // After corridor, protagonist turns on living room light, so page should be lit
+                        if(!bodyElement.classList.contains('page-is-lit')) {
+                            livingRoomLightOnBtn.classList.remove('hidden'); // Show button to turn on living room light
+                        } else {
+                             livingRoomLightStatus.classList.remove('hidden'); // If already lit, just show status
+                        }
+
+                    }, 1500);
+                });
+            }
+
+            // Scene 3: Window Knock
+            const triggerKnock1 = document.getElementById('triggerKnock1');
+            const windowContext = document.getElementById('window-context');
+            const knockAgainText = document.getElementById('knock-again-text');
+            const toNoisesBtn = document.getElementById('toNoisesBtn');
+
+            if (triggerKnock1) {
+                triggerKnock1.addEventListener('click', () => {
+                    initAudioContext();
+                    playKnockingSound(); // 使用Web Audio API敲击声
+                    quickFlash(120, 0.3);
+                    applyScreenShake(250);
+                    triggerKnock1.classList.add('hidden');
+                    windowContext.classList.remove('hidden');
+                    // 添加恐怖氛围音效
+                    playHorrorChord();
+                    
+                    setTimeout(() => {
+                        knockAgainText.classList.remove('hidden');
+                        playKnockingSound(); // 再次播放敲击声
+                        playScreamingWind(); // 添加风声
+                        quickFlash(180, 0.35);
+                        applyScreenShake(300);
+                        // 第二次敲击时播放更强烈的音效
+                        playHorrorChord();
+                        playEerieWhisper();
+                         setTimeout(() => { toNoisesBtn.classList.remove('hidden'); }, 1200);
+                    }, 3800 + Math.random() * 1800); 
+                });
+            }
+            
+            // Scene 4: Chaotic Sound
+            const playChaoticSoundBtn = document.getElementById('playChaoticSoundBtn');
+            const recordingResult = document.getElementById('recording-result');
+            const toVideoCallBtn = document.getElementById('toVideoCallBtn');
+            if(playChaoticSoundBtn) {
+                playChaoticSoundBtn.addEventListener('click', () => {
+                    playSound(audioChaoticNoise);
+                    quickFlash(600, 0.25); 
+                    applyScreenShake(600);
+                    playChaoticSoundBtn.disabled = true;
+                    playChaoticSoundBtn.innerHTML = `<span class="material-icons-outlined">volume_up</span>播放中...`;
+                    
+                    // 添加动态生成的混乱音效
+                    initAudioContext();
+                    playCreepyAmbient();
+                    setTimeout(() => playHorrorChord(), 1000);
+                    setTimeout(() => playEerieWhisper(), 2000);
+                    
+                    // Estimate duration or use actual if possible
+                    const chaoticNoiseDuration = audioChaoticNoise.duration && !isNaN(audioChaoticNoise.duration) ? audioChaoticNoise.duration * 1000 : 5000;
+
+                    setTimeout(() => {
+                         recordingResult.classList.remove('hidden');
+                         playChaoticSoundBtn.classList.add('hidden');
+                         toVideoCallBtn.classList.remove('hidden');
+                    }, chaoticNoiseDuration - 1000 > 0 ? chaoticNoiseDuration - 1000 : chaoticNoiseDuration);
+                });
+            }
+
+            // Scene 5: Video Call (mostly same)
+            const peekWindowBtn = document.getElementById('peekWindowBtn');
+            const windowPeekView = document.getElementById('window-peek-view');
+            const classmateResponse = document.getElementById('classmate-response');
+            const afterPeek = document.getElementById('after-peek');
+            const toFinalScareBtn = document.getElementById('toFinalScareBtn');
+
+            if (peekWindowBtn) {
+                peekWindowBtn.addEventListener('click', () => {
+                    peekWindowBtn.disabled = true;
+                    peekWindowBtn.innerHTML = `<span class="material-icons-outlined">phonelink_ring</span>窥视窗外...`;
+                    windowPeekView.classList.remove('hidden');
+                    setTimeout(() => {
+                        classmateResponse.classList.remove('hidden');
+                        peekWindowBtn.classList.add('hidden');
+                        afterPeek.classList.remove('hidden');
+                        toFinalScareBtn.classList.remove('hidden');
+                    }, 4200 + Math.random() * 1200); 
+                });
+            }
+            
+            // Scene 6 wardrobe figure is handled by IntersectionObserver in switchScene for re-triggering animation
+
+            // Restart Story
+            const restartStoryBtn = document.getElementById('restartStoryBtn');
+            if (restartStoryBtn) {
+                restartStoryBtn.addEventListener('click', () => {
+                    audioHeartbeat.pause(); audioHeartbeat.currentTime = 0;
+                    bodyElement.classList.remove('page-is-lit'); // Reset global light
+                    roomLightToggleBtn.innerHTML = `<span class="material-icons-outlined">lightbulb</span>开灯`;
+                    roomLightToggleBtn.classList.add('hidden');
+
+                    // Reset Scene 2
+                    openStudyDoorBtn.classList.remove('hidden');
+                    turnOnCorridorLightBtn.classList.add('hidden');
+                    corridorViewContainer.classList.add('hidden'); corridorViewContainer.classList.remove('lit');
+                    corridorLightEffect.classList.remove('on');
+                    whiteFigure.classList.add('hidden'); whiteFigure.classList.remove('visible', 'revealed-as-sheet');
+                    corridorTextScare.classList.add('hidden'); corridorTextReveal.classList.add('hidden');
+                    corridorAftermath.classList.add('hidden'); toBedroomBtn.classList.add('hidden');
+                    livingRoomLightOnBtn.classList.remove('hidden'); livingRoomLightOnBtn.disabled = false;
+                    livingRoomLightStatus.classList.add('hidden');
+
+
+                    // Reset Scene 3
+                    triggerKnock1.classList.remove('hidden');
+                    windowContext.classList.add('hidden'); knockAgainText.classList.add('hidden');
+                    toNoisesBtn.classList.add('hidden');
+                    bedroomLivingRoomLightOffBtn.textContent = "随手关掉客厅的灯"; bedroomLivingRoomLightOffBtn.disabled = false;
+
+
+                    // Reset Scene 4
+                    playChaoticSoundBtn.classList.remove('hidden'); playChaoticSoundBtn.disabled = false;
+                    playChaoticSoundBtn.innerHTML = `<span class="material-icons-outlined">play_circle_filled</span>窗外到底是什么... (点击听)`;
+                    recordingResult.classList.add('hidden'); toVideoCallBtn.classList.add('hidden');
+                    
+                    // Reset Scene 5
+                    peekWindowBtn.classList.remove('hidden'); peekWindowBtn.disabled = false;
+                    peekWindowBtn.innerHTML = '<span class="material-icons-outlined">visibility</span>把手机镜头对准窗外...';
+                    windowPeekView.classList.add('hidden'); classmateResponse.classList.add('hidden');
+                    afterPeek.classList.add('hidden'); toFinalScareBtn.classList.add('hidden');
+
+                    // Reset Scene 6 wardrobe figure animation
+                    const wardrobeFigure = document.getElementById('wardrobe-hunched-figure');
+                    if (wardrobeFigure) { wardrobeFigure.style.animation = 'none'; wardrobeFigure.style.opacity = 0; }
+
+
+                    switchScene('intro');
+                });
+            }
+             // Initialize first scene correctly
+            if(scenes.length > 0) {
+                const firstScene = scenes[0];
+                if(firstScene.id === 'intro') {
+                     audioHeartbeat.pause();
+                     audioHeartbeat.currentTime = 0;
+                     roomLightToggleBtn.classList.add('hidden');
+                }
+            }
+        });
+    </script>
+</body>
+</html>
