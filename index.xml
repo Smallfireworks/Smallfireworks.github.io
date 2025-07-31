@@ -22,427 +22,87 @@ ajax测试：
             &lt;option value=&#34;&#34;&gt;所有学院&lt;/option&gt;
         &lt;/select&gt;
     &lt;/div&gt;
-    
     &lt;div id=&#34;teacher-list&#34; aria-live=&#34;polite&#34;&gt;
         &lt;p class=&#34;initial-message&#34;&gt;请输入教师姓名、拼音或选择学院以开始查询。&lt;/p&gt;
     &lt;/div&gt;
-    
     &lt;div id=&#34;loading-indicator&#34; class=&#34;hidden&#34;&gt;
         &lt;div class=&#34;spinner&#34;&gt;&lt;/div&gt;
         &lt;span&gt;加载中...&lt;/span&gt;
     &lt;/div&gt;
 &lt;/div&gt;
-
 &lt;div id=&#34;modal-container&#34; class=&#34;modal-hidden&#34;&gt;&lt;/div&gt;
 &lt;button id=&#34;back-to-top&#34; class=&#34;hidden&#34;&gt;▲&lt;/button&gt;
-
 &lt;style&gt;
 
-    #teacher-search-app {
-        font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Arial, sans-serif;
-        max-width: 900px;
-        margin: 0 auto;
-        padding: 20px;
-    }
+    #teacher-search-app { font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
+    .search-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
+    #searchInput, #departmentSelect { padding: 12px 15px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; transition: border-color 0.2s, box-shadow 0.2s; }
+    #searchInput:focus, #departmentSelect:focus { outline: none; border-color: #0056b3; box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2); }
+    #searchInput { flex: 2 1 300px; }
+    #departmentSelect { flex: 1 1 200px; }
+    .teacher-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 15px 20px; margin-bottom: 15px; transition: box-shadow 0.3s ease; }
+    .teacher-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+    .teacher-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
+    .teacher-name { font-size: 22px; font-weight: 600; color: #0056b3; }
+    .teacher-dept { font-size: 14px; color: #666; background-color: #e9ecef; padding: 4px 10px; border-radius: 12px; white-space: nowrap; flex-shrink: 0; }
+    .teacher-stats { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; color: #555; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; margin-bottom: 10px; }
+    .collapsible { background-color: #f8f9fa; color: #444; cursor: pointer; padding: 12px 15px; width: 100%; border: 1px solid #e0e0e0; text-align: left; outline: none; font-size: 16px; margin-top: 10px; border-radius: 5px; font-weight: bold; transition: background-color 0.2s; }
+    .collapsible:hover { background-color: #e9ecef; }
+    .collapsible:after { content: &#39;\25BC&#39;; float: right; transition: transform 0.2s; }
+    .collapsible.active:after { transform: rotate(180deg); }
+    .content { padding: 0; max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease-out; background-color: white; border-left: 1px solid #e0e0e0; border-right: 1px solid #e0e0e0; border-bottom: 1px solid #e0e0e0; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; }
+    .content-inner { padding: 1px 18px; }
+    .collapsible.active + .content { padding: 10px 0 0 0; }
+    .gpa-table { width: 100%; border-collapse: collapse; margin: 5px 0 15px 0; }
+    .gpa-table th, .gpa-table td { text-align: left; padding: 10px; border-bottom: 1px solid #ddd; }
+    .gpa-table th { background-color: #f2f2f2; }
+    .gpa-table tr:nth-child(even) { background-color: #f9f9f9; }
+    .course-link { color: #0056b3; text-decoration: none; border-bottom: 1px dotted #0056b3; cursor: pointer; }
+    .course-link:hover { color: #003d82; }
+    .comment-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 18px 5px 18px; }
+    .comment-header h3 { margin: 0; font-size: 1em; color: #666; font-weight: normal; }
+    .sort-btn { background: none; border: none; padding: 5px 8px; cursor: pointer; color: #888; font-size: 0.9em; border-radius: 4px; }
+    .sort-btn.active { font-weight: bold; color: #0056b3; background-color: #e0eaf6; }
+    .comment-list { padding: 0 18px; }
+    .comment { border-top: 1px solid #eee; padding: 12px 0; font-size: 14px; }
+    .comment:first-child { border-top: none; }
+    .comment &gt; div:first-child { margin: 0 0 8px 0; line-height: 1.6; word-wrap: break-word; }
+    .comment-meta { display: flex; justify-content: space-between; font-size: 12px; color: #888; flex-wrap: wrap; }
+    .comment-likes { font-weight: bold; white-space: nowrap; }
+    .like { color: #28a745; } .dislike { color: #dc3545; }
+    .initial-message, .info-message, .no-data-message { text-align: center; color: #666; padding: 20px; font-size: 16px; }
+    #loading-indicator { text-align: center; padding: 20px; color: #666; }
+    #loading-indicator.hidden { display: none; }
+    .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(0,86,179,0.3); border-radius: 50%; border-top-color: #0056b3; animation: spin 1s ease-in-out infinite; margin-right: 10px; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+    .modal-overlay.visible { opacity: 1; }
+    .modal-content { background: white; padding: 20px 30px; border-radius: 8px; max-width: 600px; width: 90%; max-height: 80vh; overflow-y: auto; position: relative; box-shadow: 0 5px 20px rgba(0,0,0,0.2); transform: scale(0.95); transition: transform 0.3s ease; }
+    .modal-overlay.visible .modal-content { transform: scale(1); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e0e0e0; padding-bottom: 10px; margin-bottom: 15px; }
+    .modal-title { font-size: 20px; font-weight: 600; color: #0056b3; }
+    .modal-close { font-size: 28px; font-weight: bold; cursor: pointer; color: #888; border: none; background: none; }
+    .modal-close:hover { color: #000; }
+    .modal-hidden { display: none; }
+    .highlight-row { background-color: #fff3cd !important; font-weight: bold; }
+    #back-to-top { position: fixed; bottom: 20px; right: 20px; background-color: #0056b3; color: white; border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(100px); z-index: 999; }
+    #back-to-top.visible { opacity: 1; transform: translateY(0); }
+    #back-to-top.hidden { display: none; }
+    body.modal-open { overflow: hidden; }
+    @media (max-width: 768px) { .teacher-header { flex-direction: column; align-items: flex-start; } .modal-content { padding: 15px; } }
     
-    .search-container {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 25px;
-    }
-    
-    #searchInput, #departmentSelect {
-        padding: 12px 15px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
-        font-size: 16px;
-        transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    
-    #searchInput:focus, #departmentSelect:focus {
-        outline: none;
-        border-color: #0056b3;
-        box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
-    }
-    
-    #searchInput {
-        flex: 2 1 300px;
-    }
-    
-    #departmentSelect {
-        flex: 1 1 200px;
-    }
-    
-    .teacher-card {
-        background: #fff;
-        border: 1px solid #e0e0e0;
-        border-radius: 8px;
-        padding: 15px 20px;
-        margin-bottom: 15px;
-        transition: box-shadow 0.3s ease;
-    }
-    
-    .teacher-card:hover {
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    
-    .teacher-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
-    
-    .teacher-name {
-        font-size: 22px;
-        font-weight: 600;
-        color: #0056b3;
-    }
-    
-    .teacher-dept {
-        font-size: 14px;
-        color: #666;
-        background-color: #e9ecef;
-        padding: 4px 10px;
-        border-radius: 12px;
-        white-space: nowrap;
-        flex-shrink: 0;
-    }
-    
-    .teacher-stats {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-        font-size: 14px;
-        color: #555;
-        padding-bottom: 10px;
-        border-bottom: 1px solid #f0f0f0;
-        margin-bottom: 10px;
-    }
-    
-    .collapsible {
-        background-color: #f8f9fa;
-        color: #444;
-        cursor: pointer;
-        padding: 12px 15px;
-        width: 100%;
-        border: 1px solid #e0e0e0;
-        text-align: left;
-        outline: none;
-        font-size: 16px;
-        margin-top: 10px;
-        border-radius: 5px;
-        font-weight: bold;
-        transition: background-color 0.2s;
-    }
-    
-    .collapsible:hover {
-        background-color: #e9ecef;
-    }
-    
-    .collapsible:after {
-        content: &#39;\25BC&#39;;
-        float: right;
-        transition: transform 0.2s;
-    }
-    
-    .collapsible.active:after {
-        transform: rotate(180deg);
-    }
-    
-    .content {
-        padding: 0;
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-        background-color: white;
-        border-left: 1px solid #e0e0e0;
-        border-right: 1px solid #e0e0e0;
-        border-bottom: 1px solid #e0e0e0;
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
-    }
-    
-    .content-inner {
-        padding: 1px 18px;
-    }
-    
-    .collapsible.active + .content {
-        padding: 10px 0 0 0;
-    }
-    
-    .gpa-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 5px 0 15px 0;
-    }
-    
-    .gpa-table th, .gpa-table td {
-        text-align: left;
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-    }
-    
-    .gpa-table th {
-        background-color: #f2f2f2;
-    }
-    
-    .gpa-table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-    
-    .course-link {
-        color: #0056b3;
-        text-decoration: none;
-        border-bottom: 1px dotted #0056b3;
-        cursor: pointer;
-    }
-    
-    .course-link:hover {
-        color: #003d82;
-    }
-    
-    .comment-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 10px 18px 5px 18px;
-    }
-    
-    .comment-header h3 {
-        margin: 0;
-        font-size: 1em;
-        color: #666;
-        font-weight: normal;
-    }
-    
-    .sort-btn {
-        background: none;
-        border: none;
-        padding: 5px 8px;
-        cursor: pointer;
-        color: #888;
-        font-size: 0.9em;
-        border-radius: 4px;
-    }
-    
-    .sort-btn.active {
-        font-weight: bold;
-        color: #0056b3;
-        background-color: #e0eaf6;
-    }
-    
-    .comment-list {
-        padding: 0 18px;
-    }
-    
-    .comment {
-        border-top: 1px solid #eee;
-        padding: 12px 0;
-        font-size: 14px;
-    }
-    
-    .comment:first-child {
-        border-top: none;
-    }
-    
-    .comment &gt; div:first-child {
-        margin: 0 0 8px 0;
-        line-height: 1.6;
-        word-wrap: break-word;
-    }
-    
-    .comment-meta {
-        display: flex;
-        justify-content: space-between;
-        font-size: 12px;
-        color: #888;
-        flex-wrap: wrap;
-    }
-    
-    .comment-likes {
-        font-weight: bold;
-        white-space: nowrap;
-    }
-    
-    .like {
-        color: #28a745;
-    }
-    
-    .dislike {
-        color: #dc3545;
-    }
-    
-    .initial-message, .info-message, .no-data-message {
-        text-align: center;
-        color: #666;
-        padding: 20px;
-        font-size: 16px;
-    }
-    
-    #loading-indicator {
-        text-align: center;
-        padding: 20px;
-        color: #666;
-    }
-    
-    #loading-indicator.hidden {
-        display: none;
-    }
-    
-    .spinner {
-        display: inline-block;
-        width: 20px;
-        height: 20px;
-        border: 3px solid rgba(0,86,179,0.3);
-        border-radius: 50%;
-        border-top-color: #0056b3;
-        animation: spin 1s ease-in-out infinite;
-        margin-right: 10px;
-        vertical-align: middle;
-    }
-    
-    @keyframes spin {
-        to { transform: rotate(360deg); }
-    }
-    
-     
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.6);
-        z-index: 1000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-    
-    .modal-overlay.visible {
-        opacity: 1;
-    }
-    
-    .modal-content {
-        background: white;
-        padding: 20px 30px;
-        border-radius: 8px;
-        max-width: 600px;
-        width: 90%;
-        max-height: 80vh;
-        overflow-y: auto;
-        position: relative;
-        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        transform: scale(0.95);
-        transition: transform 0.3s ease;
-    }
-    
-    .modal-overlay.visible .modal-content {
-        transform: scale(1);
-    }
-    
-    .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 1px solid #e0e0e0;
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-    }
-    
-    .modal-title {
-        font-size: 20px;
-        font-weight: 600;
-        color: #0056b3;
-    }
-    
-    .modal-close {
-        font-size: 28px;
-        font-weight: bold;
-        cursor: pointer;
-        color: #888;
-        border: none;
-        background: none;
-    }
-    
-    .modal-close:hover {
-        color: #000;
-    }
-    
-    .modal-hidden {
-        display: none;
-    }
-    
-    .highlight-row {
-        background-color: #fff3cd !important;
-        font-weight: bold;
-    }
-    
-    #back-to-top {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background-color: #0056b3;
-        color: white;
-        border: none;
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-        cursor: pointer;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-        opacity: 0;
-        transition: opacity 0.3s, transform 0.3s;
-        transform: translateY(100px);
-        z-index: 999;
-    }
-    
-    #back-to-top.visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    
-    #back-to-top.hidden {
-        display: none;
-    }
-    
-    body.modal-open {
-        overflow: hidden;
-    }
-    
-    @media (max-width: 768px) {
-        .teacher-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        
-        .modal-content {
-            padding: 15px;
-        }
-    }
-
 &lt;/style&gt;
-
 &lt;script&gt;
 
 (function() {
-    
-    const DATA_BASE_URL = &#39;/teachers/data/&#39;;  
+    const DATA_BASE_URL = &#39;/teachers/data/&#39;;
     const DISPLAY_LIMIT = 50;
-    
     
     let indexData = null;
     let metadata = null;
     let courseData = null;
-    let loadedTeachers = new Map();  
+    let loadedTeachers = new Map();
     let currentSearchResults = [];
-    
     
     const searchInput = document.getElementById(&#39;searchInput&#39;);
     const departmentSelect = document.getElementById(&#39;departmentSelect&#39;);
@@ -450,7 +110,6 @@ ajax测试：
     const modalContainer = document.getElementById(&#39;modal-container&#39;);
     const backToTopButton = document.getElementById(&#39;back-to-top&#39;);
     const loadingIndicator = document.getElementById(&#39;loading-indicator&#39;);
-    
     
     function debounce(func, wait) {
         let timeout;
@@ -471,59 +130,52 @@ ajax测试：
     function processCommentContent(text) {
         if (!text) return &#39;&#39;;
         let escaped = escapeHtml(text);
-        while (escaped.includes(&#39;\\n\\n&#39;)) {
-            escaped = escaped.replace(&#39;\\n\\n&#39;, &#39;&lt;br&gt;&#39;);
-        }
-        return escaped;
+        return escaped.replace(/\\n/g, &#39;&lt;br&gt;&#39;);
     }
     
     function formatGpa(gpa, std_dev) {
         const num_gpa = parseFloat(gpa);
         const num_std = parseFloat(std_dev);
-        if (isNaN(num_gpa)) return gpa;
+        if (isNaN(num_gpa)) return &#39;N/A&#39;;
         if (isNaN(num_std) || num_std === 0) return num_gpa.toFixed(2);
         return `${num_gpa.toFixed(2)} ± ${num_std.toFixed(2)}`;
     }
     
-    
     async function loadInitialData() {
         try {
-            
             const [indexResponse, metadataResponse] = await Promise.all([
                 fetch(DATA_BASE_URL + &#39;index.json&#39;),
                 fetch(DATA_BASE_URL + &#39;metadata.json&#39;)
             ]);
             
             if (!indexResponse.ok || !metadataResponse.ok) {
-                throw new Error(&#39;Failed to load initial data&#39;);
+                throw new Error(`Failed to load initial data: index status ${indexResponse.status}, metadata status ${metadataResponse.status}`);
             }
             
             indexData = await indexResponse.json();
             metadata = await metadataResponse.json();
             
-            
-            metadata.departments.forEach(dept =&gt; {
-                const option = document.createElement(&#39;option&#39;);
-                option.value = dept;
-                option.textContent = dept;
-                departmentSelect.appendChild(option);
-            });
-            
+            if (metadata.departments &amp;&amp; Array.isArray(metadata.departments)) {
+                metadata.departments.forEach(dept =&gt; {
+                    if (dept) {
+                        const option = document.createElement(&#39;option&#39;);
+                        option.value = dept;
+                        option.textContent = dept;
+                        departmentSelect.appendChild(option);
+                    }
+                });
+            }
         } catch (error) {
             console.error(&#39;Error loading initial data:&#39;, error);
-            teacherList.innerHTML = &#39;&lt;p class=&#34;info-message&#34;&gt;数据加载失败，请刷新页面重试。&lt;/p&gt;&#39;;
+            teacherList.innerHTML = &#39;&lt;p class=&#34;info-message&#34;&gt;数据加载失败，请检查浏览器控制台 (F12) 获取更多信息，并确认部署路径正确。&lt;/p&gt;&#39;;
         }
     }
     
     async function loadTeacherChunk(chunkId) {
-        if (loadedTeachers.has(chunkId)) {
-            return loadedTeachers.get(chunkId);
-        }
-        
+        if (loadedTeachers.has(chunkId)) return loadedTeachers.get(chunkId);
         try {
             const response = await fetch(DATA_BASE_URL + `teachers_${chunkId}.json`);
             if (!response.ok) throw new Error(&#39;Failed to load teacher chunk&#39;);
-            
             const data = await response.json();
             loadedTeachers.set(chunkId, data);
             return data;
@@ -535,11 +187,9 @@ ajax测试：
     
     async function loadCourseData() {
         if (courseData) return courseData;
-        
         try {
             const response = await fetch(DATA_BASE_URL + &#39;courses.json&#39;);
             if (!response.ok) throw new Error(&#39;Failed to load course data&#39;);
-            
             courseData = await response.json();
             return courseData;
         } catch (error) {
@@ -547,7 +197,6 @@ ajax测试：
             return {};
         }
     }
-    
     
     async function searchTeachers() {
         const searchTerm = searchInput.value.toLowerCase().trim();
@@ -561,10 +210,8 @@ ajax测试：
             return;
         }
         
-        
         loadingIndicator.classList.remove(&#39;hidden&#39;);
         teacherList.innerHTML = &#39;&#39;;
-        
         
         const matchedTeachers = indexData.filter(teacher =&gt; {
             const nameMatch = teacher.name &amp;&amp; teacher.name.toLowerCase().includes(searchTerm);
@@ -583,7 +230,6 @@ ajax测试：
             return;
         }
         
-        
         await renderTeachers(matchedTeachers.slice(0, DISPLAY_LIMIT));
         
         if (matchedTeachers.length &gt; DISPLAY_LIMIT) {
@@ -597,25 +243,13 @@ ajax测试：
     }
     
     async function renderTeachers(teachers) {
-        
-        const chunksToLoad = new Set();
-        teachers.forEach(teacher =&gt; {
-            const chunkId = Math.floor(teacher.id / metadata.teachers_per_chunk);
-            chunksToLoad.add(chunkId);
-        });
-        
-        
-        const chunkPromises = Array.from(chunksToLoad).map(chunkId =&gt; loadTeacherChunk(chunkId));
-        await Promise.all(chunkPromises);
-        
+        const chunksToLoad = new Set(teachers.map(t =&gt; Math.floor(t.id / metadata.teachers_per_chunk)));
+        await Promise.all(Array.from(chunksToLoad).map(id =&gt; loadTeacherChunk(id)));
         
         teachers.forEach(teacherIndex =&gt; {
             const chunkId = Math.floor(teacherIndex.id / metadata.teachers_per_chunk);
             const teacherData = loadedTeachers.get(chunkId)?.find(t =&gt; t.id === teacherIndex.id);
-            
-            if (teacherData) {
-                renderTeacherCard(teacherData);
-            }
+            if (teacherData) renderTeacherCard(teacherData);
         });
     }
     
@@ -629,30 +263,28 @@ ajax测试：
         
         const gpaInfoHtml = hasGpa ? `
             &lt;button type=&#34;button&#34; class=&#34;collapsible&#34;&gt;课程GPA信息 (${teacher.gpa_info.length})&lt;/button&gt;
-            &lt;div class=&#34;content&#34;&gt;
-                &lt;div class=&#34;content-inner&#34;&gt;
-                    &lt;table class=&#34;gpa-table&#34;&gt;
-                        &lt;thead&gt;&lt;tr&gt;&lt;th&gt;课程名&lt;/th&gt;&lt;th&gt;平均绩点±标准差&lt;/th&gt;&lt;th&gt;选课人数&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
-                        &lt;tbody&gt;
-                            ${teacher.gpa_info.map(course =&gt; `
-                                &lt;tr&gt;
-                                    &lt;td&gt;&lt;a href=&#34;#&#34; class=&#34;course-link&#34; data-course-name=&#34;${escapeHtml(course[0])}&#34; data-teacher-name=&#34;${escapeHtml(teacher.姓名)}&#34;&gt;${escapeHtml(course[0])}&lt;/a&gt;&lt;/td&gt;
-                                    &lt;td&gt;${formatGpa(course[1], course[3])}&lt;/td&gt;
-                                    &lt;td&gt;${escapeHtml(course[2])}&lt;/td&gt;
-                                &lt;/tr&gt;`).join(&#39;&#39;)}
-                        &lt;/tbody&gt;
-                    &lt;/table&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;` : &#39;&#39;;
+            &lt;div class=&#34;content&#34;&gt;&lt;div class=&#34;content-inner&#34;&gt;
+                &lt;table class=&#34;gpa-table&#34;&gt;
+                    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;课程名&lt;/th&gt;&lt;th&gt;平均绩点±标准差&lt;/th&gt;&lt;th&gt;选课人数&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+                    &lt;tbody&gt;
+                        ${teacher.gpa_info.map(c =&gt; `
+                            &lt;tr&gt;
+                                &lt;td&gt;&lt;a href=&#34;#&#34; class=&#34;course-link&#34; data-course-name=&#34;${escapeHtml(c[0])}&#34; data-teacher-name=&#34;${escapeHtml(teacher.姓名)}&#34;&gt;${escapeHtml(c[0])}&lt;/a&gt;&lt;/td&gt;
+                                &lt;td&gt;${formatGpa(c[1], c[3])}&lt;/td&gt;
+                                &lt;td&gt;${escapeHtml(c[2])}&lt;/td&gt;
+                            &lt;/tr&gt;`).join(&#39;&#39;)}
+                    &lt;/tbody&gt;
+                &lt;/table&gt;
+            &lt;/div&gt;&lt;/div&gt;` : &#39;&#39;;
         
         const commentsHtml = hasComments ? `
             &lt;button type=&#34;button&#34; class=&#34;collapsible&#34;&gt;学生评价 (${teacher.comments.length})&lt;/button&gt;
             &lt;div class=&#34;content&#34;&gt;
                  &lt;div class=&#34;comment-header&#34;&gt;
-                     &lt;h3&gt;${teacher.comments.length}个评论&lt;/h3&gt;
+                     &lt;h3&gt;${teacher.comments.length}条评价&lt;/h3&gt;
                      &lt;div class=&#34;comment-sort&#34;&gt;
-                         &lt;button class=&#34;sort-btn active&#34; data-sort-mode=&#34;popularity&#34;&gt;人气评论&lt;/button&gt;
-                         &lt;button class=&#34;sort-btn&#34; data-sort-mode=&#34;latest&#34;&gt;最新评论&lt;/button&gt;
+                         &lt;button class=&#34;sort-btn active&#34; data-sort-mode=&#34;popularity&#34;&gt;人气&lt;/button&gt;
+                         &lt;button class=&#34;sort-btn&#34; data-sort-mode=&#34;latest&#34;&gt;最新&lt;/button&gt;
                      &lt;/div&gt;
                  &lt;/div&gt;
                 &lt;div class=&#34;comment-list&#34; id=&#34;comment-list-${teacher.id}&#34;&gt;
@@ -664,45 +296,39 @@ ajax测试：
         
         card.innerHTML = `
             &lt;div class=&#34;teacher-header&#34;&gt;
-                &lt;span class=&#34;teacher-name&#34;&gt;${escapeHtml(teacher[&#39;姓名&#39;])}&lt;/span&gt;
-                &lt;span class=&#34;teacher-dept&#34;&gt;${escapeHtml(teacher[&#39;学院&#39;])}&lt;/span&gt;
+                &lt;span class=&#34;teacher-name&#34;&gt;${escapeHtml(teacher.姓名)}&lt;/span&gt;
+                &lt;span class=&#34;teacher-dept&#34;&gt;${escapeHtml(teacher.学院)}&lt;/span&gt;
             &lt;/div&gt;
             &lt;div class=&#34;teacher-stats&#34;&gt;
-                &lt;span&gt;&lt;b&gt;评分:&lt;/b&gt; ${teacher[&#39;评分&#39;].toFixed(2)} (${teacher[&#39;评分人数&#39;]}人)&lt;/span&gt;
-                &lt;span&gt;&lt;b&gt;热度:&lt;/b&gt; ${teacher[&#39;热度&#39;]}&lt;/span&gt;
+                &lt;span&gt;&lt;b&gt;评分:&lt;/b&gt; ${parseFloat(teacher.评分).toFixed(2)} (${teacher.评分人数}人)&lt;/span&gt;
+                &lt;span&gt;&lt;b&gt;热度:&lt;/b&gt; ${teacher.热度}&lt;/span&gt;
             &lt;/div&gt;
-            ${gpaInfoHtml}
-            ${commentsHtml}
-            ${noDataMessage}`;
+            ${gpaInfoHtml}${commentsHtml}${noDataMessage}`;
         
         teacherList.appendChild(card);
     }
     
     function renderComments(teacher, sortMode = &#39;popularity&#39;) {
         if (!teacher.comments || teacher.comments.length === 0) return &#39;&#39;;
-        
-        const sortedComments = [...teacher.comments].sort((a, b) =&gt; {
+        const sorted = [...teacher.comments].sort((a, b) =&gt; {
             if (sortMode === &#39;latest&#39;) {
-                try { return new Date(b[&#39;发表时间&#39;]) - new Date(a[&#39;发表时间&#39;]); } catch (e) { return 0; }
+                const dateA = new Date(a.发表时间);
+                const dateB = new Date(b.发表时间);
+                if (isNaN(dateA) || isNaN(dateB)) return 0;
+                return dateB - dateA;
             }
-            return (b[&#39;点赞减去点踩数量&#39;] || 0) - (a[&#39;点赞减去点踩数量&#39;] || 0);
+            return (b.点赞减去点踩数量 || 0) - (a.点赞减去点踩数量 || 0);
         });
-        
-        return sortedComments.map(comment =&gt; {
-            const content = processCommentContent(comment[&#39;内容&#39;]);
-            return `
-                &lt;div class=&#34;comment&#34;&gt;
-                    &lt;div&gt;${content}&lt;/div&gt;
-                    &lt;div class=&#34;comment-meta&#34;&gt;
-                        &lt;span&gt;发布于 ${escapeHtml(comment[&#39;发表时间&#39;])}&lt;/span&gt;
-                        &lt;span class=&#34;comment-likes&#34;&gt;
-                            &lt;span class=&#34;like&#34;&gt;👍 ${comment[&#39;点赞量&#39;] || 0}&lt;/span&gt; | 
-                            &lt;span class=&#34;dislike&#34;&gt;👎 ${comment[&#39;点踩量&#39;] || 0}&lt;/span&gt;
-                        &lt;/span&gt;
-                    &lt;/div&gt;
+        return sorted.map(c =&gt; `
+            &lt;div class=&#34;comment&#34;&gt;
+                &lt;div&gt;${processCommentContent(c.内容)}&lt;/div&gt;
+                &lt;div class=&#34;comment-meta&#34;&gt;
+                    &lt;span&gt;${escapeHtml(c.发表时间)}&lt;/span&gt;
+                    &lt;span class=&#34;comment-likes&#34;&gt;
+                        &lt;span class=&#34;like&#34;&gt;👍 ${c.点赞量}&lt;/span&gt; | &lt;span class=&#34;dislike&#34;&gt;👎 ${c.点踩量}&lt;/span&gt;
+                    &lt;/span&gt;
                 &lt;/div&gt;
-            `;
-        }).join(&#39;&#39;);
+            &lt;/div&gt;`).join(&#39;&#39;);
     }
     
     async function showCourseModal(courseName, currentTeacherName) {
@@ -712,26 +338,22 @@ ajax测试：
         
         courseInfo.sort((a, b) =&gt; parseFloat(b.avg_gpa) - parseFloat(a.avg_gpa));
         
-        const tableRows = courseInfo.map(teacher =&gt; `
-            &lt;tr class=&#34;${teacher.teacher === currentTeacherName ? &#39;highlight-row&#39; : &#39;&#39;}&#34;&gt;
-                &lt;td&gt;${escapeHtml(teacher.teacher)}&lt;/td&gt;
-                &lt;td&gt;${formatGpa(teacher.avg_gpa, teacher.std_dev)}&lt;/td&gt;
-                &lt;td&gt;${escapeHtml(teacher.count)}&lt;/td&gt;
-            &lt;/tr&gt;`).join(&#39;&#39;);
-        
         modalContainer.innerHTML = `
-            &lt;div class=&#34;modal-overlay&#34;&gt;
-                &lt;div class=&#34;modal-content&#34;&gt;
-                    &lt;div class=&#34;modal-header&#34;&gt;
-                        &lt;h2 class=&#34;modal-title&#34;&gt;${escapeHtml(courseName)}&lt;/h2&gt;
-                        &lt;button class=&#34;modal-close&#34;&gt;×&lt;/button&gt;
-                    &lt;/div&gt;
-                    &lt;table class=&#34;gpa-table&#34;&gt;
-                        &lt;thead&gt;&lt;tr&gt;&lt;th&gt;老师姓名&lt;/th&gt;&lt;th&gt;平均绩点±标准差&lt;/th&gt;&lt;th&gt;人数&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
-                        &lt;tbody&gt;${tableRows}&lt;/tbody&gt;
-                    &lt;/table&gt;
+            &lt;div class=&#34;modal-overlay&#34;&gt;&lt;div class=&#34;modal-content&#34;&gt;
+                &lt;div class=&#34;modal-header&#34;&gt;
+                    &lt;h2 class=&#34;modal-title&#34;&gt;${escapeHtml(courseName)}&lt;/h2&gt;
+                    &lt;button class=&#34;modal-close&#34;&gt;×&lt;/button&gt;
                 &lt;/div&gt;
-            &lt;/div&gt;`;
+                &lt;table class=&#34;gpa-table&#34;&gt;
+                    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;老师姓名&lt;/th&gt;&lt;th&gt;平均绩点±标准差&lt;/th&gt;&lt;th&gt;人数&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+                    &lt;tbody&gt;${courseInfo.map(t =&gt; `
+                        &lt;tr class=&#34;${t.teacher === currentTeacherName ? &#39;highlight-row&#39; : &#39;&#39;}&#34;&gt;
+                            &lt;td&gt;${escapeHtml(t.teacher)}&lt;/td&gt;
+                            &lt;td&gt;${formatGpa(t.avg_gpa, t.std_dev)}&lt;/td&gt;
+                            &lt;td&gt;${escapeHtml(t.count)}&lt;/td&gt;
+                        &lt;/tr&gt;`).join(&#39;&#39;)}&lt;/tbody&gt;
+                &lt;/table&gt;
+            &lt;/div&gt;&lt;/div&gt;`;
         
         modalContainer.classList.remove(&#39;modal-hidden&#39;);
         setTimeout(() =&gt; {
@@ -742,97 +364,57 @@ ajax测试：
     
     function closeModal() {
         const overlay = modalContainer.querySelector(&#39;.modal-overlay&#39;);
-        if (overlay) {
-            overlay.classList.remove(&#39;visible&#39;);
-            document.body.classList.remove(&#39;modal-open&#39;);
-            setTimeout(() =&gt; modalContainer.classList.add(&#39;modal-hidden&#39;), 300);
-        }
+        if (!overlay) return;
+        overlay.classList.remove(&#39;visible&#39;);
+        document.body.classList.remove(&#39;modal-open&#39;);
+        setTimeout(() =&gt; modalContainer.classList.add(&#39;modal-hidden&#39;), 300);
     }
     
-    
-    document.body.addEventListener(&#39;click&#39;, async (e) =&gt; {
-        const target = e.target;
-        
-        
-        if (target === backToTopButton) {
-            window.scrollTo({ top: 0, behavior: &#39;smooth&#39; });
-            return;
-        }
-        
-        
-        if (target.classList.contains(&#39;modal-overlay&#39;) || target.classList.contains(&#39;modal-close&#39;)) {
-            closeModal();
-            return;
-        }
-        
+    document.body.addEventListener(&#39;click&#39;, async e =&gt; {
+        const { target } = e;
+        if (target === backToTopButton) return window.scrollTo({ top: 0, behavior: &#39;smooth&#39; });
+        if (target.classList.contains(&#39;modal-overlay&#39;) || target.classList.contains(&#39;modal-close&#39;)) return closeModal();
         
         const card = target.closest(&#39;.teacher-card&#39;);
         if (!card) return;
         
-        
         if (target.classList.contains(&#39;collapsible&#39;)) {
             target.classList.toggle(&#39;active&#39;);
             const content = target.nextElementSibling;
-            if (content.style.maxHeight) {
-                content.style.maxHeight = null;
-            } else {
-                content.style.maxHeight = content.scrollHeight + &#34;px&#34;;
-            }
-        } 
-        
-        else if (target.classList.contains(&#39;course-link&#39;)) {
+            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + &#34;px&#34;;
+        } else if (target.classList.contains(&#39;course-link&#39;)) {
             e.preventDefault();
             await showCourseModal(target.dataset.courseName, target.dataset.teacherName);
-        } 
-        
-        else if (target.classList.contains(&#39;sort-btn&#39;)) {
-            const sortMode = target.dataset.sortMode;
+        } else if (target.classList.contains(&#39;sort-btn&#39;)) {
+            const { sortMode } = target.dataset;
             const teacherId = parseInt(card.dataset.teacherId, 10);
-            
+            if (target.classList.contains(&#39;active&#39;)) return;
             
             card.querySelectorAll(&#39;.sort-btn&#39;).forEach(btn =&gt; btn.classList.remove(&#39;active&#39;));
             target.classList.add(&#39;active&#39;);
-            
             
             const chunkId = Math.floor(teacherId / metadata.teachers_per_chunk);
             const teacherData = loadedTeachers.get(chunkId)?.find(t =&gt; t.id === teacherId);
             
             if (teacherData) {
-                
-                const commentListDiv = card.querySelector(&#39;.comment-list&#39;);
-                commentListDiv.innerHTML = renderComments(teacherData, sortMode);
-                
-                
-                const contentDiv = target.closest(&#39;.content&#39;);
-                if(contentDiv &amp;&amp; contentDiv.style.maxHeight) {
-                    contentDiv.style.maxHeight = contentDiv.scrollHeight + &#34;px&#34;;
-                }
+                const list = card.querySelector(&#39;.comment-list&#39;);
+                list.innerHTML = renderComments(teacherData, sortMode);
+                const contentDiv = list.closest(&#39;.content&#39;);
+                if (contentDiv.style.maxHeight) contentDiv.style.maxHeight = contentDiv.scrollHeight + &#34;px&#34;;
             }
         }
     });
-    
     
     const debouncedSearch = debounce(searchTeachers, 300);
     searchInput.addEventListener(&#39;input&#39;, debouncedSearch);
     departmentSelect.addEventListener(&#39;change&#39;, searchTeachers);
     
-    
     window.addEventListener(&#39;scroll&#39;, () =&gt; {
-        if (window.scrollY &gt; 300) {
-            backToTopButton.classList.add(&#39;visible&#39;);
-            backToTopButton.classList.remove(&#39;hidden&#39;);
-        } else {
-            backToTopButton.classList.remove(&#39;visible&#39;);
-        }
+        backToTopButton.classList.toggle(&#39;visible&#39;, window.scrollY &gt; 300);
+        backToTopButton.classList.toggle(&#39;hidden&#39;, window.scrollY &lt;= 300);
     });
     
-    
-    document.addEventListener(&#39;keydown&#39;, (e) =&gt; {
-        if (e.key === &#39;Escape&#39;) {
-            closeModal();
-        }
-    });
-    
+    document.addEventListener(&#39;keydown&#39;, e =&gt; e.key === &#39;Escape&#39; &amp;&amp; closeModal());
     
     loadInitialData();
 })();
