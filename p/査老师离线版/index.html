@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="终于完成了査老师的制作，我的博客也是有用起来了。点击即可查看。\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="终于完成了査老师的制作，我的博客也是有用起来了。点击即可查看。\najax测试： 所有学院 请输入教师姓名、拼音或选择学院以开始查询。\n">
 <title>査老师（离线版）</title>
 
 <link rel='canonical' href='https://smallfireworks.github.io/p/%E6%9F%BB%E8%80%81%E5%B8%88%E7%A6%BB%E7%BA%BF%E7%89%88/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="査老师（离线版）">
-<meta property='og:description' content="终于完成了査老师的制作，我的博客也是有用起来了。点击即可查看。\n">
+<meta property='og:description' content="终于完成了査老师的制作，我的博客也是有用起来了。点击即可查看。\najax测试： 所有学院 请输入教师姓名、拼音或选择学院以开始查询。\n">
 <meta property='og:url' content='https://smallfireworks.github.io/p/%E6%9F%BB%E8%80%81%E5%B8%88%E7%A6%BB%E7%BA%BF%E7%89%88/'>
 <meta property='og:site_name' content='Small_fireworks的小站'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='査老师' /><meta property='article:published_time' content='2025-07-30T21:38:00&#43;08:00'/><meta property='article:modified_time' content='2025-07-30T21:38:00&#43;08:00'/>
 <meta name="twitter:title" content="査老师（离线版）">
-<meta name="twitter:description" content="终于完成了査老师的制作，我的博客也是有用起来了。点击即可查看。\n">
+<meta name="twitter:description" content="终于完成了査老师的制作，我的博客也是有用起来了。点击即可查看。\najax测试： 所有学院 请输入教师姓名、拼音或选择学院以开始查询。\n">
     </head>
     <body class="
     article-page
@@ -309,7 +309,832 @@
     <section class="article-content">
     
     
-    <p>终于完成了<a class="link" href="/%e6%9f%bb%e8%80%81%e5%b8%88%28%e7%a6%bb%e7%ba%bf%e7%89%88%29.html" >査老师</a>的制作，我的博客也是有用起来了。点击即可查看。</p>
+    <p>终于完成了<a class="link" href="/%e6%9f%bb%e8%80%81%e5%b8%88%28%e7%a6%bb%e7%ba%bf%e7%89%88%29.html" >査老师</a>的制作，我的博客也是有用起来了。点击即可查看。<br>
+ajax测试：
+<div id="teacher-search-app">
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="按姓名 / 拼音 / 首字母搜索..." aria-label="搜索教师">
+        <select id="departmentSelect" aria-label="选择学院">
+            <option value="">所有学院</option>
+        </select>
+    </div>
+    
+    <div id="teacher-list" aria-live="polite">
+        <p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p>
+    </div>
+    
+    <div id="loading-indicator" class="hidden">
+        <div class="spinner"></div>
+        <span>加载中...</span>
+    </div>
+</div>
+
+<div id="modal-container" class="modal-hidden"></div>
+<button id="back-to-top" class="hidden">▲</button>
+
+<style>
+
+    #teacher-search-app {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .search-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 25px;
+    }
+    
+    #searchInput, #departmentSelect {
+        padding: 12px 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    
+    #searchInput:focus, #departmentSelect:focus {
+        outline: none;
+        border-color: #0056b3;
+        box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+    }
+    
+    #searchInput {
+        flex: 2 1 300px;
+    }
+    
+    #departmentSelect {
+        flex: 1 1 200px;
+    }
+    
+    .teacher-card {
+        background: #fff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        transition: box-shadow 0.3s ease;
+    }
+    
+    .teacher-card:hover {
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    
+    .teacher-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .teacher-name {
+        font-size: 22px;
+        font-weight: 600;
+        color: #0056b3;
+    }
+    
+    .teacher-dept {
+        font-size: 14px;
+        color: #666;
+        background-color: #e9ecef;
+        padding: 4px 10px;
+        border-radius: 12px;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    .teacher-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        font-size: 14px;
+        color: #555;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #f0f0f0;
+        margin-bottom: 10px;
+    }
+    
+    .collapsible {
+        background-color: #f8f9fa;
+        color: #444;
+        cursor: pointer;
+        padding: 12px 15px;
+        width: 100%;
+        border: 1px solid #e0e0e0;
+        text-align: left;
+        outline: none;
+        font-size: 16px;
+        margin-top: 10px;
+        border-radius: 5px;
+        font-weight: bold;
+        transition: background-color 0.2s;
+    }
+    
+    .collapsible:hover {
+        background-color: #e9ecef;
+    }
+    
+    .collapsible:after {
+        content: '\25BC';
+        float: right;
+        transition: transform 0.2s;
+    }
+    
+    .collapsible.active:after {
+        transform: rotate(180deg);
+    }
+    
+    .content {
+        padding: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+        background-color: white;
+        border-left: 1px solid #e0e0e0;
+        border-right: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+    }
+    
+    .content-inner {
+        padding: 1px 18px;
+    }
+    
+    .collapsible.active + .content {
+        padding: 10px 0 0 0;
+    }
+    
+    .gpa-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 5px 0 15px 0;
+    }
+    
+    .gpa-table th, .gpa-table td {
+        text-align: left;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .gpa-table th {
+        background-color: #f2f2f2;
+    }
+    
+    .gpa-table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    
+    .course-link {
+        color: #0056b3;
+        text-decoration: none;
+        border-bottom: 1px dotted #0056b3;
+        cursor: pointer;
+    }
+    
+    .course-link:hover {
+        color: #003d82;
+    }
+    
+    .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 18px 5px 18px;
+    }
+    
+    .comment-header h3 {
+        margin: 0;
+        font-size: 1em;
+        color: #666;
+        font-weight: normal;
+    }
+    
+    .sort-btn {
+        background: none;
+        border: none;
+        padding: 5px 8px;
+        cursor: pointer;
+        color: #888;
+        font-size: 0.9em;
+        border-radius: 4px;
+    }
+    
+    .sort-btn.active {
+        font-weight: bold;
+        color: #0056b3;
+        background-color: #e0eaf6;
+    }
+    
+    .comment-list {
+        padding: 0 18px;
+    }
+    
+    .comment {
+        border-top: 1px solid #eee;
+        padding: 12px 0;
+        font-size: 14px;
+    }
+    
+    .comment:first-child {
+        border-top: none;
+    }
+    
+    .comment > div:first-child {
+        margin: 0 0 8px 0;
+        line-height: 1.6;
+        word-wrap: break-word;
+    }
+    
+    .comment-meta {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        color: #888;
+        flex-wrap: wrap;
+    }
+    
+    .comment-likes {
+        font-weight: bold;
+        white-space: nowrap;
+    }
+    
+    .like {
+        color: #28a745;
+    }
+    
+    .dislike {
+        color: #dc3545;
+    }
+    
+    .initial-message, .info-message, .no-data-message {
+        text-align: center;
+        color: #666;
+        padding: 20px;
+        font-size: 16px;
+    }
+    
+    #loading-indicator {
+        text-align: center;
+        padding: 20px;
+        color: #666;
+    }
+    
+    #loading-indicator.hidden {
+        display: none;
+    }
+    
+    .spinner {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(0,86,179,0.3);
+        border-radius: 50%;
+        border-top-color: #0056b3;
+        animation: spin 1s ease-in-out infinite;
+        margin-right: 10px;
+        vertical-align: middle;
+    }
+    
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+    
+     
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 1000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+    
+    .modal-overlay.visible {
+        opacity: 1;
+    }
+    
+    .modal-content {
+        background: white;
+        padding: 20px 30px;
+        border-radius: 8px;
+        max-width: 600px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+        position: relative;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        transform: scale(0.95);
+        transition: transform 0.3s ease;
+    }
+    
+    .modal-overlay.visible .modal-content {
+        transform: scale(1);
+    }
+    
+    .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #e0e0e0;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .modal-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #0056b3;
+    }
+    
+    .modal-close {
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #888;
+        border: none;
+        background: none;
+    }
+    
+    .modal-close:hover {
+        color: #000;
+    }
+    
+    .modal-hidden {
+        display: none;
+    }
+    
+    .highlight-row {
+        background-color: #fff3cd !important;
+        font-weight: bold;
+    }
+    
+    #back-to-top {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+        cursor: pointer;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        opacity: 0;
+        transition: opacity 0.3s, transform 0.3s;
+        transform: translateY(100px);
+        z-index: 999;
+    }
+    
+    #back-to-top.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    #back-to-top.hidden {
+        display: none;
+    }
+    
+    body.modal-open {
+        overflow: hidden;
+    }
+    
+    @media (max-width: 768px) {
+        .teacher-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        
+        .modal-content {
+            padding: 15px;
+        }
+    }
+
+</style>
+
+<script>
+
+(function() {
+    
+    const DATA_BASE_URL = '/teachers/data/';  
+    const DISPLAY_LIMIT = 50;
+    
+    
+    let indexData = null;
+    let metadata = null;
+    let courseData = null;
+    let loadedTeachers = new Map();  
+    let currentSearchResults = [];
+    
+    
+    const searchInput = document.getElementById('searchInput');
+    const departmentSelect = document.getElementById('departmentSelect');
+    const teacherList = document.getElementById('teacher-list');
+    const modalContainer = document.getElementById('modal-container');
+    const backToTopButton = document.getElementById('back-to-top');
+    const loadingIndicator = document.getElementById('loading-indicator');
+    
+    
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            const context = this;
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(context, args), wait);
+        };
+    }
+    
+    function escapeHtml(text) {
+        if (text === null || typeof text === 'undefined') return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+    
+    function processCommentContent(text) {
+        if (!text) return '';
+        let escaped = escapeHtml(text);
+        while (escaped.includes('\\n\\n')) {
+            escaped = escaped.replace('\\n\\n', '<br>');
+        }
+        return escaped;
+    }
+    
+    function formatGpa(gpa, std_dev) {
+        const num_gpa = parseFloat(gpa);
+        const num_std = parseFloat(std_dev);
+        if (isNaN(num_gpa)) return gpa;
+        if (isNaN(num_std) || num_std === 0) return num_gpa.toFixed(2);
+        return `${num_gpa.toFixed(2)} ± ${num_std.toFixed(2)}`;
+    }
+    
+    
+    async function loadInitialData() {
+        try {
+            
+            const [indexResponse, metadataResponse] = await Promise.all([
+                fetch(DATA_BASE_URL + 'index.json'),
+                fetch(DATA_BASE_URL + 'metadata.json')
+            ]);
+            
+            if (!indexResponse.ok || !metadataResponse.ok) {
+                throw new Error('Failed to load initial data');
+            }
+            
+            indexData = await indexResponse.json();
+            metadata = await metadataResponse.json();
+            
+            
+            metadata.departments.forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept;
+                option.textContent = dept;
+                departmentSelect.appendChild(option);
+            });
+            
+        } catch (error) {
+            console.error('Error loading initial data:', error);
+            teacherList.innerHTML = '<p class="info-message">数据加载失败，请刷新页面重试。</p>';
+        }
+    }
+    
+    async function loadTeacherChunk(chunkId) {
+        if (loadedTeachers.has(chunkId)) {
+            return loadedTeachers.get(chunkId);
+        }
+        
+        try {
+            const response = await fetch(DATA_BASE_URL + `teachers_${chunkId}.json`);
+            if (!response.ok) throw new Error('Failed to load teacher chunk');
+            
+            const data = await response.json();
+            loadedTeachers.set(chunkId, data);
+            return data;
+        } catch (error) {
+            console.error(`Error loading teacher chunk ${chunkId}:`, error);
+            return [];
+        }
+    }
+    
+    async function loadCourseData() {
+        if (courseData) return courseData;
+        
+        try {
+            const response = await fetch(DATA_BASE_URL + 'courses.json');
+            if (!response.ok) throw new Error('Failed to load course data');
+            
+            courseData = await response.json();
+            return courseData;
+        } catch (error) {
+            console.error('Error loading course data:', error);
+            return {};
+        }
+    }
+    
+    
+    async function searchTeachers() {
+        const searchTerm = searchInput.value.toLowerCase().trim();
+        const selectedDept = departmentSelect.value;
+        
+        if (!indexData) return;
+        
+        if (searchTerm === '' && selectedDept === '') {
+            teacherList.innerHTML = '<p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p>';
+            currentSearchResults = [];
+            return;
+        }
+        
+        
+        loadingIndicator.classList.remove('hidden');
+        teacherList.innerHTML = '';
+        
+        
+        const matchedTeachers = indexData.filter(teacher => {
+            const nameMatch = teacher.name && teacher.name.toLowerCase().includes(searchTerm);
+            const pinyinMatch = teacher.pinyin && teacher.pinyin.toLowerCase().includes(searchTerm);
+            const pinyinAbbrMatch = teacher.pinyin_abbr && teacher.pinyin_abbr.toLowerCase().includes(searchTerm);
+            const termMatch = searchTerm === '' || nameMatch || pinyinMatch || pinyinAbbrMatch;
+            const deptMatch = !selectedDept || teacher.dept === selectedDept;
+            return termMatch && deptMatch;
+        });
+        
+        currentSearchResults = matchedTeachers;
+        
+        if (matchedTeachers.length === 0) {
+            loadingIndicator.classList.add('hidden');
+            teacherList.innerHTML = '<p class="info-message">没有找到符合条件的老师。</p>';
+            return;
+        }
+        
+        
+        await renderTeachers(matchedTeachers.slice(0, DISPLAY_LIMIT));
+        
+        if (matchedTeachers.length > DISPLAY_LIMIT) {
+            const infoMsg = document.createElement('p');
+            infoMsg.className = 'info-message';
+            infoMsg.textContent = `结果过多，仅显示前 ${DISPLAY_LIMIT} 条记录（共 ${matchedTeachers.length} 条）。请优化您的搜索条件。`;
+            teacherList.appendChild(infoMsg);
+        }
+        
+        loadingIndicator.classList.add('hidden');
+    }
+    
+    async function renderTeachers(teachers) {
+        
+        const chunksToLoad = new Set();
+        teachers.forEach(teacher => {
+            const chunkId = Math.floor(teacher.id / metadata.teachers_per_chunk);
+            chunksToLoad.add(chunkId);
+        });
+        
+        
+        const chunkPromises = Array.from(chunksToLoad).map(chunkId => loadTeacherChunk(chunkId));
+        await Promise.all(chunkPromises);
+        
+        
+        teachers.forEach(teacherIndex => {
+            const chunkId = Math.floor(teacherIndex.id / metadata.teachers_per_chunk);
+            const teacherData = loadedTeachers.get(chunkId)?.find(t => t.id === teacherIndex.id);
+            
+            if (teacherData) {
+                renderTeacherCard(teacherData);
+            }
+        });
+    }
+    
+    function renderTeacherCard(teacher) {
+        const card = document.createElement('div');
+        card.className = 'teacher-card';
+        card.dataset.teacherId = teacher.id;
+        
+        const hasGpa = teacher.gpa_info && teacher.gpa_info.length > 0;
+        const hasComments = teacher.comments && teacher.comments.length > 0;
+        
+        const gpaInfoHtml = hasGpa ? `
+            <button type="button" class="collapsible">课程GPA信息 (${teacher.gpa_info.length})</button>
+            <div class="content">
+                <div class="content-inner">
+                    <table class="gpa-table">
+                        <thead><tr><th>课程名</th><th>平均绩点±标准差</th><th>选课人数</th></tr></thead>
+                        <tbody>
+                            ${teacher.gpa_info.map(course => `
+                                <tr>
+                                    <td><a href="#" class="course-link" data-course-name="${escapeHtml(course[0])}" data-teacher-name="${escapeHtml(teacher.姓名)}">${escapeHtml(course[0])}</a></td>
+                                    <td>${formatGpa(course[1], course[3])}</td>
+                                    <td>${escapeHtml(course[2])}</td>
+                                </tr>`).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>` : '';
+        
+        const commentsHtml = hasComments ? `
+            <button type="button" class="collapsible">学生评价 (${teacher.comments.length})</button>
+            <div class="content">
+                 <div class="comment-header">
+                     <h3>${teacher.comments.length}个评论</h3>
+                     <div class="comment-sort">
+                         <button class="sort-btn active" data-sort-mode="popularity">人气评论</button>
+                         <button class="sort-btn" data-sort-mode="latest">最新评论</button>
+                     </div>
+                 </div>
+                <div class="comment-list" id="comment-list-${teacher.id}">
+                    ${renderComments(teacher, 'popularity')}
+                </div>
+            </div>` : '';
+        
+        const noDataMessage = !hasGpa && !hasComments ? '<p class="no-data-message">暂无课程GPA或学生评价数据</p>' : '';
+        
+        card.innerHTML = `
+            <div class="teacher-header">
+                <span class="teacher-name">${escapeHtml(teacher['姓名'])}</span>
+                <span class="teacher-dept">${escapeHtml(teacher['学院'])}</span>
+            </div>
+            <div class="teacher-stats">
+                <span><b>评分:</b> ${teacher['评分'].toFixed(2)} (${teacher['评分人数']}人)</span>
+                <span><b>热度:</b> ${teacher['热度']}</span>
+            </div>
+            ${gpaInfoHtml}
+            ${commentsHtml}
+            ${noDataMessage}`;
+        
+        teacherList.appendChild(card);
+    }
+    
+    function renderComments(teacher, sortMode = 'popularity') {
+        if (!teacher.comments || teacher.comments.length === 0) return '';
+        
+        const sortedComments = [...teacher.comments].sort((a, b) => {
+            if (sortMode === 'latest') {
+                try { return new Date(b['发表时间']) - new Date(a['发表时间']); } catch (e) { return 0; }
+            }
+            return (b['点赞减去点踩数量'] || 0) - (a['点赞减去点踩数量'] || 0);
+        });
+        
+        return sortedComments.map(comment => {
+            const content = processCommentContent(comment['内容']);
+            return `
+                <div class="comment">
+                    <div>${content}</div>
+                    <div class="comment-meta">
+                        <span>发布于 ${escapeHtml(comment['发表时间'])}</span>
+                        <span class="comment-likes">
+                            <span class="like">👍 ${comment['点赞量'] || 0}</span> | 
+                            <span class="dislike">👎 ${comment['点踩量'] || 0}</span>
+                        </span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
+    
+    async function showCourseModal(courseName, currentTeacherName) {
+        const courses = await loadCourseData();
+        const courseInfo = courses[courseName];
+        if (!courseInfo) return;
+        
+        courseInfo.sort((a, b) => parseFloat(b.avg_gpa) - parseFloat(a.avg_gpa));
+        
+        const tableRows = courseInfo.map(teacher => `
+            <tr class="${teacher.teacher === currentTeacherName ? 'highlight-row' : ''}">
+                <td>${escapeHtml(teacher.teacher)}</td>
+                <td>${formatGpa(teacher.avg_gpa, teacher.std_dev)}</td>
+                <td>${escapeHtml(teacher.count)}</td>
+            </tr>`).join('');
+        
+        modalContainer.innerHTML = `
+            <div class="modal-overlay">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">${escapeHtml(courseName)}</h2>
+                        <button class="modal-close">×</button>
+                    </div>
+                    <table class="gpa-table">
+                        <thead><tr><th>老师姓名</th><th>平均绩点±标准差</th><th>人数</th></tr></thead>
+                        <tbody>${tableRows}</tbody>
+                    </table>
+                </div>
+            </div>`;
+        
+        modalContainer.classList.remove('modal-hidden');
+        setTimeout(() => {
+            modalContainer.querySelector('.modal-overlay').classList.add('visible');
+            document.body.classList.add('modal-open');
+        }, 10);
+    }
+    
+    function closeModal() {
+        const overlay = modalContainer.querySelector('.modal-overlay');
+        if (overlay) {
+            overlay.classList.remove('visible');
+            document.body.classList.remove('modal-open');
+            setTimeout(() => modalContainer.classList.add('modal-hidden'), 300);
+        }
+    }
+    
+    
+    document.body.addEventListener('click', async (e) => {
+        const target = e.target;
+        
+        
+        if (target === backToTopButton) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+        }
+        
+        
+        if (target.classList.contains('modal-overlay') || target.classList.contains('modal-close')) {
+            closeModal();
+            return;
+        }
+        
+        
+        const card = target.closest('.teacher-card');
+        if (!card) return;
+        
+        
+        if (target.classList.contains('collapsible')) {
+            target.classList.toggle('active');
+            const content = target.nextElementSibling;
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+            } else {
+                content.style.maxHeight = content.scrollHeight + "px";
+            }
+        } 
+        
+        else if (target.classList.contains('course-link')) {
+            e.preventDefault();
+            await showCourseModal(target.dataset.courseName, target.dataset.teacherName);
+        } 
+        
+        else if (target.classList.contains('sort-btn')) {
+            const sortMode = target.dataset.sortMode;
+            const teacherId = parseInt(card.dataset.teacherId, 10);
+            
+            
+            card.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+            target.classList.add('active');
+            
+            
+            const chunkId = Math.floor(teacherId / metadata.teachers_per_chunk);
+            const teacherData = loadedTeachers.get(chunkId)?.find(t => t.id === teacherId);
+            
+            if (teacherData) {
+                
+                const commentListDiv = card.querySelector('.comment-list');
+                commentListDiv.innerHTML = renderComments(teacherData, sortMode);
+                
+                
+                const contentDiv = target.closest('.content');
+                if(contentDiv && contentDiv.style.maxHeight) {
+                    contentDiv.style.maxHeight = contentDiv.scrollHeight + "px";
+                }
+            }
+        }
+    });
+    
+    
+    const debouncedSearch = debounce(searchTeachers, 300);
+    searchInput.addEventListener('input', debouncedSearch);
+    departmentSelect.addEventListener('change', searchTeachers);
+    
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add('visible');
+            backToTopButton.classList.remove('hidden');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+    
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeModal();
+        }
+    });
+    
+    
+    loadInitialData();
+})();
+
+</script>
+</p>
 
 </section>
 
