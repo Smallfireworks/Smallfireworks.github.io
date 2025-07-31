@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>数论 on Small_fireworks的小站</title>
+        <link>https://smallfireworks.github.io/tags/%E6%95%B0%E8%AE%BA/</link>
+        <description>Recent content in 数论 on Small_fireworks的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Small_fireworks</copyright>
+        <lastBuildDate>Mon, 30 Jun 2025 22:10:41 +0800</lastBuildDate><atom:link href="https://smallfireworks.github.io/tags/%E6%95%B0%E8%AE%BA/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>初来乍到</title>
+        <link>https://smallfireworks.github.io/p/%E5%88%9D%E6%9D%A5%E4%B9%8D%E5%88%B0/</link>
+        <pubDate>Mon, 30 Jun 2025 22:10:41 +0800</pubDate>
+        
+        <guid>https://smallfireworks.github.io/p/%E5%88%9D%E6%9D%A5%E4%B9%8D%E5%88%B0/</guid>
+        <description>&lt;p&gt;初来乍到，发一个高中的发现的定理。&lt;/p&gt;
+&lt;h3 id=&#34;定理&#34;&gt;定理
+&lt;/h3&gt;&lt;p&gt;设 \(p\) 为一个奇素数，\(a\) 为一个整数且 \(1 \le a &lt; p\)。记 \(N\) 为满足以下两个条件的整数 \(x\) 的数量：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;\(x\) 是模 \(p\) 的二次剩余。&lt;/li&gt;
+&lt;li&gt;\(x-a\) 也是模 \(p\) 的二次剩余。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;其中 \(x\) 的取值范围是 \(\{1, 2, \dots, p-1\}\)。&lt;/p&gt;
+&lt;p&gt;那么 \(N\) 的值可以根据 \(p\) 和 \(a\) 的性质确定：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;情况一：当 \(p \equiv 1 \pmod 4\)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若 \(a\) 是模 \(p\) 的二次剩余，则 \(N = \frac{p-5}{4}\)。&lt;/li&gt;
+&lt;li&gt;若 \(a\) 是模 \(p\) 的二次非剩余，则 \(N = \frac{p-1}{4}\)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;情况二：当 \(p \equiv 3 \pmod 4\)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;无论 \(a\) 是二次剩余还是非剩余，均有 \(N = \frac{p-3}{4}\)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;证明&#34;&gt;证明
+&lt;/h3&gt;&lt;p&gt;我们的核心工具是&lt;strong&gt;勒让德符号&lt;/strong&gt; \(\left(\frac{n}{p}\right)\)。对于 \(n \not\equiv 0 \pmod p\)，我们知道：
+&lt;/p&gt;
+\[
+\frac{1 + \left(\frac{n}{p}\right)}{2} = 
+\begin{cases} 
+1 &amp; \text{如果 } n \text{ 是二次剩余} \\
+0 &amp; \text{如果 } n \text{ 是二次非剩余}
+\end{cases}
+\]&lt;p&gt;利用这个性质，我们可以将 \(N\) 表示为一个和式。注意求和时需要排除 \(x=a\) 的情况，因为此时 \(x-a=0\)，不满足条件2。
+&lt;/p&gt;
+\[ N = \sum_{\substack{x=1 \\ x \ne a}}^{p-1} \left( \frac{1 + \left(\frac{x}{p}\right)}{2} \right) \left( \frac{1 + \left(\frac{x-a}{p}\right)}{2} \right) \]&lt;p&gt;为了简化计算，我们先计算一个相关的和 \(S\)，其求和范围为完整的 \(\{1, 2, \dots, p-1\}\)：
+&lt;/p&gt;
+\[ S = \sum_{x=1}^{p-1} \left( \frac{1 + \left(\frac{x}{p}\right)}{2} \right) \left( \frac{1 + \left(\frac{x-a}{p}\right)}{2} \right) \]&lt;p&gt;
+展开得：
+&lt;/p&gt;
+\[ 4S = \sum_{x=1}^{p-1} \left( 1 + \left(\frac{x}{p}\right) + \left(\frac{x-a}{p}\right) + \left(\frac{x(x-a)}{p}\right) \right) \]&lt;p&gt;
+&lt;/p&gt;
+\[ 4S = \sum_{x=1}^{p-1} 1 + \sum_{x=1}^{p-1} \left(\frac{x}{p}\right) + \sum_{x=1}^{p-1} \left(\frac{x-a}{p}\right) + \sum_{x=1}^{p-1} \left(\frac{x(x-a)}{p}\right) \]&lt;p&gt;现在我们逐项计算这四个和：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;\(\sum_{x=1}^{p-1} 1 = p-1\)。&lt;/li&gt;
+&lt;li&gt;\(\sum_{x=1}^{p-1} \left(\frac{x}{p}\right) = 0\)。 (在一个完整剩余系中，二次剩余与非剩余数量相等)&lt;/li&gt;
+&lt;li&gt;\(\sum_{x=1}^{p-1} \left(\frac{x-a}{p}\right)\)。当 \(x\) 遍历 \(\{1, \dots, p-1\}\) 时，\(x-a\) 遍历 \(\{1-a, \dots, p-1-a\}\)，这个集合模 \(p\) 后恰好是 \(\{0, 1, \dots, p-1\}\) 中去掉了 \(-a\)。所以和为 \(\sum_{y=0}^{p-1}\left(\frac{y}{p}\right) - \left(\frac{-a}{p}\right) = 0 - \left(\frac{-a}{p}\right) = -\left(\frac{-a}{p}\right)\)。&lt;/li&gt;
+&lt;li&gt;\(\sum_{x=1}^{p-1} \left(\frac{x(x-a)}{p}\right) = -1\)。这是一个经典的特征和结论。其简要证明如下：
+\[ \sum_{x=1}^{p-1} \left(\frac{x(x-a)}{p}\right) = \sum_{x=1}^{p-1} \left(\frac{x^2(1-ax^{-1})}{p}\right) = \sum_{x=1}^{p-1} \left(\frac{1-ax^{-1}}{p}\right) \]
+令 \(y = x^{-1}\)，当 \(x\) 遍历 \(\{1, \dots, p-1\}\) 时，\(y\) 也遍历该集合。上式变为：
+\[ \sum_{y=1}^{p-1} \left(\frac{1-ay}{p}\right) \]
+令 \(z = 1-ay\)，\(z\) 会遍历 \(\{1, \dots, p-1\}\) 中除 \(1\) 以外的所有元素。因此和为 \(\sum_{z=1}^{p-1}\left(\frac{z}{p}\right) - \left(\frac{1}{p}\right) = 0-1 = -1\)。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;将以上结果代入 \(4S\) 的表达式：
+&lt;/p&gt;
+\[ 4S = (p-1) + 0 - \left(\frac{-a}{p}\right) + (-1) = p - 2 - \left(\frac{-a}{p}\right) \]&lt;p&gt;和 \(S\) 包含了 \(x=a\) 这一项的贡献，而我们要求的 \(N\) 并不包含。当 \(x=a\) 时，\(\left(\frac{x-a}{p}\right) = 0\)，该项对 \(S\) 的贡献是：
+&lt;/p&gt;
+\[ \left( \frac{1 + \left(\frac{a}{p}\right)}{2} \right) \left( \frac{1 + 0}{2} \right) = \frac{1 + \left(\frac{a}{p}\right)}{4} \]&lt;p&gt;
+所以，\(S = N + \frac{1 + \left(\frac{a}{p}\right)}{4}\)。由此可得 \(N\):
+&lt;/p&gt;
+\[ N = S - \frac{1 + \left(\frac{a}{p}\right)}{4} = \frac{p - 2 - \left(\frac{-a}{p}\right)}{4} - \frac{1 + \left(\frac{a}{p}\right)}{4} \]&lt;p&gt;
+&lt;/p&gt;
+\[ N = \frac{p - 3 - \left(\frac{a}{p}\right) - \left(\frac{-a}{p}\right)}{4} \]&lt;p&gt;这是 \(N\) 的通用表达式。现在我们分情况讨论：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;当 \(p \equiv 1 \pmod 4\)&lt;/strong&gt;，有 \(\left(\frac{-1}{p}\right) = 1\)，因此 \(\left(\frac{-a}{p}\right) = \left(\frac{a}{p}\right)\)。
+&lt;/p&gt;
+\[ N = \frac{p - 3 - 2\left(\frac{a}{p}\right)}{4} \]&lt;ul&gt;
+&lt;li&gt;若 \(a\) 是二次剩余，\(\left(\frac{a}{p}\right)=1\)，则 \(N = \frac{p-3-2}{4} = \frac{p-5}{4}\)。&lt;/li&gt;
+&lt;li&gt;若 \(a\) 是二次非剩余，\(\left(\frac{a}{p}\right)=-1\)，则 \(N = \frac{p-3+2}{4} = \frac{p-1}{4}\)。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;当 \(p \equiv 3 \pmod 4\)&lt;/strong&gt;，有 \(\left(\frac{-1}{p}\right) = -1\)，因此 \(\left(\frac{-a}{p}\right) = -\left(\frac{a}{p}\right)\)。
+&lt;/p&gt;
+\[ N = \frac{p - 3 - \left(\frac{a}{p}\right) - (-\left(\frac{a}{p}\right))}{4} = \frac{p-3}{4} \]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;所有情况均已得到验证。证明完毕。&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

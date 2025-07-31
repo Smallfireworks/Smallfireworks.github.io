@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>浙大相关 on Small_fireworks的小站</title>
+        <link>https://smallfireworks.github.io/categories/%E6%B5%99%E5%A4%A7%E7%9B%B8%E5%85%B3/</link>
+        <description>Recent content in 浙大相关 on Small_fireworks的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Small_fireworks</copyright>
+        <lastBuildDate>Wed, 30 Jul 2025 21:38:00 +0800</lastBuildDate><atom:link href="https://smallfireworks.github.io/categories/%E6%B5%99%E5%A4%A7%E7%9B%B8%E5%85%B3/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>査老师（离线版）</title>
+        <link>https://smallfireworks.github.io/p/%E6%9F%BB%E8%80%81%E5%B8%88%E7%A6%BB%E7%BA%BF%E7%89%88/</link>
+        <pubDate>Wed, 30 Jul 2025 21:38:00 +0800</pubDate>
+        
+        <guid>https://smallfireworks.github.io/p/%E6%9F%BB%E8%80%81%E5%B8%88%E7%A6%BB%E7%BA%BF%E7%89%88/</guid>
+        <description>&lt;p&gt;终于完成了&lt;a class=&#34;link&#34; href=&#34;https://smallfireworks.github.io/%e6%9f%bb%e8%80%81%e5%b8%88%28%e7%a6%bb%e7%ba%bf%e7%89%88%29.html&#34; &gt;査老师&lt;/a&gt;的制作，我的博客也是有用起来了。点击即可查看。&lt;br&gt;
+ajax拆分后测试中：&lt;div class=&#34;teacher-query-app&#34; 
+     data-teachers-url=&#34;https://smallfireworks.github.io/data/teachers.json&#34; 
+     data-courses-url=&#34;https://smallfireworks.github.io/data/courses.json&#34;&gt;
+    
+    &lt;div class=&#34;container&#34;&gt;
+        &lt;header&gt;
+            &lt;h1&gt;教师信息查询系统&lt;/h1&gt;
+            &lt;p&gt;综合教师评分、课程GPA、学生评语等多维度信息&lt;/p&gt;
+        &lt;/header&gt;
+        &lt;div class=&#34;search-container&#34;&gt;
+            &lt;input type=&#34;text&#34; id=&#34;searchInput&#34; placeholder=&#34;正在加载数据...&#34; aria-label=&#34;搜索教师&#34; disabled&gt;
+            &lt;select id=&#34;departmentSelect&#34; aria-label=&#34;选择学院&#34; disabled&gt;
+                &lt;option value=&#34;&#34;&gt;所有学院&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        &lt;div id=&#34;teacher-list&#34; aria-live=&#34;polite&#34;&gt;
+            &lt;p class=&#34;initial-message&#34;&gt;正在从服务器加载数据，请稍候... &lt;span class=&#34;loading&#34;&gt;&lt;/span&gt;&lt;/p&gt;
+        &lt;/div&gt;
+        &lt;footer&gt;
+            &lt;p&gt;© 2025 by Small fireworks. For offline backup and reference only.&lt;/p&gt;
+            &lt;p&gt;注：评分及热度指标来源于原始数据文件，仅供参考。&lt;/p&gt;
+        &lt;/footer&gt;
+    &lt;/div&gt;
+    &lt;div id=&#34;modal-container&#34; class=&#34;modal-hidden&#34;&gt;&lt;/div&gt;
+    &lt;button id=&#34;back-to-top&#34; class=&#34;hidden&#34;&gt;▲&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+    .teacher-query-app :root{--primary-color:#0056b3;--light-gray:#f4f7f6;--border-color:#e0e0e0;--card-bg:#ffffff;--text-color:#333;--text-muted:#666;--like-color:#28a745;--dislike-color:#dc3545}body.modal-open{overflow:hidden}.teacher-query-app .container{max-width:900px;margin:0 auto;background:var(--card-bg);padding:20px 30px;border-radius:8px;box-shadow:0 4px 15px rgba(0,0,0,.08)}.teacher-query-app header{text-align:center;border-bottom:1px solid var(--border-color);padding-bottom:20px;margin-bottom:20px}.teacher-query-app header h1{color:var(--primary-color);margin:0;font-size:28px}.teacher-query-app .search-container{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:25px}.teacher-query-app #searchInput,.teacher-query-app #departmentSelect{padding:12px 15px;border-radius:6px;border:1px solid #ccc;font-size:16px;transition:border-color .2s,box-shadow .2s;color:#333;background:#fff}.teacher-query-app #searchInput:focus,.teacher-query-app #departmentSelect:focus{outline:none;border-color:var(--primary-color);box-shadow:0 0 0 2px rgba(0,86,179,.2)}.teacher-query-app #searchInput{flex:2 1 300px}.teacher-query-app #departmentSelect{flex:1 1 200px}.teacher-query-app .teacher-card{background:var(--card-bg);border:1px solid var(--border-color);border-radius:8px;padding:15px 20px;margin-bottom:15px;transition:box-shadow .3s ease}.teacher-query-app .teacher-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1)}.teacher-query-app .teacher-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:10px}.teacher-query-app .teacher-name{font-size:22px;font-weight:600;color:var(--primary-color)}.teacher-query-app .teacher-dept{font-size:14px;color:var(--text-muted);background-color:#e9ecef;padding:4px 10px;border-radius:12px;white-space:nowrap;flex-shrink:0}.teacher-query-app .teacher-stats{display:flex;flex-wrap:wrap;gap:20px;font-size:14px;color:#555;padding-bottom:10px;border-bottom:1px solid #f0f0f0;margin-bottom:10px}.teacher-query-app .collapsible{background-color:#f8f9fa;color:#444;cursor:pointer;padding:12px 15px;width:100%;border:1px solid var(--border-color);text-align:left;outline:none;font-size:16px;margin-top:10px;border-radius:5px;font-weight:700;transition:background-color .2s}.teacher-query-app .collapsible:hover{background-color:#e9ecef}.teacher-query-app .collapsible:after{content:&#39;\25BC&#39;;float:right;transition:transform .2s}.teacher-query-app .collapsible.active:after{transform:rotate(180deg)}.teacher-query-app .content{padding:0;max-height:0;overflow:hidden;transition:max-height .3s ease-out,padding .3s ease-out;background-color:#fff;border-left:1px solid var(--border-color);border-right:1px solid var(--border-color);border-bottom:1px solid var(--border-color);border-bottom-left-radius:5px;border-bottom-right-radius:5px}.teacher-query-app .content-inner{padding:1px 18px}.teacher-query-app .collapsible.active+.content{padding:10px 0 0}.teacher-query-app .gpa-table{width:100%;border-collapse:collapse;margin:5px 0 15px}.teacher-query-app .gpa-table th,.teacher-query-app .gpa-table td{text-align:left;padding:10px;border-bottom:1px solid #ddd}.teacher-query-app .gpa-table th{background-color:#f2f2f2}.teacher-query-app .gpa-table tr:nth-child(even){background-color:#f9f9f9}.teacher-query-app .course-link{color:var(--primary-color);text-decoration:none;border-bottom:1px dotted var(--primary-color);cursor:pointer}.teacher-query-app .course-link:hover{color:#003d82}.teacher-query-app .comment-header{display:flex;justify-content:space-between;align-items:center;padding:10px 18px 5px}.teacher-query-app .comment-header h3{margin:0;font-size:1em;color:var(--text-muted);font-weight:400}.teacher-query-app .sort-btn{background:none;border:none;padding:5px 8px;cursor:pointer;color:#888;font-size:.9em;border-radius:4px}.teacher-query-app .sort-btn.active{font-weight:700;color:var(--primary-color);background-color:#e0eaf6}.teacher-query-app .comment-list{padding:0 18px}.teacher-query-app .comment{border-top:1px solid #eee;padding:12px 0;font-size:14px}.teacher-query-app .comment:first-child{border-top:none}.teacher-query-app .comment&gt;div:first-child{margin:0 0 8px;line-height:1.6;word-wrap:break-word}.teacher-query-app .comment-meta{display:flex;justify-content:space-between;font-size:12px;color:#888;flex-wrap:wrap}.teacher-query-app .comment-likes{font-weight:700;white-space:nowrap}.teacher-query-app .like{color:var(--like-color)}.teacher-query-app .dislike{color:var(--dislike-color)}.teacher-query-app .initial-message,.teacher-query-app .info-message,.teacher-query-app .no-data-message{text-align:center;color:#666;padding:20px;font-size:16px}.teacher-query-app footer{text-align:center;margin-top:20px;font-size:12px;color:#aaa}.teacher-query-app .modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:1000;display:flex;justify-content:center;align-items:center;opacity:0;transition:opacity .3s ease}.teacher-query-app .modal-overlay.visible{opacity:1}.teacher-query-app .modal-content{background:#fff;padding:20px 30px;border-radius:8px;max-width:600px;width:90%;max-height:80vh;overflow-y:auto;position:relative;box-shadow:0 5px 20px rgba(0,0,0,.2);transform:scale(.95);transition:transform .3s ease}.teacher-query-app .modal-overlay.visible .modal-content{transform:scale(1)}.teacher-query-app .modal-header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border-color);padding-bottom:10px;margin-bottom:15px}.teacher-query-app .modal-title{font-size:20px;font-weight:600;color:var(--primary-color)}.teacher-query-app .modal-close{font-size:28px;font-weight:700;cursor:pointer;color:#888;border:none;background:none}.teacher-query-app .modal-close:hover{color:#000}.teacher-query-app .modal-hidden{display:none}.teacher-query-app .highlight-row{background-color:#fff3cd!important;font-weight:700}.teacher-query-app #back-to-top{position:fixed;bottom:20px;right:20px;background-color:var(--primary-color);color:#fff;border:none;border-radius:50%;width:40px;height:40px;font-size:20px;cursor:pointer;box-shadow:0 2px 5px rgba(0,0,0,.3);opacity:0;transition:opacity .3s,transform .3s;transform:translateY(100px)}.teacher-query-app #back-to-top.visible{opacity:1;transform:translateY(0)}.teacher-query-app .loading{display:inline-block;width:20px;height:20px;border:3px solid rgba(0,86,179,.3);border-radius:50%;border-top-color:var(--primary-color);animation:spin 1s ease-in-out infinite;margin-left:10px;vertical-align:middle}@keyframes spin{to{transform:rotate(360deg)}}
+&lt;/style&gt;&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
