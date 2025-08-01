@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh-cn" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="终于完成了査老师的制作，我的博客也是有用起来了。点击即可查看。\najax测试： 请输入教师姓名、拼音或选择学院以开始查询。\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="完成了査老师（离线版）的制作，我的博客也是有用起来了。html版査老师，点击即可查看，但加载缓慢，不建议使用，可以直接使用下面的。\n请输入教师姓名、拼音或选择学院以开始查询。\n">
 <title>査老师（离线版）</title>
 
 <link rel='canonical' href='https://smallfireworks.github.io/p/%E6%9F%BB%E8%80%81%E5%B8%88%E7%A6%BB%E7%BA%BF%E7%89%88/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="査老师（离线版）">
-<meta property='og:description' content="终于完成了査老师的制作，我的博客也是有用起来了。点击即可查看。\najax测试： 请输入教师姓名、拼音或选择学院以开始查询。\n">
+<meta property='og:description' content="完成了査老师（离线版）的制作，我的博客也是有用起来了。html版査老师，点击即可查看，但加载缓慢，不建议使用，可以直接使用下面的。\n请输入教师姓名、拼音或选择学院以开始查询。\n">
 <meta property='og:url' content='https://smallfireworks.github.io/p/%E6%9F%BB%E8%80%81%E5%B8%88%E7%A6%BB%E7%BA%BF%E7%89%88/'>
 <meta property='og:site_name' content='Small_fireworks的小站'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='査老师' /><meta property='article:published_time' content='2025-07-30T21:38:00&#43;08:00'/><meta property='article:modified_time' content='2025-07-30T21:38:00&#43;08:00'/>
 <meta name="twitter:title" content="査老师（离线版）">
-<meta name="twitter:description" content="终于完成了査老师的制作，我的博客也是有用起来了。点击即可查看。\najax测试： 请输入教师姓名、拼音或选择学院以开始查询。\n">
+<meta name="twitter:description" content="完成了査老师（离线版）的制作，我的博客也是有用起来了。html版査老师，点击即可查看，但加载缓慢，不建议使用，可以直接使用下面的。\n请输入教师姓名、拼音或选择学院以开始查询。\n">
     </head>
     <body class="
     article-page
@@ -309,205 +309,28 @@
     <section class="article-content">
     
     
-    <p>终于完成了<a class="link" href="/%e6%9f%bb%e8%80%81%e5%b8%88%28%e7%a6%bb%e7%ba%bf%e7%89%88%29.html" >査老师</a>的制作，我的博客也是有用起来了。点击即可查看。<br>
-ajax测试：
+    <p>完成了査老师（离线版）的制作，我的博客也是有用起来了。<a class="link" href="/%e6%9f%bb%e8%80%81%e5%b8%88%28%e7%a6%bb%e7%ba%bf%e7%89%88%29.html" >html版査老师</a>，点击即可查看，但加载缓慢，不建议使用，可以直接使用下面的。<br>
+
 <div id="teacher-search-app">
     <div class="search-container">
         <input type="text" id="searchInput" placeholder="按姓名 / 拼音 / 首字母搜索..." aria-label="搜索教师">
-        <input type="text" id="departmentInput" list="departmentList" placeholder="按学院筛选..." aria-label="筛选学院">
-        <datalist id="departmentList"></datalist>
+        <div class="dept-dropdown-container">
+            <input type="text" id="departmentInput" placeholder="按学院筛选..." aria-label="筛选学院" autocomplete="off">
+            <div id="departmentDropdown" class="dept-dropdown hidden" role="listbox"></div>
+        </div>
     </div>
-    <div id="teacher-list" aria-live="polite"><p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p></div>
-    <div id="loading-indicator" class="hidden"><div class="spinner"></div><span>加载中...</span></div>
+    <div id="teacher-list" aria-live="polite" role="region">
+        <p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p>
+    </div>
+    <footer class="page-footer">
+        <p>© 2025 by Small fireworks. For offline backup and reference only.</p>
+        <p>注：评分及热度指标来源于原始数据文件，仅供参考。</p>
+    </footer>
 </div>
 <div id="modal-container" class="modal-hidden"></div>
-<button id="back-to-top" class="hidden" title="返回顶部">▲</button>
-<style>
-    :root { --primary-color: #0056b3; --border-color: #ccc; --card-border-color: #e0e0e0; --bg-light: #f8f9fa; }
-    #teacher-search-app { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
-    .search-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
-    #searchInput, #departmentInput { padding: 12px 15px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 16px; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box; }
-    #searchInput:focus, #departmentInput:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2); }
-    #searchInput { flex: 2 1 300px; } #departmentInput { flex: 1 1 200px; }
-    .teacher-card { background: #fff; border: 1px solid var(--card-border-color); border-radius: 8px; padding: 15px 20px; margin-bottom: 15px; transition: box-shadow 0.3s ease; }
-    .teacher-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .teacher-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
-    .teacher-name { font-size: 22px; font-weight: 600; color: var(--primary-color); }
-    .teacher-dept { font-size: 14px; color: #666; background-color: #e9ecef; padding: 4px 10px; border-radius: 12px; }
-    .teacher-stats { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; color: #555; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; margin-bottom: 10px; }
-    .collapsible { background-color: var(--bg-light); color: #444; cursor: pointer; padding: 12px 15px; width: 100%; border: 1px solid var(--card-border-color); text-align: left; font-size: 16px; margin-top: 10px; border-radius: 5px; font-weight: bold; transition: background-color .2s; position: relative; }
-    .collapsible:after { content: '▼'; position: absolute; right: 15px; transition: transform .2s; }
-    .collapsible.active:after { transform: rotate(180deg); }
-    .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background-color: white; border: 1px solid var(--card-border-color); border-top: none; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; }
-    .content-inner { padding: 10px 18px; }
-    #loading-indicator { text-align: center; padding: 20px; color: #666; } #loading-indicator.hidden { display: none; }
-    .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(0,86,179,0.3); border-radius: 50%; border-top-color: var(--primary-color); animation: spin 1s ease-in-out infinite; margin-right: 10px; vertical-align: middle; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #back-to-top { position: fixed; bottom: 25px; right: 25px; width: 40px; height: 40px; background-color: var(--primary-color); color: white; border: none; border-radius: 50%; font-size: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(100px); z-index: 999; }
-    #back-to-top.visible { opacity: 1; transform: translateY(0); }
-    </style>
-<script>
-(function() {
-    'use strict';
-    const DATA_BASE_URL = '/teachers/data/';
-    const DISPLAY_LIMIT = 50;
-    
-    let indexData = null;
-    let metadata = null;
-    let courseData = null;
-    let loadedTeachers = new Map();
-    let searchRequestCounter = 0; 
-
-    const searchInput = document.getElementById('searchInput');
-    const departmentInput = document.getElementById('departmentInput');
-    const departmentList = document.getElementById('departmentList');
-    const teacherList = document.getElementById('teacher-list');
-    const backToTopButton = document.getElementById('back-to-top');
-    const loadingIndicator = document.getElementById('loading-indicator');
-    
-    function debounce(func, wait) {
-        let timeout;
-        return function(...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => func.apply(this, args), wait);
-        };
-    }
-    
-    function escapeHtml(text) {
-        if (typeof text !== 'string' || text === '') return '';
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-    }
-    
-    async function loadInitialData() {
-        try {
-            const [indexResponse, metadataResponse] = await Promise.all([
-                fetch(DATA_BASE_URL + 'index.json'), fetch(DATA_BASE_URL + 'metadata.json')
-            ]);
-            if (!indexResponse.ok || !metadataResponse.ok) throw new Error('Failed to load initial data');
-            indexData = await indexResponse.json();
-            metadata = await metadataResponse.json();
-            if (metadata.departments) {
-                departmentList.innerHTML = metadata.departments.map(dept => `<option value="${escapeHtml(dept)}"></option>`).join('');
-            }
-        } catch (error) {
-            console.error('Error loading initial data:', error);
-            teacherList.innerHTML = '<p class="info-message">数据加载失败，请刷新页面重试。</p>';
-        }
-    }
-    
-    const searchTeachers = debounce(async () => {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        const deptTerm = departmentInput.value.toLowerCase().trim();
-        
-        searchRequestCounter++; 
-        const currentSearchId = searchRequestCounter; 
-
-        if (!indexData) return;
-        if (searchTerm === '' && deptTerm === '') {
-            teacherList.innerHTML = '<p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p>';
-            return;
-        }
-        
-        loadingIndicator.classList.remove('hidden');
-        teacherList.innerHTML = '';
-        
-        const matchedTeachers = indexData.filter(teacher => {
-            const nameMatch = (teacher.name && teacher.name.toLowerCase().includes(searchTerm)) || 
-                              (teacher.pinyin && teacher.pinyin.toLowerCase().includes(searchTerm)) || 
-                              (teacher.pinyin_abbr && teacher.pinyin_abbr.toLowerCase().includes(searchTerm));
-            const deptMatch = !deptTerm || (teacher.dept && teacher.dept.toLowerCase().includes(deptTerm));
-            return nameMatch && deptMatch;
-        });
-        
-        
-        if (currentSearchId !== searchRequestCounter) return;
-
-        if (matchedTeachers.length === 0) {
-            loadingIndicator.classList.add('hidden');
-            teacherList.innerHTML = '<p class="info-message">没有找到符合条件的老师。</p>';
-            return;
-        }
-        
-        const chunksToLoad = new Set(matchedTeachers.slice(0, DISPLAY_LIMIT).map(t => Math.floor(t.id / metadata.teachers_per_chunk)));
-        await Promise.all(Array.from(chunksToLoad).map(loadTeacherChunk));
-        
-        
-        if (currentSearchId !== searchRequestCounter) return;
-
-        let finalHtml = matchedTeachers.slice(0, DISPLAY_LIMIT)
-            .map(teacherIndex => {
-                const chunkId = Math.floor(teacherIndex.id / metadata.teachers_per_chunk);
-                const teacherData = loadedTeachers.get(chunkId)?.find(t => t.id === teacherIndex.id);
-                return teacherData ? renderTeacherCard(teacherData) : '';
-            }).join('');
-
-        if (matchedTeachers.length > DISPLAY_LIMIT) {
-            finalHtml += `<p class="info-message">结果过多，仅显示前 ${DISPLAY_LIMIT} 条（共 ${matchedTeachers.length} 条）。请优化搜索条件。</p>`;
-        }
-        
-        teacherList.innerHTML = finalHtml;
-        loadingIndicator.classList.add('hidden');
-    }, 300);
-
-    async function loadTeacherChunk(chunkId) {
-        if (loadedTeachers.has(chunkId)) return;
-        try {
-            const response = await fetch(`${DATA_BASE_URL}teachers_${chunkId}.json`);
-            if (response.ok) loadedTeachers.set(chunkId, await response.json());
-        } catch (error) { console.error(`Error loading chunk ${chunkId}:`, error); }
-    }
-    
-    function renderTeacherCard(teacher) {
-        const hasGpa = teacher.gpa_info && teacher.gpa_info.length > 0;
-        const hasComments = teacher.comments && teacher.comments.length > 0;
-        const gpaInfoHtml = hasGpa ? `<button type="button" class="collapsible">课程GPA信息 (${teacher.gpa_info.length})</button><div class="collapsible-content"><div class="content-inner">${renderGpaTable(teacher)}</div></div>` : '';
-        const commentsHtml = hasComments ? `<button type="button" class="collapsible">学生评价 (${teacher.comments.length})</button><div class="collapsible-content"><div class="content-inner">${renderCommentsSection(teacher)}</div></div>` : '';
-        return `<div class="teacher-card" data-teacher-id="${teacher.id}"><div class="teacher-header"><span class="teacher-name">${escapeHtml(teacher.姓名)}</span><span class="teacher-dept">${escapeHtml(teacher.学院)}</span></div><div class="teacher-stats"><span><b>评分:</b> ${parseFloat(teacher.评分 || 0).toFixed(2)} (${teacher.评分人数}人)</span><span><b>热度:</b> ${teacher.热度}</span></div>${gpaInfoHtml}${commentsHtml}${!hasGpa && !hasComments ? '<p class="no-data-message">暂无课程GPA或学生评价数据</p>' : ''}</div>`;
-    }
-    
-    function renderGpaTable(teacher) { return `<table class="gpa-table"><thead><tr><th>课程名</th><th>平均绩点±标差</th><th>人数</th></tr></thead><tbody>${teacher.gpa_info.map(c => `<tr><td>${escapeHtml(c[0])}</td><td>${parseFloat(c[1]||0).toFixed(2)} ± ${parseFloat(c[3]||0).toFixed(2)}</td><td>${c[2]}</td></tr>`).join('')}</tbody></table>`; }
-
-    function renderCommentsSection(teacher, sortMode = 'popularity') {
-        const sorted = [...teacher.comments].sort((a, b) => sortMode === 'latest' ? (new Date(b.发表时间) - new Date(a.发表时间)) : ((b.点赞减去点踩数量 || 0) - (a.点赞减去点踩数量 || 0)));
-        return `<div class="comment-sort"><button class="sort-btn ${sortMode==='popularity'?'active':''}" data-sort-mode="popularity">人气</button><button class="sort-btn ${sortMode==='latest'?'active':''}" data-sort-mode="latest">最新</button></div><div class="comment-list">${sorted.map(c => `<div class="comment"><div>${escapeHtml(c.内容).replace(/\\n/g, '<br>')}</div><div class="comment-meta"><span>${escapeHtml(c.发表时间)}</span><span class="comment-likes">👍 ${c.点赞量} | 👎 ${c.点踩量}</span></div></div>`).join('')}</div>`;
-    }
-
-    
-    document.getElementById('teacher-search-app').addEventListener('click', e => {
-        const target = e.target;
-        const card = target.closest('.teacher-card');
-        if (!card) return;
-
-        if (target.matches('.collapsible')) {
-            target.classList.toggle('active');
-            const content = target.nextElementSibling;
-            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + 'px';
-        } else if (target.matches('.sort-btn')) {
-            if (target.classList.contains('active')) return;
-            const teacherId = parseInt(card.dataset.teacherId, 10);
-            const chunkId = Math.floor(teacherId / metadata.teachers_per_chunk);
-            const teacherData = loadedTeachers.get(chunkId)?.find(t => t.id === teacherId);
-            if (teacherData) {
-                const commentContainer = target.closest('.content-inner');
-                commentContainer.innerHTML = renderCommentsSection(teacherData, target.dataset.sortMode);
-            }
-        }
-    });
-
-    searchInput.addEventListener('input', searchTeachers);
-    departmentInput.addEventListener('input', searchTeachers);
-
-    window.addEventListener('scroll', () => {
-        backToTopButton.classList.toggle('visible', window.scrollY > 300);
-    }, { passive: true });
-    
-    backToTopButton.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-    
-    loadInitialData();
-})();
-</script>
+<button id="back-to-top" class="hidden" aria-label="返回顶部">▲</button>
+<link rel="stylesheet" href="/teachers/assets/style.css">
+<script src="/teachers/assets/script.js" defer></script>
 </p>
 
 </section>

@@ -13,205 +13,28 @@
         <pubDate>Wed, 30 Jul 2025 21:38:00 +0800</pubDate>
         
         <guid>https://smallfireworks.github.io/p/%E6%9F%BB%E8%80%81%E5%B8%88%E7%A6%BB%E7%BA%BF%E7%89%88/</guid>
-        <description>&lt;p&gt;终于完成了&lt;a class=&#34;link&#34; href=&#34;https://smallfireworks.github.io/%e6%9f%bb%e8%80%81%e5%b8%88%28%e7%a6%bb%e7%ba%bf%e7%89%88%29.html&#34; &gt;査老师&lt;/a&gt;的制作，我的博客也是有用起来了。点击即可查看。&lt;br&gt;
-ajax测试：
+        <description>&lt;p&gt;完成了査老师（离线版）的制作，我的博客也是有用起来了。&lt;a class=&#34;link&#34; href=&#34;https://smallfireworks.github.io/%e6%9f%bb%e8%80%81%e5%b8%88%28%e7%a6%bb%e7%ba%bf%e7%89%88%29.html&#34; &gt;html版査老师&lt;/a&gt;，点击即可查看，但加载缓慢，不建议使用，可以直接使用下面的。&lt;br&gt;
+
 &lt;div id=&#34;teacher-search-app&#34;&gt;
     &lt;div class=&#34;search-container&#34;&gt;
         &lt;input type=&#34;text&#34; id=&#34;searchInput&#34; placeholder=&#34;按姓名 / 拼音 / 首字母搜索...&#34; aria-label=&#34;搜索教师&#34;&gt;
-        &lt;input type=&#34;text&#34; id=&#34;departmentInput&#34; list=&#34;departmentList&#34; placeholder=&#34;按学院筛选...&#34; aria-label=&#34;筛选学院&#34;&gt;
-        &lt;datalist id=&#34;departmentList&#34;&gt;&lt;/datalist&gt;
+        &lt;div class=&#34;dept-dropdown-container&#34;&gt;
+            &lt;input type=&#34;text&#34; id=&#34;departmentInput&#34; placeholder=&#34;按学院筛选...&#34; aria-label=&#34;筛选学院&#34; autocomplete=&#34;off&#34;&gt;
+            &lt;div id=&#34;departmentDropdown&#34; class=&#34;dept-dropdown hidden&#34; role=&#34;listbox&#34;&gt;&lt;/div&gt;
+        &lt;/div&gt;
     &lt;/div&gt;
-    &lt;div id=&#34;teacher-list&#34; aria-live=&#34;polite&#34;&gt;&lt;p class=&#34;initial-message&#34;&gt;请输入教师姓名、拼音或选择学院以开始查询。&lt;/p&gt;&lt;/div&gt;
-    &lt;div id=&#34;loading-indicator&#34; class=&#34;hidden&#34;&gt;&lt;div class=&#34;spinner&#34;&gt;&lt;/div&gt;&lt;span&gt;加载中...&lt;/span&gt;&lt;/div&gt;
+    &lt;div id=&#34;teacher-list&#34; aria-live=&#34;polite&#34; role=&#34;region&#34;&gt;
+        &lt;p class=&#34;initial-message&#34;&gt;请输入教师姓名、拼音或选择学院以开始查询。&lt;/p&gt;
+    &lt;/div&gt;
+    &lt;footer class=&#34;page-footer&#34;&gt;
+        &lt;p&gt;© 2025 by Small fireworks. For offline backup and reference only.&lt;/p&gt;
+        &lt;p&gt;注：评分及热度指标来源于原始数据文件，仅供参考。&lt;/p&gt;
+    &lt;/footer&gt;
 &lt;/div&gt;
 &lt;div id=&#34;modal-container&#34; class=&#34;modal-hidden&#34;&gt;&lt;/div&gt;
-&lt;button id=&#34;back-to-top&#34; class=&#34;hidden&#34; title=&#34;返回顶部&#34;&gt;▲&lt;/button&gt;
-&lt;style&gt;
-    :root { --primary-color: #0056b3; --border-color: #ccc; --card-border-color: #e0e0e0; --bg-light: #f8f9fa; }
-    #teacher-search-app { font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Arial, sans-serif; max-width: 900px; margin: 0 auto; padding: 20px; }
-    .search-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 25px; }
-    #searchInput, #departmentInput { padding: 12px 15px; border-radius: 6px; border: 1px solid var(--border-color); font-size: 16px; transition: border-color 0.2s, box-shadow 0.2s; box-sizing: border-box; }
-    #searchInput:focus, #departmentInput:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2); }
-    #searchInput { flex: 2 1 300px; } #departmentInput { flex: 1 1 200px; }
-    .teacher-card { background: #fff; border: 1px solid var(--card-border-color); border-radius: 8px; padding: 15px 20px; margin-bottom: 15px; transition: box-shadow 0.3s ease; }
-    .teacher-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-    .teacher-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; }
-    .teacher-name { font-size: 22px; font-weight: 600; color: var(--primary-color); }
-    .teacher-dept { font-size: 14px; color: #666; background-color: #e9ecef; padding: 4px 10px; border-radius: 12px; }
-    .teacher-stats { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; color: #555; padding-bottom: 10px; border-bottom: 1px solid #f0f0f0; margin-bottom: 10px; }
-    .collapsible { background-color: var(--bg-light); color: #444; cursor: pointer; padding: 12px 15px; width: 100%; border: 1px solid var(--card-border-color); text-align: left; font-size: 16px; margin-top: 10px; border-radius: 5px; font-weight: bold; transition: background-color .2s; position: relative; }
-    .collapsible:after { content: &#39;▼&#39;; position: absolute; right: 15px; transition: transform .2s; }
-    .collapsible.active:after { transform: rotate(180deg); }
-    .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background-color: white; border: 1px solid var(--card-border-color); border-top: none; border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; }
-    .content-inner { padding: 10px 18px; }
-    #loading-indicator { text-align: center; padding: 20px; color: #666; } #loading-indicator.hidden { display: none; }
-    .spinner { display: inline-block; width: 20px; height: 20px; border: 3px solid rgba(0,86,179,0.3); border-radius: 50%; border-top-color: var(--primary-color); animation: spin 1s ease-in-out infinite; margin-right: 10px; vertical-align: middle; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    #back-to-top { position: fixed; bottom: 25px; right: 25px; width: 40px; height: 40px; background-color: var(--primary-color); color: white; border: none; border-radius: 50%; font-size: 20px; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.3); opacity: 0; transition: opacity 0.3s, transform 0.3s; transform: translateY(100px); z-index: 999; }
-    #back-to-top.visible { opacity: 1; transform: translateY(0); }
-    &lt;/style&gt;
-&lt;script&gt;
-(function() {
-    &#39;use strict&#39;;
-    const DATA_BASE_URL = &#39;/teachers/data/&#39;;
-    const DISPLAY_LIMIT = 50;
-    
-    let indexData = null;
-    let metadata = null;
-    let courseData = null;
-    let loadedTeachers = new Map();
-    let searchRequestCounter = 0; 
-
-    const searchInput = document.getElementById(&#39;searchInput&#39;);
-    const departmentInput = document.getElementById(&#39;departmentInput&#39;);
-    const departmentList = document.getElementById(&#39;departmentList&#39;);
-    const teacherList = document.getElementById(&#39;teacher-list&#39;);
-    const backToTopButton = document.getElementById(&#39;back-to-top&#39;);
-    const loadingIndicator = document.getElementById(&#39;loading-indicator&#39;);
-    
-    function debounce(func, wait) {
-        let timeout;
-        return function(...args) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() =&gt; func.apply(this, args), wait);
-        };
-    }
-    
-    function escapeHtml(text) {
-        if (typeof text !== &#39;string&#39; || text === &#39;&#39;) return &#39;&#39;;
-        const div = document.createElement(&#39;div&#39;);
-        div.textContent = text;
-        return div.innerHTML;
-    }
-    
-    async function loadInitialData() {
-        try {
-            const [indexResponse, metadataResponse] = await Promise.all([
-                fetch(DATA_BASE_URL + &#39;index.json&#39;), fetch(DATA_BASE_URL + &#39;metadata.json&#39;)
-            ]);
-            if (!indexResponse.ok || !metadataResponse.ok) throw new Error(&#39;Failed to load initial data&#39;);
-            indexData = await indexResponse.json();
-            metadata = await metadataResponse.json();
-            if (metadata.departments) {
-                departmentList.innerHTML = metadata.departments.map(dept =&gt; `&lt;option value=&#34;${escapeHtml(dept)}&#34;&gt;&lt;/option&gt;`).join(&#39;&#39;);
-            }
-        } catch (error) {
-            console.error(&#39;Error loading initial data:&#39;, error);
-            teacherList.innerHTML = &#39;&lt;p class=&#34;info-message&#34;&gt;数据加载失败，请刷新页面重试。&lt;/p&gt;&#39;;
-        }
-    }
-    
-    const searchTeachers = debounce(async () =&gt; {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        const deptTerm = departmentInput.value.toLowerCase().trim();
-        
-        searchRequestCounter++; 
-        const currentSearchId = searchRequestCounter; 
-
-        if (!indexData) return;
-        if (searchTerm === &#39;&#39; &amp;&amp; deptTerm === &#39;&#39;) {
-            teacherList.innerHTML = &#39;&lt;p class=&#34;initial-message&#34;&gt;请输入教师姓名、拼音或选择学院以开始查询。&lt;/p&gt;&#39;;
-            return;
-        }
-        
-        loadingIndicator.classList.remove(&#39;hidden&#39;);
-        teacherList.innerHTML = &#39;&#39;;
-        
-        const matchedTeachers = indexData.filter(teacher =&gt; {
-            const nameMatch = (teacher.name &amp;&amp; teacher.name.toLowerCase().includes(searchTerm)) || 
-                              (teacher.pinyin &amp;&amp; teacher.pinyin.toLowerCase().includes(searchTerm)) || 
-                              (teacher.pinyin_abbr &amp;&amp; teacher.pinyin_abbr.toLowerCase().includes(searchTerm));
-            const deptMatch = !deptTerm || (teacher.dept &amp;&amp; teacher.dept.toLowerCase().includes(deptTerm));
-            return nameMatch &amp;&amp; deptMatch;
-        });
-        
-        
-        if (currentSearchId !== searchRequestCounter) return;
-
-        if (matchedTeachers.length === 0) {
-            loadingIndicator.classList.add(&#39;hidden&#39;);
-            teacherList.innerHTML = &#39;&lt;p class=&#34;info-message&#34;&gt;没有找到符合条件的老师。&lt;/p&gt;&#39;;
-            return;
-        }
-        
-        const chunksToLoad = new Set(matchedTeachers.slice(0, DISPLAY_LIMIT).map(t =&gt; Math.floor(t.id / metadata.teachers_per_chunk)));
-        await Promise.all(Array.from(chunksToLoad).map(loadTeacherChunk));
-        
-        
-        if (currentSearchId !== searchRequestCounter) return;
-
-        let finalHtml = matchedTeachers.slice(0, DISPLAY_LIMIT)
-            .map(teacherIndex =&gt; {
-                const chunkId = Math.floor(teacherIndex.id / metadata.teachers_per_chunk);
-                const teacherData = loadedTeachers.get(chunkId)?.find(t =&gt; t.id === teacherIndex.id);
-                return teacherData ? renderTeacherCard(teacherData) : &#39;&#39;;
-            }).join(&#39;&#39;);
-
-        if (matchedTeachers.length &gt; DISPLAY_LIMIT) {
-            finalHtml += `&lt;p class=&#34;info-message&#34;&gt;结果过多，仅显示前 ${DISPLAY_LIMIT} 条（共 ${matchedTeachers.length} 条）。请优化搜索条件。&lt;/p&gt;`;
-        }
-        
-        teacherList.innerHTML = finalHtml;
-        loadingIndicator.classList.add(&#39;hidden&#39;);
-    }, 300);
-
-    async function loadTeacherChunk(chunkId) {
-        if (loadedTeachers.has(chunkId)) return;
-        try {
-            const response = await fetch(`${DATA_BASE_URL}teachers_${chunkId}.json`);
-            if (response.ok) loadedTeachers.set(chunkId, await response.json());
-        } catch (error) { console.error(`Error loading chunk ${chunkId}:`, error); }
-    }
-    
-    function renderTeacherCard(teacher) {
-        const hasGpa = teacher.gpa_info &amp;&amp; teacher.gpa_info.length &gt; 0;
-        const hasComments = teacher.comments &amp;&amp; teacher.comments.length &gt; 0;
-        const gpaInfoHtml = hasGpa ? `&lt;button type=&#34;button&#34; class=&#34;collapsible&#34;&gt;课程GPA信息 (${teacher.gpa_info.length})&lt;/button&gt;&lt;div class=&#34;collapsible-content&#34;&gt;&lt;div class=&#34;content-inner&#34;&gt;${renderGpaTable(teacher)}&lt;/div&gt;&lt;/div&gt;` : &#39;&#39;;
-        const commentsHtml = hasComments ? `&lt;button type=&#34;button&#34; class=&#34;collapsible&#34;&gt;学生评价 (${teacher.comments.length})&lt;/button&gt;&lt;div class=&#34;collapsible-content&#34;&gt;&lt;div class=&#34;content-inner&#34;&gt;${renderCommentsSection(teacher)}&lt;/div&gt;&lt;/div&gt;` : &#39;&#39;;
-        return `&lt;div class=&#34;teacher-card&#34; data-teacher-id=&#34;${teacher.id}&#34;&gt;&lt;div class=&#34;teacher-header&#34;&gt;&lt;span class=&#34;teacher-name&#34;&gt;${escapeHtml(teacher.姓名)}&lt;/span&gt;&lt;span class=&#34;teacher-dept&#34;&gt;${escapeHtml(teacher.学院)}&lt;/span&gt;&lt;/div&gt;&lt;div class=&#34;teacher-stats&#34;&gt;&lt;span&gt;&lt;b&gt;评分:&lt;/b&gt; ${parseFloat(teacher.评分 || 0).toFixed(2)} (${teacher.评分人数}人)&lt;/span&gt;&lt;span&gt;&lt;b&gt;热度:&lt;/b&gt; ${teacher.热度}&lt;/span&gt;&lt;/div&gt;${gpaInfoHtml}${commentsHtml}${!hasGpa &amp;&amp; !hasComments ? &#39;&lt;p class=&#34;no-data-message&#34;&gt;暂无课程GPA或学生评价数据&lt;/p&gt;&#39; : &#39;&#39;}&lt;/div&gt;`;
-    }
-    
-    function renderGpaTable(teacher) { return `&lt;table class=&#34;gpa-table&#34;&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;课程名&lt;/th&gt;&lt;th&gt;平均绩点±标差&lt;/th&gt;&lt;th&gt;人数&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;&lt;tbody&gt;${teacher.gpa_info.map(c =&gt; `&lt;tr&gt;&lt;td&gt;${escapeHtml(c[0])}&lt;/td&gt;&lt;td&gt;${parseFloat(c[1]||0).toFixed(2)} ± ${parseFloat(c[3]||0).toFixed(2)}&lt;/td&gt;&lt;td&gt;${c[2]}&lt;/td&gt;&lt;/tr&gt;`).join(&#39;&#39;)}&lt;/tbody&gt;&lt;/table&gt;`; }
-
-    function renderCommentsSection(teacher, sortMode = &#39;popularity&#39;) {
-        const sorted = [...teacher.comments].sort((a, b) =&gt; sortMode === &#39;latest&#39; ? (new Date(b.发表时间) - new Date(a.发表时间)) : ((b.点赞减去点踩数量 || 0) - (a.点赞减去点踩数量 || 0)));
-        return `&lt;div class=&#34;comment-sort&#34;&gt;&lt;button class=&#34;sort-btn ${sortMode===&#39;popularity&#39;?&#39;active&#39;:&#39;&#39;}&#34; data-sort-mode=&#34;popularity&#34;&gt;人气&lt;/button&gt;&lt;button class=&#34;sort-btn ${sortMode===&#39;latest&#39;?&#39;active&#39;:&#39;&#39;}&#34; data-sort-mode=&#34;latest&#34;&gt;最新&lt;/button&gt;&lt;/div&gt;&lt;div class=&#34;comment-list&#34;&gt;${sorted.map(c =&gt; `&lt;div class=&#34;comment&#34;&gt;&lt;div&gt;${escapeHtml(c.内容).replace(/\\n/g, &#39;&lt;br&gt;&#39;)}&lt;/div&gt;&lt;div class=&#34;comment-meta&#34;&gt;&lt;span&gt;${escapeHtml(c.发表时间)}&lt;/span&gt;&lt;span class=&#34;comment-likes&#34;&gt;👍 ${c.点赞量} | 👎 ${c.点踩量}&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;`).join(&#39;&#39;)}&lt;/div&gt;`;
-    }
-
-    
-    document.getElementById(&#39;teacher-search-app&#39;).addEventListener(&#39;click&#39;, e =&gt; {
-        const target = e.target;
-        const card = target.closest(&#39;.teacher-card&#39;);
-        if (!card) return;
-
-        if (target.matches(&#39;.collapsible&#39;)) {
-            target.classList.toggle(&#39;active&#39;);
-            const content = target.nextElementSibling;
-            content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + &#39;px&#39;;
-        } else if (target.matches(&#39;.sort-btn&#39;)) {
-            if (target.classList.contains(&#39;active&#39;)) return;
-            const teacherId = parseInt(card.dataset.teacherId, 10);
-            const chunkId = Math.floor(teacherId / metadata.teachers_per_chunk);
-            const teacherData = loadedTeachers.get(chunkId)?.find(t =&gt; t.id === teacherId);
-            if (teacherData) {
-                const commentContainer = target.closest(&#39;.content-inner&#39;);
-                commentContainer.innerHTML = renderCommentsSection(teacherData, target.dataset.sortMode);
-            }
-        }
-    });
-
-    searchInput.addEventListener(&#39;input&#39;, searchTeachers);
-    departmentInput.addEventListener(&#39;input&#39;, searchTeachers);
-
-    window.addEventListener(&#39;scroll&#39;, () =&gt; {
-        backToTopButton.classList.toggle(&#39;visible&#39;, window.scrollY &gt; 300);
-    }, { passive: true });
-    
-    backToTopButton.addEventListener(&#39;click&#39;, () =&gt; window.scrollTo({ top: 0, behavior: &#39;smooth&#39; }));
-    
-    loadInitialData();
-})();
-&lt;/script&gt;
+&lt;button id=&#34;back-to-top&#34; class=&#34;hidden&#34; aria-label=&#34;返回顶部&#34;&gt;▲&lt;/button&gt;
+&lt;link rel=&#34;stylesheet&#34; href=&#34;https://smallfireworks.github.io/teachers/assets/style.css&#34;&gt;
+&lt;script src=&#34;https://smallfireworks.github.io/teachers/assets/script.js&#34; defer&gt;&lt;/script&gt;
 &lt;/p&gt;
 </description>
         </item>
