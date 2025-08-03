@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>AI on Small_fireworks的小站</title>
+        <link>https://smallfireworks.github.io/tags/ai/</link>
+        <description>Recent content in AI on Small_fireworks的小站</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>Small_fireworks</copyright>
+        <lastBuildDate>Sun, 03 Aug 2025 22:12:00 +0800</lastBuildDate><atom:link href="https://smallfireworks.github.io/tags/ai/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>AI对话（测试中）</title>
+        <link>https://smallfireworks.github.io/p/ai%E5%AF%B9%E8%AF%9D%E6%B5%8B%E8%AF%95%E4%B8%AD/</link>
+        <pubDate>Sun, 03 Aug 2025 22:12:00 +0800</pubDate>
+        
+        <guid>https://smallfireworks.github.io/p/ai%E5%AF%B9%E8%AF%9D%E6%B5%8B%E8%AF%95%E4%B8%AD/</guid>
+        <description>&lt;p&gt;这是一个AI对话系统，你可以在下面的输入框中输入你的问题，系统会根据你的问题进行回复。此外，査老师的数据集已作为其知识库。
+
+&lt;div id=&#34;teacher-chat-app&#34;
+     data-base-url=&#34;https://smallfireworks.github.io/teachers/data/&#34;
+     data-assets-url=&#34;https://smallfireworks.github.io/teachers/chat/assets/&#34;
+     data-api-base=&#34;https://teacher-ai-gateway.smallfireworks05.workers.dev&#34;&gt;
+  &lt;div class=&#34;chat-container&#34;&gt;
+    &lt;div class=&#34;chat-header&#34;&gt;
+      &lt;h2&gt;AI 对话（教师与课程助手）&lt;/h2&gt;
+      &lt;div class=&#34;chat-mode&#34;&gt;
+        &lt;label&gt;模式：
+          &lt;select id=&#34;chatMode&#34;&gt;
+            &lt;option value=&#34;auto&#34; selected&gt;智能（自动实体识别）&lt;/option&gt;
+            &lt;option value=&#34;teacher&#34;&gt;优先老师&lt;/option&gt;
+            &lt;option value=&#34;course&#34;&gt;优先课程/GPA&lt;/option&gt;
+          &lt;/select&gt;
+        &lt;/label&gt;
+        &lt;label class=&#34;toggle&#34;&gt;
+          &lt;input type=&#34;checkbox&#34; id=&#34;showCitations&#34; checked /&gt;
+          &lt;span&gt;显示证据片段&lt;/span&gt;
+        &lt;/label&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div id=&#34;chatMessages&#34; class=&#34;chat-messages&#34; aria-live=&#34;polite&#34;&gt;&lt;/div&gt;
+    &lt;div class=&#34;chat-input&#34;&gt;
+      &lt;textarea id=&#34;chatInput&#34; placeholder=&#34;请输入问题，例如：张三老师的数据结构给分如何？&#34; rows=&#34;2&#34;&gt;&lt;/textarea&gt;
+      &lt;button id=&#34;sendBtn&#34; aria-label=&#34;发送&#34;&gt;发送&lt;/button&gt;
+    &lt;/div&gt;
+    &lt;div class=&#34;chat-footer&#34;&gt;
+      &lt;small&gt;注：回答尽量基于教师库/评论/GPA数据；对不确定的信息会明确说明。&lt;/small&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;link rel=&#34;stylesheet&#34; href=&#34;https://smallfireworks.github.io/teachers/chat/assets/chat.css&#34; /&gt;
+&lt;script src=&#34;https://smallfireworks.github.io/teachers/chat/assets/chat.js&#34; defer&gt;&lt;/script&gt;
+&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
