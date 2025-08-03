@@ -2,7 +2,9 @@
 document.addEventListener('DOMContentLoaded', function() {
   'use strict';
 
-  const DATA_BASE_URL = '/teachers/data/';
+  // <<< 修复 >>>: 从window对象读取由Hugo模板注入的基础URL，并提供一个本地回退方案
+  const DATA_BASE_URL = window.TEACHER_SEARCH_DATA_URL || '/teachers/data/';
+  
   const DISPLAY_LIMIT = 60;
   const SLICE_RENDER_BATCH = 20;
   const SEARCH_DEBOUNCE = 260;

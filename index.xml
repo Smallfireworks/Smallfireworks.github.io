@@ -40,8 +40,14 @@
 &lt;div id=&#34;modal-container&#34; class=&#34;modal-hidden&#34; aria-hidden=&#34;true&#34;&gt;&lt;/div&gt;
 &lt;button id=&#34;back-to-top&#34; class=&#34;hidden&#34; aria-label=&#34;返回顶部&#34; title=&#34;返回顶部&#34;&gt;▲&lt;/button&gt;
 
+
 &lt;link rel=&#34;preload&#34; href=&#34;https://smallfireworks.github.io/teachers/assets/style.css&#34; as=&#34;style&#34; /&gt;
 &lt;link rel=&#34;stylesheet&#34; href=&#34;https://smallfireworks.github.io/teachers/assets/style.css&#34; /&gt;
+
+
+&lt;script&gt;
+  window.TEACHER_SEARCH_DATA_URL = &#34;https:\/\/smallfireworks.github.io\/teachers\/data\/&#34;;
+&lt;/script&gt;
 &lt;script src=&#34;https://smallfireworks.github.io/teachers/assets/script.js&#34; defer&gt;&lt;/script&gt;
 &lt;/p&gt;
 </description>
