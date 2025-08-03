@@ -311,28 +311,33 @@
     
     <p>完成了査老师（离线版）的制作，我的博客也是有用起来了。<a class="link" href="/%e6%9f%bb%e8%80%81%e5%b8%88%28%e7%a6%bb%e7%ba%bf%e7%89%88%29.html" >html版査老师</a>，点击即可查看，但加载缓慢，不建议使用，可以直接使用下面的。<br>
 
-<div id="teacher-search-app">
-    <div class="search-container">
-        <div class="search-input-wrapper">
-            <input type="text" id="searchInput" placeholder="按姓名 / 拼音 / 首字母搜索..." aria-label="搜索教师">
-            <button id="clearSearch" class="clear-btn hidden" aria-label="清空搜索框">×</button>
-        </div>
-        <div class="dept-dropdown-container">
-            <input type="text" id="departmentInput" placeholder="按学院筛选..." aria-label="筛选学院" autocomplete="off">
-            <div id="departmentDropdown" class="dept-dropdown hidden" role="listbox"></div>
-        </div>
+<div id="teacher-search-app" role="application" aria-label="教师查询系统">
+  <div class="search-container">
+    <div class="search-input-wrapper">
+      <input type="text" id="searchInput" placeholder="按 姓名 / 拼音 / 首字母 搜索，支持多关键字（空格分隔）..." aria-label="搜索教师" autocomplete="off" />
+      <button id="clearSearch" class="clear-btn hidden" aria-label="清空搜索框" title="清空">×</button>
     </div>
-    <div id="teacher-list" aria-live="polite" role="region">
-        <p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p>
+    <div class="dept-dropdown-container">
+      <input type="text" id="departmentInput" placeholder="按学院筛选..." aria-label="筛选学院" autocomplete="off" />
+      <div id="departmentDropdown" class="dept-dropdown hidden" role="listbox" aria-label="学院列表"></div>
     </div>
-    <footer class="page-footer">
-        <p>© 2025 by Small fireworks. For offline backup and reference only.</p>
-        <p>注：评分、热度及GPA等指标来源于原始数据文件，仅供参考。</p>
-    </footer>
+  </div>
+
+  <div id="teacher-list" aria-live="polite" role="region">
+    <p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p>
+  </div>
+
+  <footer class="page-footer">
+    <p>© 2025 by Small fireworks. For offline backup and reference only.</p>
+    <p>注：评分、热度及GPA等指标来源于原始数据文件，仅供参考。</p>
+  </footer>
 </div>
-<div id="modal-container" class="modal-hidden"></div>
-<button id="back-to-top" class="hidden" aria-label="返回顶部">▲</button>
-<link rel="stylesheet" href="/teachers/assets/style.css">
+
+<div id="modal-container" class="modal-hidden" aria-hidden="true"></div>
+<button id="back-to-top" class="hidden" aria-label="返回顶部" title="返回顶部">▲</button>
+
+<link rel="preload" href="/teachers/assets/style.css" as="style" />
+<link rel="stylesheet" href="/teachers/assets/style.css" />
 <script src="/teachers/assets/script.js" defer></script>
 </p>
 
