@@ -1,1 +1,245 @@
-document.addEventListener("DOMContentLoaded",()=>{"use strict";const e=document.getElementById("teacher-search-app"),t=e.dataset.baseUrl,a=60,s=20,c=260,n=2;let o,l,r,i=new Map,d=0,p=-1,u=new Map;const h=document.getElementById("searchInput"),m=document.getElementById("clearSearch"),g=document.getElementById("departmentInput"),f=document.getElementById("departmentDropdown"),y=document.getElementById("teacher-list"),b=document.getElementById("modal-container"),v=document.getElementById("back-to-top");function w(e,t){let a;return function(...s){clearTimeout(a),a=setTimeout((()=>e.apply(this,s)),t)}}async function E(e,t=n){for(let a=0;a<=t;a++)try{const t=await fetch(e,{cache:"no-cache"});if(!t.ok)throw new Error("HTTP "+t.status);return await t.json()}catch(s){if(a===t)throw s;await new Promise((e=>setTimeout(e,150*(a+1))))}}function L(e,t){if(!t)return e;const a=new RegExp(`(${t.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")})`,"gi");return e.replace(a,"<strong>$1</strong>")}function k(e,t){return`<div class="comment-controls"><span class="comment-count-display">共 ${e.m.length} 条</span><div class="comment-sort-buttons"><button class="sort-btn ${"popularity"===t?"active":""}" data-sort="popularity">按人气</button><button class="sort-btn ${"time"===t?"active":""}" data-sort="time">按时间</button></div></div><div class="comments-list">${S(e.m,t)}</div>`}function S(e,t){const a=[...e].sort(((e,a)=>"time"===t?(a.t||"").localeCompare(e.t||""):(a.p||0)-(e.p||0)));return a.map((e=>`<div class="comment"><div class="comment-body" style="white-space: pre-wrap;">${(e.c||"").replace(/\\n/g,"\n")}</div><div class="comment-meta"><span>${e.t||""}</span><span class="comment-likes"><span class="like">👍 ${e.u||0}</span> | <span class="dislike">👎 ${e.d||0}</span></span></div></div>`)).join("")}function A(){const e=b.querySelector(".modal-overlay");e&&(e.classList.remove("visible"),e.querySelector(".modal-content").style.transform="scale(0.95)"),document.body.classList.remove("modal-open"),b.setAttribute("aria-hidden","true"),setTimeout((()=>{b.classList.add("modal-hidden"),b.innerHTML=""}),300)}function T(){if(!l)return;const e=(g.value||"").toLowerCase(),t=l.d.filter((t=>t.toLowerCase().includes(e)));0===t.length?(f.classList.add("hidden"),p=-1):(f.innerHTML=t.map(((e,t)=>`<div class="dept-dropdown-item ${0===t?"active":""}" role="option" data-value="${e}">${e}</div>`)).join(""),p=0,f.classList.remove("hidden"))}function H(e){const t=Array.from(f.querySelectorAll(".dept-dropdown-item"));0!==t.length&&(t[p].classList.remove("active"),p=(p+e+t.length)%t.length,t[p].classList.add("active"),t[p].scrollIntoView({block:"nearest"}))}(async()=>{y.innerHTML=((e=`\n      <div class="skeleton-card" aria-hidden="true">\n        <div class="teacher-header"><div class="skeleton-line title shimmer"></div><div class="skeleton-line dept shimmer"></div></div>\n        <div class="skeleton-line text shimmer"></div><div class="skeleton-line w-75 shimmer"></div>\n      </div>`)=>Array(3).fill(e).join(""))(),await async function(){try{const[e,t,a]=await Promise.all([E(`${t}index.json`),E(`${t}metadata.json`),E(`${t}courses.json`)]);o=e,l=t,r=a}catch(e){return console.error("Error loading initial data:",e),void(y.innerHTML='<p class="info-message">数据加载失败，请检查网络或稍后重试。</p>')}}(),o&&(y.innerHTML='<p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p>')})();const C=w((async function(){const e=++d,n=(h.value||"").toLowerCase().trim(),p=(g.value||"").toLowerCase().trim();if(m.classList.toggle("hidden",0===h.value.length),!o)return""===n&&""===p?(y.innerHTML='<p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p>',void 0):void 0;y.innerHTML=((e=`\n      <div class="skeleton-card" aria-hidden="true">\n        <div class="teacher-header"><div class="skeleton-line title shimmer"></div><div class="skeleton-line dept shimmer"></div></div>\n        <div class="skeleton-line text shimmer"></div><div class="skeleton-line w-75 shimmer"></div>\n      </div>`)=>Array(4).fill(e).join(""))();const u=o.filter((e=>(!n||e.s&&e.s.includes(n))&&(!p||e.d&&e.d.toLowerCase().includes(p))));if(e!==d)return;if(0===u.length)return y.innerHTML='<p class="info-message">没有找到符合条件的老师。</p>',void 0;const v=u.slice(0,a),w=new Set(v.map((e=>e.c)));try{await Promise.all(Array.from(w).map((async function(e){if(i.has(e))return;const a=`${t}teachers_${e}.json`;try{const t=await E(a);i.set(e,t)}catch(t){throw console.error(`Error loading chunk ${e}:`,t),t}})))}catch(t){return e===d&&(y.innerHTML='<p class="info-message">加载教师数据时出错，请稍后重试。</p>'),void 0}if(e!==d)return;y.innerHTML="";let b=0;!function t(){if(e!==d)return;const c=v.slice(b,b+s),o=c.map((e=>{const t=i.get(e.c)?.find((t=>t.id===e.id));return t?function(e,t){let a,s;const c=Array.isArray(e.g)&&e.g.length>0,o=Array.isArray(e.m)&&e.m.length>0,i=t?L(e.n,t):e.n;let d=`<div class="teacher-card" role="article" aria-labelledby="teacher-name-${e.id}"><div class="teacher-header"><span id="teacher-name-${e.id}" class="teacher-name">${i}</span><span class="teacher-dept">${e.d||""}</span></div><div class="teacher-stats"><span><b>评分:</b> ${(parseFloat(e.r)||0).toFixed(2)} (${e.rc}人)</span><span><b>热度:</b> ${e.h}</span></div>`;return c&&(d+=`<button type="button" class="collapsible" aria-expanded="false" aria-controls="gpa-${e.id}" data-cid="${e.id}">课程GPA信息 (${e.g.length})</button><div class="collapsible-content" id="gpa-${e.id}"><div class="content-inner">${(a=`<table class="gpa-table" aria-label="课程GPA"><thead><tr><th>课程名</th><th>平均绩点±标准差</th><th>选课人数</th></tr></thead><tbody>${e.g.map((e=>`<tr><td><a href="#" class="course-link" data-course-name="${e[0]}" data-teacher-name="${t.n}">${e[0]}</a></td><td>${(parseFloat(e[1])||0).toFixed(2)} ± ${(parseFloat(e[3])||0).toFixed(2)}</td><td>${0===e[2]?"500+":e[2]}</td></tr>`)).join("")}</tbody></table>`,a)}</div></div>`),o&&(d+=`<button type="button" class="collapsible" aria-expanded="false" aria-controls="comments-${e.id}" data-cid="${e.id}">学生评价 (${e.m.length})</button><div class="collapsible-content" id="comments-${e.id}" data-teacher-id="${e.id}"><div class="content-inner">${k(e,(null===(s=u.get(e.id))?void 0:s)||"popularity")}</div></div>`),!c&&!o&&(d+='<p style="text-align:center;color:#888;padding:15px 0;">暂无课程GPA或学生评价数据</p>'),d+="</div>",d}(t,n):""})).join("");y.insertAdjacentHTML("beforeend",o),b+=s,b<v.length?requestIdleCallback(t,{timeout:200}):u.length>a&&y.insertAdjacentHTML("beforeend",`<p class="info-message">结果过多，仅显示前 ${a} 条（共 ${u.length} 条）。</p>`)}()}),c);h.addEventListener("input",C),g.addEventListener("input",(()=>{T(),C()})),g.addEventListener("focus",T),m.addEventListener("click",(()=>{h.value="",h.focus(),C()})),document.addEventListener("click",(e=>{g.contains(e.target)||f.contains(e.target)||f.classList.add("hidden"),e.target.classList.contains("dept-dropdown-item")&&(g.value=e.target.dataset.value,f.classList.add("hidden"),g.focus(),C())})),g.addEventListener("keydown",(e=>{if(f.classList.contains("hidden"))return;"ArrowDown"===e.key?(e.preventDefault(),H(1)):"ArrowUp"===e.key?(e.preventDefault(),H(-1)):"Enter"===e.key?(()=>{const e=f.querySelector(".dept-dropdown-item.active");e&&(g.value=e.dataset.value,f.classList.add("hidden"),C())})():"Escape"===e.key&&f.classList.add("hidden")})),y.addEventListener("click",(e=>{const t=e.target;if(t.classList.contains("collapsible"))t.classList.toggle("active"),t.setAttribute("aria-expanded",!!t.classList.contains("active")),t.nextElementSibling.style.maxHeight=t.classList.contains("active")?t.nextElementSibling.scrollHeight+"px":null;else if(t.matches(".course-link, .course-link *")){e.preventDefault();const e=t.closest(".course-link");!function(e,t){const a=r[e];if(!a)return;const s=`modal-title-${e.replace(/\W/g,"-")}`,c=[...a].sort(((e,t)=>(parseFloat(t.g)||0)-(parseFloat(e.g)||0))).map((a=>`<tr class="${a.t===t?"highlight-row":""}"><td>${a.t}</td><td>${(parseFloat(a.g)||0).toFixed(2)} ± ${(parseFloat(a.s)||0).toFixed(2)}</td><td>${0===a.n?"500+":a.n}</td></tr>`)).join("");b.innerHTML=`<div class="modal-overlay visible" role="dialog" aria-modal="true" aria-labelledby="${s}"><div class="modal-content"><div class="modal-header"><h2 class="modal-title" id="${s}">${e}</h2><button class="modal-close" aria-label="关闭">×</button></div><div class="table-container"><table class="gpa-table"><thead><tr><th>老师姓名</th><th>平均绩点±标准差</th><th>人数</th></tr></thead><tbody>${c}</tbody></table></div></div></div>`,b.classList.remove("modal-hidden"),b.setAttribute("aria-hidden","false"),document.body.classList.add("modal-open"),b.querySelector(".modal-close").focus()}(e.dataset.courseName,e.dataset.teacherName)}else if(t.matches(".sort-btn")&&!t.classList.contains("active")){e.preventDefault();const a=t.dataset.sort,s=t.closest(".collapsible-content"),c=parseInt(s.dataset.teacherId,10),n=o.find((e=>e.id===c));if(!n)return;const l=i.get(n.c)?.find((e=>e.id===c));if(!l)return;const r=s.querySelector(".comments-list"),d=s.querySelectorAll(".sort-btn");r.innerHTML=S(l.m,a),d.forEach((e=>e.classList.remove("active"))),t.classList.add("active"),u.set(c,a),s.style.maxHeight&&(s.style.maxHeight=s.scrollHeight+"px")}})),b.addEventListener("click",(e=>{e.target.matches(".modal-overlay, .modal-close, .modal-close *")&&A()})),document.addEventListener("keydown",(e=>{"Escape"===e.key&&!b.classList.contains("modal-hidden")&&A()})),window.addEventListener("scroll",(()=>{v.classList.toggle("visible",window.scrollY>300)}),{passive:!0}),v.addEventListener("click",(()=>{window.scrollTo({top:0,behavior:"smooth"})}))});
+
+document.addEventListener('DOMContentLoaded', function() {
+  'use strict';
+
+  const searchApp = document.getElementById('teacher-search-app');
+  const DATA_BASE_URL = searchApp.dataset.baseUrl;
+  
+  const DISPLAY_LIMIT = 60;
+  const SLICE_RENDER_BATCH = 20;
+  const SEARCH_DEBOUNCE = 260;
+  const MAX_RETRY = 2;
+
+  let indexData = null, metadata = null, courseData = null;
+  let loadedTeachers = new Map();
+  let searchRequestCounter = 0;
+  let deptActiveIndex = -1;
+  let teacherCommentsSortState = new Map();
+
+  const searchInput = document.getElementById('searchInput');
+  const clearSearchBtn = document.getElementById('clearSearch');
+  const departmentInput = document.getElementById('departmentInput');
+  const departmentDropdown = document.getElementById('departmentDropdown');
+  const teacherList = document.getElementById('teacher-list');
+  const modalContainer = document.getElementById('modal-container');
+  const backToTopButton = document.getElementById('back-to-top');
+
+  function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
+  }
+
+  async function fetchWithRetry(url, retries = MAX_RETRY) {
+    for (let i = 0; i <= retries; i++) {
+      try {
+        const res = await fetch(url, { cache: 'no-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        return await res.json();
+      } catch (err) {
+        if (i === retries) throw err;
+        await new Promise(r => setTimeout(r, 150 * (i + 1)));
+      }
+    }
+  }
+  
+  async function loadInitialData() {
+    try {
+      const [i, m, c] = await Promise.all([
+        fetchWithRetry(`${DATA_BASE_URL}index.json`),
+        fetchWithRetry(`${DATA_BASE_URL}metadata.json`),
+        fetchWithRetry(`${DATA_BASE_URL}courses.json`)
+      ]);
+      indexData = i; metadata = m; courseData = c;
+    } catch (error) {
+      console.error('Error loading initial data:', error);
+      teacherList.innerHTML = '<p class="info-message">数据加载失败，请检查网络或稍后重试。</p>';
+    }
+  }
+
+  function renderSkeletonLoader(count) {
+    const skeletonCard = `
+      <div class="skeleton-card" aria-hidden="true">
+        <div class="teacher-header"><div class="skeleton-line title shimmer"></div><div class="skeleton-line dept shimmer"></div></div>
+        <div class="skeleton-line text shimmer"></div><div class="skeleton-line w-75 shimmer"></div>
+      </div>`;
+    return Array(count).fill(skeletonCard).join('');
+  }
+
+  async function searchTeachers() {
+    const currentRequest = ++searchRequestCounter;
+    const searchTerm = searchInput.value.toLowerCase().trim();
+    const deptTerm = (departmentInput.value || '').toLowerCase().trim();
+
+    clearSearchBtn.classList.toggle('hidden', searchInput.value.length === 0);
+
+    if (!indexData) return;
+
+    if (searchTerm === '' && deptTerm === '') {
+      teacherList.innerHTML = '<p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p>';
+      return;
+    }
+
+    teacherList.innerHTML = renderSkeletonLoader(4);
+    
+    const matched = indexData.filter(t => 
+        (!searchTerm || (t.s && t.s.includes(searchTerm))) &&
+        (!deptTerm || (t.d && t.d.toLowerCase().includes(deptTerm)))
+    );
+
+    if (currentRequest !== searchRequestCounter) return;
+
+    if (matched.length === 0) {
+      teacherList.innerHTML = '<p class="info-message">没有找到符合条件的老师。</p>';
+      return;
+    }
+
+    const toRender = matched.slice(0, DISPLAY_LIMIT);
+    const chunkIds = new Set(toRender.map(t => t.c));
+
+    try {
+      await Promise.all(Array.from(chunkIds).map(loadTeacherChunk));
+    } catch (error) {
+      if (currentRequest === searchRequestCounter) teacherList.innerHTML = '<p class="info-message">加载教师数据时出错，请稍后重试。</p>';
+      return;
+    }
+    if (currentRequest !== searchRequestCounter) return;
+
+    teacherList.innerHTML = '';
+    let offset = 0;
+    function renderBatch() {
+      if (currentRequest !== searchRequestCounter) return;
+      const slice = toRender.slice(offset, offset + SLICE_RENDER_BATCH);
+      const html = slice.map(idx => {
+        const data = loadedTeachers.get(idx.c)?.find(x => x.id === idx.id);
+        return data ? renderTeacherCard(data, searchTerm) : '';
+      }).join('');
+      teacherList.insertAdjacentHTML('beforeend', html);
+      offset += SLICE_RENDER_BATCH;
+      if (offset < toRender.length) {
+        requestIdleCallback(renderBatch, { timeout: 200 });
+      } else if (matched.length > DISPLAY_LIMIT) {
+        teacherList.insertAdjacentHTML('beforeend', `<p class="info-message">结果过多，仅显示前 ${DISPLAY_LIMIT} 条（共 ${matched.length} 条）。</p>`);
+      }
+    }
+    renderBatch();
+  }
+  
+  async function loadTeacherChunk(chunkId) {
+    if (loadedTeachers.has(chunkId)) return;
+    const url = `${DATA_BASE_URL}teachers_${chunkId}.json`;
+    try {
+      const data = await fetchWithRetry(url);
+      loadedTeachers.set(chunkId, data);
+    } catch (error) {
+      console.error(`Error loading chunk ${chunkId}:`, error); throw error;
+    }
+  }
+
+  function highlightTerm(text, term) {
+    if (!term) return text;
+    const regex = new RegExp(`(${term.replace(/[.*+?^${}()|[\]\\\\]/g, '\\\\$&')})`, 'gi');
+    return text.replace(regex, '<strong>$1</strong>');
+  }
+
+  function renderTeacherCard(t, searchTerm) {
+    const hasGpa = Array.isArray(t.g) && t.g.length > 0;
+    const hasComments = Array.isArray(t.m) && t.m.length > 0;
+    const displayName = searchTerm ? highlightTerm(t.n, searchTerm) : t.n;
+    
+    let html = `<div class="teacher-card" role="article" aria-labelledby="teacher-name-${t.id}"><div class="teacher-header"><span id="teacher-name-${t.id}" class="teacher-name">${displayName}</span><span class="teacher-dept">${t.d || ''}</span></div><div class="teacher-stats"><span><b>评分:</b> ${(parseFloat(t.r) || 0).toFixed(2)} (${t.rc}人)</span><span><b>热度:</b> ${t.h}</span></div>`;
+    if (hasGpa) html += `<button type="button" class="collapsible" aria-expanded="false" aria-controls="gpa-${t.id}" data-cid="${t.id}">课程GPA信息 (${t.g.length})</button><div class="collapsible-content" id="gpa-${t.id}"><div class="content-inner">${renderGpaTable(t)}</div></div>`;
+    if (hasComments) {
+      const sortBy = teacherCommentsSortState.get(t.id) || 'popularity';
+      html += `<button type="button" class="collapsible" aria-expanded="false" aria-controls="comments-${t.id}" data-cid="${t.id}">学生评价 (${t.m.length})</button><div class="collapsible-content" id="comments-${t.id}" data-teacher-id="${t.id}"><div class="content-inner">${renderCommentsContainer(t, sortBy)}</div></div>`;
+    }
+    if (!hasGpa && !hasComments) html += `<p style="text-align:center;color:#888;padding:15px 0;">暂无课程GPA或学生评价数据</p>`;
+    html += `</div>`;
+    return html;
+  }
+
+  function renderGpaTable(t) { return `<table class="gpa-table" aria-label="课程GPA"><thead><tr><th>课程名</th><th>平均绩点±标准差</th><th>选课人数</th></tr></thead><tbody>${t.g.map(c => `<tr><td><a href="#" class="course-link" data-course-name="${c[0]}" data-teacher-name="${t.n}">${c[0]}</a></td><td>${(parseFloat(c[1])||0).toFixed(2)} ± ${(parseFloat(c[3])||0).toFixed(2)}</td><td>${c[2] === 0 ? '500+' : c[2]}</td></tr>`).join('')}</tbody></table>`; }
+  function renderCommentsContainer(teacher, sortBy = 'popularity') { return `<div class="comment-controls"><span class="comment-count-display">共 ${teacher.m.length} 条</span><div class="comment-sort-buttons"><button class="sort-btn ${sortBy === 'popularity' ? 'active' : ''}" data-sort="popularity">按人气</button><button class="sort-btn ${sortBy === 'time' ? 'active' : ''}" data-sort="time">按时间</button></div></div><div class="comments-list">${renderSortedComments(teacher.m, sortBy)}</div>`; }
+  function renderSortedComments(comments, sortBy) {
+    const sorted = [...comments].sort((a, b) => (sortBy === 'time') ? (b.t || '').localeCompare(a.t || '') : (b.p || 0) - (a.p || 0));
+    return sorted.map(c => `<div class="comment"><div class="comment-body" style="white-space: pre-wrap;">${(c.c || '').replace(/\\n/g, '\\n')}</div><div class="comment-meta"><span>${c.t || ''}</span><span class="comment-likes"><span class="like">👍 ${c.u || 0}</span> | <span class="dislike">👎 ${c.d || 0}</span></span></div></div>`).join('');
+  }
+
+  function showCourseModal(courseName, currentTeacherName) {
+    const courseInfo = courseData[courseName]; if (!courseInfo) return;
+    const modalId = `modal-title-${courseName.replace(/\\W/g, '-')}`;
+    const rows = [...courseInfo].sort((a,b) => (parseFloat(b.g)||0) - (parseFloat(a.g)||0)).map(t => `<tr class="${t.t === currentTeacherName ? 'highlight-row' : ''}"><td>${t.t}</td><td>${(parseFloat(t.g)||0).toFixed(2)} ± ${(parseFloat(t.s)||0).toFixed(2)}</td><td>${t.n === 0 ? '500+' : t.n}</td></tr>`).join('');
+    modalContainer.innerHTML = `<div class="modal-overlay visible" role="dialog" aria-modal="true" aria-labelledby="${modalId}"><div class="modal-content"><div class="modal-header"><h2 class="modal-title" id="${modalId}">${courseName}</h2><button class="modal-close" aria-label="关闭">×</button></div><div class="table-container"><table class="gpa-table"><thead><tr><th>老师姓名</th><th>平均绩点±标准差</th><th>人数</th></tr></thead><tbody>${rows}</tbody></table></div></div></div>`;
+    modalContainer.classList.remove('modal-hidden'); modalContainer.setAttribute('aria-hidden', 'false'); document.body.classList.add('modal-open');
+    modalContainer.querySelector('.modal-close').focus();
+  }
+  function closeModal() {
+    const overlay = modalContainer.querySelector('.modal-overlay');
+    if (overlay) { overlay.classList.remove('visible'); overlay.querySelector('.modal-content').style.transform = 'scale(0.95)'; }
+    document.body.classList.remove('modal-open'); modalContainer.setAttribute('aria-hidden', 'true');
+    setTimeout(() => { modalContainer.classList.add('modal-hidden'); modalContainer.innerHTML = ''; }, 300);
+  }
+
+  function updateDepartmentDropdown() {
+    if (!metadata) return;
+    const filter = (departmentInput.value || '').toLowerCase();
+    const filtered = metadata.d.filter(dept => dept.toLowerCase().includes(filter));
+    if (filtered.length === 0) { departmentDropdown.classList.add('hidden'); return; }
+    departmentDropdown.innerHTML = filtered.map((dept, i) => `<div class="dept-dropdown-item ${i===0?'active':''}" role="option" data-value="${dept}">${dept}</div>`).join('');
+    deptActiveIndex = 0; departmentDropdown.classList.remove('hidden');
+  }
+  function moveDeptActive(delta) {
+    const items = Array.from(departmentDropdown.querySelectorAll('.dept-dropdown-item'));
+    if (items.length === 0) return;
+    items[deptActiveIndex].classList.remove('active');
+    deptActiveIndex = (deptActiveIndex + delta + items.length) % items.length;
+    items[deptActiveIndex].classList.add('active');
+    items[deptActiveIndex].scrollIntoView({ block: 'nearest' });
+  }
+
+  const debouncedSearch = debounce(searchTeachers, SEARCH_DEBOUNCE);
+  searchInput.addEventListener('input', debouncedSearch);
+  departmentInput.addEventListener('input', () => { updateDepartmentDropdown(); debouncedSearch(); });
+  departmentInput.addEventListener('focus', updateDepartmentDropdown);
+  clearSearchBtn.addEventListener('click', () => { searchInput.value = ''; searchInput.focus(); debouncedSearch(); });
+  document.addEventListener('click', (e) => {
+    if (!departmentInput.contains(e.target) && !departmentDropdown.contains(e.target)) departmentDropdown.classList.add('hidden');
+    if (e.target.classList.contains('dept-dropdown-item')) { departmentInput.value = e.target.dataset.value; departmentDropdown.classList.add('hidden'); departmentInput.focus(); searchTeachers(); }
+  });
+  departmentInput.addEventListener('keydown', (e) => {
+    if (departmentDropdown.classList.contains('hidden')) return;
+    if (e.key === 'ArrowDown') { e.preventDefault(); moveDeptActive(1); }
+    else if (e.key === 'ArrowUp') { e.preventDefault(); moveDeptActive(-1); }
+    else if (e.key === 'Enter') { const active = departmentDropdown.querySelector('.dept-dropdown-item.active'); if (active) { departmentInput.value = active.dataset.value; departmentDropdown.classList.add('hidden'); searchTeachers(); } }
+    else if (e.key === 'Escape') { departmentDropdown.classList.add('hidden'); }
+  });
+  teacherList.addEventListener('click', e => {
+    const target = e.target;
+    if (target.classList.contains('collapsible')) { target.classList.toggle('active'); const isExpanded = target.classList.contains('active'); target.setAttribute('aria-expanded', isExpanded); const content = target.nextElementSibling; if (content) content.style.maxHeight = isExpanded ? (content.scrollHeight + 'px') : null; }
+    else if (target.matches('.course-link, .course-link *')) { e.preventDefault(); const link = target.closest('.course-link'); showCourseModal(link.dataset.courseName, link.dataset.teacherName); }
+    else if (target.matches('.sort-btn') && !target.classList.contains('active')) {
+      e.preventDefault(); const sortBy = target.dataset.sort; const contentWrapper = target.closest('.collapsible-content'); const teacherId = parseInt(contentWrapper.dataset.teacherId, 10);
+      const idx = indexData.find(t => t.id === teacherId); if (!idx) return;
+      const teacher = loadedTeachers.get(idx.c)?.find(x => x.id === teacherId); if (!teacher) return;
+      const commentsListEl = contentWrapper.querySelector('.comments-list'); const sortButtons = contentWrapper.querySelectorAll('.sort-btn');
+      commentsListEl.innerHTML = renderSortedComments(teacher.m, sortBy);
+      sortButtons.forEach(btn => btn.classList.remove('active')); target.classList.add('active');
+      teacherCommentsSortState.set(teacherId, sortBy);
+      if (contentWrapper.style.maxHeight) contentWrapper.style.maxHeight = contentWrapper.scrollHeight + 'px';
+    }
+  });
+  modalContainer.addEventListener('click', e => { if (e.target.matches('.modal-overlay, .modal-close, .modal-close *')) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modalContainer.classList.contains('modal-hidden')) closeModal(); });
+  window.addEventListener('scroll', () => { backToTopButton.classList.toggle('visible', window.scrollY > 300); }, { passive: true });
+  backToTopButton.addEventListener('click', () => { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+
+  (async () => {
+    teacherList.innerHTML = renderSkeletonLoader(3);
+    await loadInitialData();
+    if (indexData) {
+      teacherList.innerHTML = '<p class="initial-message">请输入教师姓名、拼音或选择学院以开始查询。</p>';
+    }
+  })();
+});
