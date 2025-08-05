@@ -3,10 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://smallfireworks.github.io/</loc>
-    <lastmod>2025-08-06T10:00:00+08:00</lastmod>
+    <lastmod>2025-08-05T23:27:00+08:00</lastmod>
+  </url><url>
+    <loc>https://smallfireworks.github.io/categories/</loc>
+    <lastmod>2025-08-05T23:27:00+08:00</lastmod>
+  </url><url>
+    <loc>https://smallfireworks.github.io/categories/math/</loc>
+    <lastmod>2025-08-05T23:27:00+08:00</lastmod>
   </url><url>
     <loc>https://smallfireworks.github.io/post/</loc>
-    <lastmod>2025-08-06T10:00:00+08:00</lastmod>
+    <lastmod>2025-08-05T23:27:00+08:00</lastmod>
+  </url><url>
+    <loc>https://smallfireworks.github.io/tags/</loc>
+    <lastmod>2025-08-05T23:27:00+08:00</lastmod>
+  </url><url>
+    <loc>https://smallfireworks.github.io/p/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/</loc>
+    <lastmod>2025-08-05T23:27:00+08:00</lastmod>
+  </url><url>
+    <loc>https://smallfireworks.github.io/tags/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/</loc>
+    <lastmod>2025-08-05T23:27:00+08:00</lastmod>
+  </url><url>
+    <loc>https://smallfireworks.github.io/tags/%E6%95%B0%E5%AD%A6/</loc>
+    <lastmod>2025-08-05T23:27:00+08:00</lastmod>
   </url><url>
     <loc>https://smallfireworks.github.io/tags/ai/</loc>
     <lastmod>2025-08-03T22:12:00+08:00</lastmod>
@@ -14,13 +32,7 @@
     <loc>https://smallfireworks.github.io/p/ai%E5%AF%B9%E8%AF%9D%E6%B5%8B%E8%AF%95%E4%B8%AD/</loc>
     <lastmod>2025-08-03T22:12:00+08:00</lastmod>
   </url><url>
-    <loc>https://smallfireworks.github.io/categories/</loc>
-    <lastmod>2025-08-03T22:12:00+08:00</lastmod>
-  </url><url>
     <loc>https://smallfireworks.github.io/categories/cs%E7%9B%B8%E5%85%B3/</loc>
-    <lastmod>2025-08-03T22:12:00+08:00</lastmod>
-  </url><url>
-    <loc>https://smallfireworks.github.io/tags/</loc>
     <lastmod>2025-08-03T22:12:00+08:00</lastmod>
   </url><url>
     <loc>https://smallfireworks.github.io/tags/%E6%9F%BB%E8%80%81%E5%B8%88/</loc>
@@ -69,9 +81,6 @@
     <lastmod>2025-06-30T22:10:41+08:00</lastmod>
   </url><url>
     <loc>https://smallfireworks.github.io/tags/%E6%95%B0%E8%AE%BA/</loc>
-    <lastmod>2025-06-30T22:10:41+08:00</lastmod>
-  </url><url>
-    <loc>https://smallfireworks.github.io/tags/%E6%95%B0%E5%AD%A6/</loc>
     <lastmod>2025-06-30T22:10:41+08:00</lastmod>
   </url><url>
     <loc>https://smallfireworks.github.io/page/</loc>

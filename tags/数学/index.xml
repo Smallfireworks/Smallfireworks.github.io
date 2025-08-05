@@ -7,7 +7,78 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>Small_fireworks</copyright>
-        <lastBuildDate>Mon, 30 Jun 2025 22:10:41 +0800</lastBuildDate><atom:link href="https://smallfireworks.github.io/tags/%E6%95%B0%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 05 Aug 2025 23:27:00 +0800</lastBuildDate><atom:link href="https://smallfireworks.github.io/tags/%E6%95%B0%E5%AD%A6/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>抽象代数</title>
+        <link>https://smallfireworks.github.io/p/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/</link>
+        <pubDate>Tue, 05 Aug 2025 23:27:00 +0800</pubDate>
+        
+        <guid>https://smallfireworks.github.io/p/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/</guid>
+        <description>&lt;blockquote&gt;
+&lt;p&gt;开一个抽代学习的post。主要参考的是杨劲根老师的《近世代数讲义》，会同时参考GTM73、《Algebra》和复旦英才班目前使用的讲义。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;11-定义与例子&#34;&gt;1.1 定义与例子
+&lt;/h2&gt;&lt;h3 id=&#34;二元运算-binary-operation&#34;&gt;二元运算 (Binary Operation)
+&lt;/h3&gt;&lt;p&gt;设 $S$ 是一个非空集合，一个从笛卡尔积 $S \times S$ 到 $S$ 的映射 $f$ 被称为 $S$ 上的一个&lt;strong&gt;二元运算&lt;/strong&gt;。&lt;/p&gt;
+$$f: S \times S \to S$$&lt;p&gt;这意味着对于 $S$ 中的任意一对有序元素 $(a, b)$，都有唯一确定的 $S$ 中的元素 $f(a, b)$ 与之对应。为了方便，我们通常使用 $a+b$, $a \cdot b$ 或简写为 $ab$ 这样的符号来表示。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;核心代数结构&#34;&gt;核心代数结构
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;半群 (Semigroup)&lt;/strong&gt;: 一个集合 $S$ 和其上的一个二元运算“$\cdot$”，如果这个运算满足&lt;strong&gt;结合律&lt;/strong&gt;，即对任意 $a,b,c \in S$，都有 $(a \cdot b) \cdot c = a \cdot (b \cdot c)$，则 $(S, \cdot)$ 构成一个半群。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;幺半群 (Monoid)&lt;/strong&gt;: 如果一个半群 $(S, \cdot)$ 中存在&lt;strong&gt;恒等元&lt;/strong&gt;（或称单位元）$e$，满足对任意 $a \in S$，都有 $e \cdot a = a \cdot e = a$，则称它为幺半群。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;群 (Group)&lt;/strong&gt;: 一个幺半群 $(G, \cdot)$，如果其中每一个元素 $a$ 都存在一个&lt;strong&gt;逆元&lt;/strong&gt; $a^{-1}$，满足 $a \cdot a^{-1} = a^{-1} \cdot a = e$，则称 $(G, \cdot)$ 是一个群。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;总结来说，一个集合 $G$ 配上一个二元运算“$\cdot$”构成一个&lt;strong&gt;群&lt;/strong&gt;，需要满足以下三个条件：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;结合律 (Associativity)&lt;/strong&gt;: $(a \cdot b) \cdot c = a \cdot (b \cdot c)$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;存在恒等元 (Identity Element)&lt;/strong&gt;: 存在 $e \in G$，使得 $a \cdot e = e \cdot a = a$&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;存在逆元 (Inverse Element)&lt;/strong&gt;: 对任意 $a \in G$，都存在 $a^{-1} \in G$，使得 $a \cdot a^{-1} = a^{-1} \cdot a = e$&lt;/li&gt;
+&lt;/ol&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;基本性质与命题&#34;&gt;基本性质与命题
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;命题 1.1.1&lt;/strong&gt;: 恒等元是&lt;strong&gt;唯一&lt;/strong&gt;的。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;命题 1.1.2&lt;/strong&gt;: 任何一个可逆元的逆元是&lt;strong&gt;唯一&lt;/strong&gt;的。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;可交换群 (Abelian Group)&lt;/strong&gt;: 如果一个群 $G$ 的运算还满足&lt;strong&gt;交换律&lt;/strong&gt;，即 $a \cdot b = b \cdot a$ 对所有 $a,b \in G$ 成立，则称 $G$ 为交换群或阿贝尔群。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;命题 1.1.3 (消去律)&lt;/strong&gt;: 在群 $G$ 中，若 $ab = ac$ 或 $ba = ca$，则可以推出 $b=c$。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;命题 1.1.5 (逆元的性质)&lt;/strong&gt;: 对于群 $G$ 中的任意两个元素 $a,b$，有：
+$$(ab)^{-1} = b^{-1}a^{-1}$$&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;经典例子&#34;&gt;经典例子
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;整数集合 $\mathbb{Z}$ 在加法运算下构成一个&lt;strong&gt;阿贝尔群&lt;/strong&gt;，称为整数加法群。恒等元是 $0$，元素 $n$ 的逆元是 $-n$。&lt;/li&gt;
+&lt;li&gt;全体 $n$ 阶可逆实数矩阵在矩阵乘法下构成一个群，称为&lt;strong&gt;一般线性群&lt;/strong&gt;，记作 $GL_n(\mathbb{R})$。当 $n &amp;gt; 1$ 时，它&lt;strong&gt;不是&lt;/strong&gt;阿贝尔群。&lt;/li&gt;
+&lt;li&gt;非零有理数集合 $\mathbb{Q}^* = \mathbb{Q} \setminus {0}$ 在乘法运算下构成一个&lt;strong&gt;阿贝尔群&lt;/strong&gt;。&lt;/li&gt;
+&lt;li&gt;三维欧氏空间中的向量在向量叉乘（外积）运算下&lt;strong&gt;不构成群&lt;/strong&gt;，因为它不满足结合律，也没有恒等元。&lt;/li&gt;
+&lt;li&gt;一个只含有一个元素 ${e}$ 的集合，在运算 $e \cdot e = e$ 下构成一个群，这是&lt;strong&gt;最小的群&lt;/strong&gt;。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;课后习题&#34;&gt;课后习题
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;在集合 $G = {a \in \mathbb{R} | a &amp;gt; 0, a \neq 1}$ 上定义二元运算 $a*b = a^{\ln(b)}$。问 $G$ 在这个二元运算下是不是一个群？&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设 $A$ 是所有在 $[0, 1]$ 区间上满足 $f(0)=0, f(1)=1$ 的严格单调递增连续函数全体所构成的集合。对任意 $f, g \in A$ 规定 $fg$ 为 $f$ 和 $g$ 的复合，即 $(fg)(x) = f(g(x))$。求证 $A$ 在这个二元运算下构成群。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设 $G$ 是一个满足下面两个条件的半群：
+a. 存在一个 $e \in G$ 使 $ea = a$ 对任何 $a \in G$ 成立（左单位元）；
+b. 对任何 $a \in G$ 存在 $b \in G$ 使 $ba = e$ 成立（左逆元）。
+求证 $G$ 是一个群。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;设 $G$ 是一个有限群，$a, b \in G$。证明 $ab$ 和 $ba$ 有相同的阶。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        <item>
         <title>初来乍到</title>
         <link>https://smallfireworks.github.io/p/%E5%88%9D%E6%9D%A5%E4%B9%8D%E5%88%B0/</link>
         <pubDate>Mon, 30 Jun 2025 22:10:41 +0800</pubDate>
