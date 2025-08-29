@@ -316,13 +316,32 @@ function renderMajorsList() {
   if (majorsSortBy === "applicants-desc") {
     copy.sort((a, b) => (b.applicant_count || 0) - (a.applicant_count || 0));
   } else if (majorsSortBy === "ratio-desc") {
-    copy.sort((a, b) => ratio(b) - ratio(a));
+    // Sort using categories to handle edge cases:
+    // cat 0: quota==0 and applicants>0 (Infinity) -> top (existing behavior)
+    // cat 1: quota>0 -> sort by finite ratio desc
+    // cat 2: applicants==0 and quota==0 (0/0) -> bottom
+    copy.sort((a, b) => {
+      const ra = rank(a);
+      const rb = rank(b);
+      if (ra.cat !== rb.cat) return ra.cat - rb.cat; // lower cat first
+      if (ra.cat === 1) {
+        if (rb.ratio !== ra.ratio) return rb.ratio - ra.ratio; // desc
+      }
+      // fallback tie-breaker
+      return (b.applicant_count || 0) - (a.applicant_count || 0);
+    });
   }
 
   const CHUNK = 50;
-  function ratio(item) {
-    const q = (item.remaining_quota ?? 0) || 0;
-    return q > 0 ? (item.applicant_count || 0) / q : Infinity;
+  function rank(item) {
+    const a = item.applicant_count || 0;
+    const qRaw = item.remaining_quota;
+    const q = qRaw == null ? 0 : qRaw;
+    if (q === 0) {
+      if (a === 0) return { cat: 2, ratio: 0 }; // 0/0 -> bottom
+      return { cat: 0, ratio: Infinity }; // applicants>0 & quota==0 -> top
+    }
+    return { cat: 1, ratio: a / q }; // finite ratio
   }
 
   let offset = 0;
