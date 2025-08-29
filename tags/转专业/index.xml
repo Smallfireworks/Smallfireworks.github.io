@@ -7,10 +7,10 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>Small_fireworks</copyright>
-        <lastBuildDate>Thu, 28 Aug 2025 20:49:00 +0800</lastBuildDate><atom:link href="https://smallfireworks.github.io/tags/%E8%BD%AC%E4%B8%93%E4%B8%9A/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 28 Aug 2024 20:49:00 +0800</lastBuildDate><atom:link href="https://smallfireworks.github.io/tags/%E8%BD%AC%E4%B8%93%E4%B8%9A/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>浙江大学转专业数据查询系统</title>
         <link>https://smallfireworks.github.io/p/%E6%B5%99%E6%B1%9F%E5%A4%A7%E5%AD%A6%E8%BD%AC%E4%B8%93%E4%B8%9A%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E7%B3%BB%E7%BB%9F/</link>
-        <pubDate>Thu, 28 Aug 2025 20:49:00 +0800</pubDate>
+        <pubDate>Wed, 28 Aug 2024 20:49:00 +0800</pubDate>
         
         <guid>https://smallfireworks.github.io/p/%E6%B5%99%E6%B1%9F%E5%A4%A7%E5%AD%A6%E8%BD%AC%E4%B8%93%E4%B8%9A%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E7%B3%BB%E7%BB%9F/</guid>
         <description>&lt;h1 id=&#34;浙江大学转专业数据查询系统&#34;&gt;浙江大学转专业数据查询系统
@@ -25,7 +25,7 @@
     
     &lt;div id=&#34;error-message&#34; class=&#34;error-container&#34; style=&#34;display: none;&#34;&gt;
         &lt;div class=&#34;error-content&#34;&gt;
-            &lt;h3&gt;❌ 数据加载失败&lt;/h3&gt;
+            &lt;div class=&#34;error-title&#34;&gt;❌ 数据加载失败&lt;/div&gt;
             &lt;p id=&#34;error-text&#34;&gt;&lt;/p&gt;
             &lt;button onclick=&#34;retryLoad()&#34; class=&#34;retry-btn&#34;&gt;重试&lt;/button&gt;
         &lt;/div&gt;
@@ -42,19 +42,19 @@
         
         &lt;div class=&#34;stats-overview&#34;&gt;
             &lt;div class=&#34;stat-card&#34;&gt;
-                &lt;h3&gt;总学院数&lt;/h3&gt;
+                &lt;div class=&#34;stat-title&#34;&gt;总学院数&lt;/div&gt;
                 &lt;div class=&#34;stat-number&#34; id=&#34;total-colleges&#34;&gt;-&lt;/div&gt;
             &lt;/div&gt;
             &lt;div class=&#34;stat-card&#34;&gt;
-                &lt;h3&gt;总专业数&lt;/h3&gt;
+                &lt;div class=&#34;stat-title&#34;&gt;总专业数&lt;/div&gt;
                 &lt;div class=&#34;stat-number&#34; id=&#34;total-majors&#34;&gt;-&lt;/div&gt;
             &lt;/div&gt;
             &lt;div class=&#34;stat-card&#34;&gt;
-                &lt;h3&gt;总申请人数&lt;/h3&gt;
+                &lt;div class=&#34;stat-title&#34;&gt;总申请人数&lt;/div&gt;
                 &lt;div class=&#34;stat-number&#34; id=&#34;total-applicants&#34;&gt;-&lt;/div&gt;
             &lt;/div&gt;
             &lt;div class=&#34;stat-card&#34;&gt;
-                &lt;h3&gt;平均申请人数&lt;/h3&gt;
+                &lt;div class=&#34;stat-title&#34;&gt;平均申请人数&lt;/div&gt;
                 &lt;div class=&#34;stat-number&#34; id=&#34;avg-applicants&#34;&gt;-&lt;/div&gt;
             &lt;/div&gt;
         &lt;/div&gt;
@@ -95,13 +95,13 @@
                         &lt;/div&gt;
                     &lt;/div&gt;
                     &lt;div id=&#34;majors-table-container&#34;&gt;
+                        &lt;div id=&#34;majors-loading&#34; class=&#34;modal-loading hidden&#34;&gt;正在加载专业数据…&lt;/div&gt;
                         &lt;table id=&#34;majors-table&#34; class=&#34;majors-table&#34;&gt;
                             &lt;thead&gt;
                                 &lt;tr&gt;
                                     &lt;th&gt;专业名称&lt;/th&gt;
                                     &lt;th&gt;申请人数&lt;/th&gt;
                                     &lt;th&gt;余量&lt;/th&gt;
-                                    &lt;th&gt;是否可选&lt;/th&gt;
                                 &lt;/tr&gt;
                             &lt;/thead&gt;
                             &lt;tbody id=&#34;majors-table-body&#34;&gt;

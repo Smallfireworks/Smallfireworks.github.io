@@ -111,10 +111,16 @@ function updateDataStatus(data) {
   }
 
   if (data.last_updated) {
-    const updateTime = new Date(data.last_updated);
-    lastUpdatedElement.textContent = `最后更新: ${updateTime.toLocaleString(
-      "zh-CN"
-    )}`;
+    const date = new Date(data.last_updated);
+    lastUpdatedElement.textContent = `最后更新: ${date.toLocaleString("zh-CN", {
+      timeZone: "Asia/Shanghai",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    })} CST`;
   }
 }
 
@@ -184,23 +190,32 @@ function showCollegeDetail(college) {
   tbody.innerHTML = "";
 
   if (college.majors && college.majors.length > 0) {
-    college.majors.forEach((major) => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-                <td>${major.major_name}</td>
-                <td>${major.applicant_count.toLocaleString()}</td>
-                <td>${major.remaining_quota || "-"}</td>
-                <td class="${
-                  major.is_available === "是" ? "available-yes" : "available-no"
-                }">
-                    ${major.is_available}
-                </td>
-            `;
-      tbody.appendChild(row);
-    });
+    const majorsLoading = document.getElementById("majors-loading");
+    if (majorsLoading) majorsLoading.classList.remove("hidden");
+    // Render in chunks for performance
+    const CHUNK = 30;
+    (function renderBatch(offset = 0) {
+      const slice = college.majors.slice(offset, offset + CHUNK);
+      slice.forEach((major) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${major.major_name}</td>
+          <td>${major.applicant_count.toLocaleString()}</td>
+          <td>${major.remaining_quota || "-"}</td>
+        `;
+        tbody.appendChild(row);
+      });
+      if (offset + CHUNK < college.majors.length) {
+        requestIdleCallback(() => renderBatch(offset + CHUNK), {
+          timeout: 200,
+        });
+      } else if (majorsLoading) {
+        majorsLoading.classList.add("hidden");
+      }
+    })();
   } else {
     const row = document.createElement("tr");
-    row.innerHTML = '<td colspan="4" class="text-center">暂无专业数据</td>';
+    row.innerHTML = '<td colspan="3" class="text-center">暂无专业数据</td>';
     tbody.appendChild(row);
   }
 
