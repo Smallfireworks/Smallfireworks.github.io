@@ -1,5 +1,5 @@
 // Configuration
-const API_BASE_URL = "http://154.30.6.71:8080"; // Replace with your actual API domain
+const API_BASE_URL = "https://api.ignilumen.de:8443"; // Replace with your actual API domain
 let collegesData = [];
 let statisticsData = null;
 
