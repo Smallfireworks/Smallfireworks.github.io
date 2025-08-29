@@ -38,8 +38,8 @@ async function loadData() {
     updateStatistics(statsData);
     updateDataStatus(statsData);
 
-    // Load detailed college data
-    await loadCollegeDetails(collegesListData.data.colleges);
+    // Load detailed college + majors data via single endpoint
+    await loadAllCollegesAndMajors();
 
     hideLoading();
     showMainContent();
@@ -49,38 +49,22 @@ async function loadData() {
   }
 }
 
-// Load detailed data for all colleges
-async function loadCollegeDetails(colleges) {
-  const collegePromises = colleges.map(async (college) => {
-    try {
-      const response = await fetch(
-        `${API_BASE_URL}/api/college/${college.code}`
-      );
-      if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          return {
-            ...college,
-            ...data.data.college_info,
-            majors: data.data.majors,
-          };
-        }
-      }
-    } catch (error) {
-      console.error(`Error loading data for college ${college.code}:`, error);
-    }
+// Load all colleges and majors via single endpoint
+async function loadAllCollegesAndMajors() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/all-colleges`);
+    if (!res.ok) throw new Error("Failed to fetch all colleges");
+    const payload = await res.json();
+    if (!payload.success)
+      throw new Error(payload.message || "API returned error");
 
-    // Return basic college info if detailed data fails
-    return {
-      ...college,
-      total_majors: 0,
-      total_applicants: 0,
-      majors: [],
-    };
-  });
-
-  collegesData = await Promise.all(collegePromises);
-  renderColleges();
+    // Expect payload.data.colleges: [{ code, name, college_name, total_majors, total_applicants, majors: [...] }]
+    collegesData = payload.data.colleges || [];
+    renderColleges();
+    buildMajorsFlatList();
+  } catch (err) {
+    console.error("Error loading all colleges:", err);
+  }
 }
 
 // Update statistics display
@@ -111,16 +95,7 @@ function updateDataStatus(data) {
   }
 
   if (data.last_updated) {
-    const date = new Date(data.last_updated);
-    lastUpdatedElement.textContent = `最后更新: ${date.toLocaleString("zh-CN", {
-      timeZone: "Asia/Shanghai",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    })} CST`;
+    lastUpdatedElement.textContent = `最后更新: ${data.last_updated}`;
   }
 }
 
@@ -129,10 +104,20 @@ function renderColleges() {
   const grid = document.getElementById("colleges-grid");
   grid.innerHTML = "";
 
-  collegesData.forEach((college) => {
-    const card = createCollegeCard(college);
-    grid.appendChild(card);
-  });
+  // Render in chunks for performance
+  const CHUNK = 24;
+  let offset = 0;
+  (function renderBatch() {
+    const slice = collegesData.slice(offset, offset + CHUNK);
+    slice.forEach((college) => {
+      const card = createCollegeCard(college);
+      grid.appendChild(card);
+    });
+    offset += CHUNK;
+    if (offset < collegesData.length) {
+      requestIdleCallback(renderBatch, { timeout: 200 });
+    }
+  })();
 }
 
 // Create college card element
@@ -196,6 +181,7 @@ function showCollegeDetail(college) {
     const CHUNK = 30;
     (function renderBatch(offset = 0) {
       const slice = college.majors.slice(offset, offset + CHUNK);
+      const frag = document.createDocumentFragment();
       slice.forEach((major) => {
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -203,8 +189,9 @@ function showCollegeDetail(college) {
           <td>${major.applicant_count.toLocaleString()}</td>
           <td>${major.remaining_quota || "-"}</td>
         `;
-        tbody.appendChild(row);
+        frag.appendChild(row);
       });
+      tbody.appendChild(frag);
       if (offset + CHUNK < college.majors.length) {
         requestIdleCallback(() => renderBatch(offset + CHUNK), {
           timeout: 200,
@@ -248,6 +235,8 @@ function filterColleges() {
 
 // Sort colleges
 function sortColleges() {
+  if (document.getElementById("colleges-grid").classList.contains("hidden"))
+    return;
   const sortBy = document.getElementById("sort-select").value;
 
   collegesData.sort((a, b) => {
@@ -268,6 +257,96 @@ function sortColleges() {
   });
 
   renderColleges();
+}
+
+// Major list view helpers
+let majorsFlat = [];
+let majorsSortBy = "applicants-desc";
+
+function buildMajorsFlatList() {
+  majorsFlat = [];
+  collegesData.forEach((col) => {
+    (col.majors || []).forEach((m) => {
+      majorsFlat.push({
+        major_name: m.major_name,
+        college_name: col.college_name || col.name,
+        applicant_count: m.applicant_count || 0,
+        remaining_quota: m.remaining_quota ?? null,
+      });
+    });
+  });
+  renderMajorsList();
+}
+
+function switchView(view) {
+  const btnColleges = document.getElementById("view-colleges");
+  const btnMajors = document.getElementById("view-majors");
+  const collegesGrid = document.getElementById("colleges-grid");
+  const majorsView = document.getElementById("majors-list-view");
+  const collegesSearch = document.getElementById("colleges-search");
+
+  if (view === "majors") {
+    btnColleges.classList.remove("active");
+    btnMajors.classList.add("active");
+    collegesGrid.classList.add("hidden");
+    collegesSearch.classList.add("hidden");
+    majorsView.classList.remove("hidden");
+    renderMajorsList();
+  } else {
+    btnMajors.classList.remove("active");
+    btnColleges.classList.add("active");
+    majorsView.classList.add("hidden");
+    collegesGrid.classList.remove("hidden");
+    collegesSearch.classList.remove("hidden");
+  }
+}
+
+function sortMajorsList() {
+  majorsSortBy = document.getElementById("major-sort-select").value;
+  renderMajorsList();
+}
+
+function renderMajorsList() {
+  const tbody = document.getElementById("majors-list-body");
+  const loading = document.getElementById("majors-list-loading");
+  if (loading) loading.classList.remove("hidden");
+  tbody.innerHTML = "";
+
+  const copy = majorsFlat.slice();
+  if (majorsSortBy === "applicants-desc") {
+    copy.sort((a, b) => (b.applicant_count || 0) - (a.applicant_count || 0));
+  } else if (majorsSortBy === "ratio-desc") {
+    copy.sort((a, b) => ratio(b) - ratio(a));
+  }
+
+  const CHUNK = 50;
+  function ratio(item) {
+    const q = (item.remaining_quota ?? 0) || 0;
+    return q > 0 ? (item.applicant_count || 0) / q : Infinity;
+  }
+
+  let offset = 0;
+  (function renderBatch() {
+    const slice = copy.slice(offset, offset + CHUNK);
+    const frag = document.createDocumentFragment();
+    slice.forEach((item) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${item.major_name}</td>
+        <td>${item.college_name || "-"}</td>
+        <td>${(item.applicant_count || 0).toLocaleString()}</td>
+        <td>${item.remaining_quota ?? "-"}</td>
+      `;
+      frag.appendChild(tr);
+    });
+    tbody.appendChild(frag);
+    offset += CHUNK;
+    if (offset < copy.length) {
+      requestIdleCallback(renderBatch, { timeout: 200 });
+    } else if (loading) {
+      loading.classList.add("hidden");
+    }
+  })();
 }
 
 // UI state management

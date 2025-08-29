@@ -107,6 +107,26 @@
   margin: 0;
 }
 
+/* View toggle */
+.view-toggle {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0 18px;
+}
+.toggle-btn {
+  padding: 8px 14px;
+  border: 1px solid #e5e5ea;
+  border-radius: 10px;
+  background: #fff;
+  color: #1d1d1f;
+  cursor: pointer;
+}
+.toggle-btn.active {
+  background: #0a84ff;
+  color: #fff;
+  border-color: #0a84ff;
+}
+
 /* Search section */
 .search-section {
   display: flex;
@@ -260,6 +280,14 @@
 
 .summary-item {
   text-align: center;
+}
+
+/* List loading */
+.list-loading {
+  padding: 10px;
+  text-align: center;
+  color: #6e6e73;
+  font-size: 14px;
 }
 
 /* Table styles */

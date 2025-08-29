@@ -7,7 +7,148 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>Small_fireworks</copyright>
-        <lastBuildDate>Tue, 05 Aug 2025 23:27:00 +0800</lastBuildDate><atom:link href="https://smallfireworks.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 29 Aug 2025 16:28:00 +0800</lastBuildDate><atom:link href="https://smallfireworks.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>浙江大学转专业数据查询系统</title>
+        <link>https://smallfireworks.github.io/p/%E6%B5%99%E6%B1%9F%E5%A4%A7%E5%AD%A6%E8%BD%AC%E4%B8%93%E4%B8%9A%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E7%B3%BB%E7%BB%9F/</link>
+        <pubDate>Fri, 29 Aug 2025 16:28:00 +0800</pubDate>
+        
+        <guid>https://smallfireworks.github.io/p/%E6%B5%99%E6%B1%9F%E5%A4%A7%E5%AD%A6%E8%BD%AC%E4%B8%93%E4%B8%9A%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E7%B3%BB%E7%BB%9F/</guid>
+        <description>&lt;h1 id=&#34;浙江大学转专业数据查询系统&#34;&gt;浙江大学转专业数据查询系统
+&lt;/h1&gt;&lt;p&gt;这是一个实时查询浙江大学转专业申请数据的工具，提供各学院、各专业的详细申请信息和统计数据。&lt;/p&gt;
+&lt;div id=&#34;zju-transfer-app&#34;&gt;
+    
+    &lt;div id=&#34;loading&#34; class=&#34;loading-container&#34;&gt;
+        &lt;div class=&#34;spinner&#34;&gt;&lt;/div&gt;
+        &lt;p&gt;正在加载数据...&lt;/p&gt;
+    &lt;/div&gt;
+
+    
+    &lt;div id=&#34;error-message&#34; class=&#34;error-container&#34; style=&#34;display: none;&#34;&gt;
+        &lt;div class=&#34;error-content&#34;&gt;
+            &lt;div class=&#34;error-title&#34;&gt;❌ 数据加载失败&lt;/div&gt;
+            &lt;p id=&#34;error-text&#34;&gt;&lt;/p&gt;
+            &lt;button onclick=&#34;retryLoad()&#34; class=&#34;retry-btn&#34;&gt;重试&lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+
+    
+    &lt;div id=&#34;main-content&#34; style=&#34;display: none;&#34;&gt;
+        
+        &lt;div id=&#34;data-status&#34; class=&#34;data-status&#34;&gt;
+            &lt;span id=&#34;status-indicator&#34;&gt;&lt;/span&gt;
+            &lt;span id=&#34;last-updated&#34;&gt;&lt;/span&gt;
+        &lt;/div&gt;
+
+        
+        &lt;div class=&#34;stats-overview&#34;&gt;
+            &lt;div class=&#34;stat-card&#34;&gt;
+                &lt;div class=&#34;stat-title&#34;&gt;总学院数&lt;/div&gt;
+                &lt;div class=&#34;stat-number&#34; id=&#34;total-colleges&#34;&gt;-&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&#34;stat-card&#34;&gt;
+                &lt;div class=&#34;stat-title&#34;&gt;总专业数&lt;/div&gt;
+                &lt;div class=&#34;stat-number&#34; id=&#34;total-majors&#34;&gt;-&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&#34;stat-card&#34;&gt;
+                &lt;div class=&#34;stat-title&#34;&gt;总申请人数&lt;/div&gt;
+                &lt;div class=&#34;stat-number&#34; id=&#34;total-applicants&#34;&gt;-&lt;/div&gt;
+            &lt;/div&gt;
+            &lt;div class=&#34;stat-card&#34;&gt;
+                &lt;div class=&#34;stat-title&#34;&gt;平均申请人数&lt;/div&gt;
+                &lt;div class=&#34;stat-number&#34; id=&#34;avg-applicants&#34;&gt;-&lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+
+        
+        &lt;div class=&#34;view-toggle&#34; role=&#34;tablist&#34; aria-label=&#34;视图切换&#34;&gt;
+            &lt;button class=&#34;toggle-btn active&#34; id=&#34;view-colleges&#34; role=&#34;tab&#34; aria-selected=&#34;true&#34; onclick=&#34;switchView(&#39;colleges&#39;)&#34;&gt;学院视图&lt;/button&gt;
+            &lt;button class=&#34;toggle-btn&#34; id=&#34;view-majors&#34; role=&#34;tab&#34; aria-selected=&#34;false&#34; onclick=&#34;switchView(&#39;majors&#39;)&#34;&gt;专业列表视图&lt;/button&gt;
+        &lt;/div&gt;
+
+        
+        &lt;div class=&#34;search-section&#34; id=&#34;colleges-search&#34;&gt;
+            &lt;input type=&#34;text&#34; id=&#34;college-search&#34; placeholder=&#34;搜索学院名称...&#34; onkeyup=&#34;filterColleges()&#34;&gt;
+            &lt;select id=&#34;sort-select&#34; onchange=&#34;sortColleges()&#34;&gt;
+                &lt;option value=&#34;applicants-desc&#34;&gt;按申请人数降序&lt;/option&gt;
+                &lt;option value=&#34;applicants-asc&#34;&gt;按申请人数升序&lt;/option&gt;
+                &lt;option value=&#34;name-asc&#34;&gt;按学院名称排序&lt;/option&gt;
+                &lt;option value=&#34;majors-desc&#34;&gt;按专业数量降序&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+
+        
+        &lt;div id=&#34;colleges-grid&#34; class=&#34;colleges-grid&#34;&gt;
+            
+        &lt;/div&gt;
+
+        
+        &lt;div id=&#34;majors-list-view&#34; class=&#34;hidden&#34;&gt;
+            &lt;div class=&#34;major-list-controls&#34;&gt;
+                &lt;select id=&#34;major-sort-select&#34; onchange=&#34;sortMajorsList()&#34;&gt;
+                    &lt;option value=&#34;applicants-desc&#34;&gt;按申请人数降序&lt;/option&gt;
+                    &lt;option value=&#34;ratio-desc&#34;&gt;按申请/余量比降序&lt;/option&gt;
+                &lt;/select&gt;
+            &lt;/div&gt;
+            &lt;div id=&#34;majors-list-loading&#34; class=&#34;list-loading hidden&#34;&gt;正在加载专业列表…&lt;/div&gt;
+            &lt;table class=&#34;majors-table&#34; id=&#34;majors-list-table&#34;&gt;
+                &lt;thead&gt;
+                    &lt;tr&gt;
+                        &lt;th&gt;专业名称&lt;/th&gt;
+                        &lt;th&gt;学院名称&lt;/th&gt;
+                        &lt;th&gt;申请人数&lt;/th&gt;
+                        &lt;th&gt;余量&lt;/th&gt;
+                    &lt;/tr&gt;
+                &lt;/thead&gt;
+                &lt;tbody id=&#34;majors-list-body&#34;&gt;&lt;/tbody&gt;
+            &lt;/table&gt;
+        &lt;/div&gt;
+
+        
+        &lt;div id=&#34;college-modal&#34; class=&#34;modal&#34; style=&#34;display: none;&#34;&gt;
+            &lt;div class=&#34;modal-content&#34;&gt;
+                &lt;div class=&#34;modal-header&#34;&gt;
+                    &lt;h2 id=&#34;modal-college-name&#34;&gt;&lt;/h2&gt;
+                    &lt;span class=&#34;close&#34; onclick=&#34;closeModal()&#34;&gt;&amp;times;&lt;/span&gt;
+                &lt;/div&gt;
+                &lt;div class=&#34;modal-body&#34;&gt;
+                    &lt;div class=&#34;college-summary&#34;&gt;
+                        &lt;div class=&#34;summary-item&#34;&gt;
+                            &lt;strong&gt;学院代码:&lt;/strong&gt; &lt;span id=&#34;modal-college-code&#34;&gt;&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&#34;summary-item&#34;&gt;
+                            &lt;strong&gt;专业总数:&lt;/strong&gt; &lt;span id=&#34;modal-total-majors&#34;&gt;&lt;/span&gt;
+                        &lt;/div&gt;
+                        &lt;div class=&#34;summary-item&#34;&gt;
+                            &lt;strong&gt;申请总人数:&lt;/strong&gt; &lt;span id=&#34;modal-total-applicants&#34;&gt;&lt;/span&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                    &lt;div id=&#34;majors-table-container&#34;&gt;
+                        &lt;div id=&#34;majors-loading&#34; class=&#34;modal-loading hidden&#34;&gt;正在加载专业数据…&lt;/div&gt;
+                        &lt;table id=&#34;majors-table&#34; class=&#34;majors-table&#34;&gt;
+                            &lt;thead&gt;
+                                &lt;tr&gt;
+                                    &lt;th&gt;专业名称&lt;/th&gt;
+                                    &lt;th&gt;申请人数&lt;/th&gt;
+                                    &lt;th&gt;余量&lt;/th&gt;
+                                &lt;/tr&gt;
+                            &lt;/thead&gt;
+                            &lt;tbody id=&#34;majors-table-body&#34;&gt;
+                                
+                            &lt;/tbody&gt;
+                        &lt;/table&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;link rel=&#34;stylesheet&#34; href=&#34;https://smallfireworks.github.io/transfer-data/assets/style.css&#34; /&gt;
+&lt;script src=&#34;https://smallfireworks.github.io/transfer-data/assets/script.js&#34; defer&gt;&lt;/script&gt;
+
+</description>
+        </item>
+        <item>
         <title>抽象代数</title>
         <link>https://smallfireworks.github.io/p/%E6%8A%BD%E8%B1%A1%E4%BB%A3%E6%95%B0/</link>
         <pubDate>Tue, 05 Aug 2025 23:27:00 +0800</pubDate>
@@ -1036,119 +1177,6 @@ b. 对任何 $a \in G$ 存在 $b \in G$ 使 $ba = e$ 成立（左逆元）。
         
         <guid>https://smallfireworks.github.io/archives/</guid>
         <description></description>
-        </item>
-        <item>
-        <title>浙江大学转专业数据查询系统</title>
-        <link>https://smallfireworks.github.io/p/%E6%B5%99%E6%B1%9F%E5%A4%A7%E5%AD%A6%E8%BD%AC%E4%B8%93%E4%B8%9A%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E7%B3%BB%E7%BB%9F/</link>
-        <pubDate>Wed, 28 Aug 2024 20:49:00 +0800</pubDate>
-        
-        <guid>https://smallfireworks.github.io/p/%E6%B5%99%E6%B1%9F%E5%A4%A7%E5%AD%A6%E8%BD%AC%E4%B8%93%E4%B8%9A%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E7%B3%BB%E7%BB%9F/</guid>
-        <description>&lt;h1 id=&#34;浙江大学转专业数据查询系统&#34;&gt;浙江大学转专业数据查询系统
-&lt;/h1&gt;&lt;p&gt;这是一个实时查询浙江大学转专业申请数据的工具，提供各学院、各专业的详细申请信息和统计数据。&lt;/p&gt;
-&lt;div id=&#34;zju-transfer-app&#34;&gt;
-    
-    &lt;div id=&#34;loading&#34; class=&#34;loading-container&#34;&gt;
-        &lt;div class=&#34;spinner&#34;&gt;&lt;/div&gt;
-        &lt;p&gt;正在加载数据...&lt;/p&gt;
-    &lt;/div&gt;
-
-    
-    &lt;div id=&#34;error-message&#34; class=&#34;error-container&#34; style=&#34;display: none;&#34;&gt;
-        &lt;div class=&#34;error-content&#34;&gt;
-            &lt;div class=&#34;error-title&#34;&gt;❌ 数据加载失败&lt;/div&gt;
-            &lt;p id=&#34;error-text&#34;&gt;&lt;/p&gt;
-            &lt;button onclick=&#34;retryLoad()&#34; class=&#34;retry-btn&#34;&gt;重试&lt;/button&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-
-    
-    &lt;div id=&#34;main-content&#34; style=&#34;display: none;&#34;&gt;
-        
-        &lt;div id=&#34;data-status&#34; class=&#34;data-status&#34;&gt;
-            &lt;span id=&#34;status-indicator&#34;&gt;&lt;/span&gt;
-            &lt;span id=&#34;last-updated&#34;&gt;&lt;/span&gt;
-        &lt;/div&gt;
-
-        
-        &lt;div class=&#34;stats-overview&#34;&gt;
-            &lt;div class=&#34;stat-card&#34;&gt;
-                &lt;div class=&#34;stat-title&#34;&gt;总学院数&lt;/div&gt;
-                &lt;div class=&#34;stat-number&#34; id=&#34;total-colleges&#34;&gt;-&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class=&#34;stat-card&#34;&gt;
-                &lt;div class=&#34;stat-title&#34;&gt;总专业数&lt;/div&gt;
-                &lt;div class=&#34;stat-number&#34; id=&#34;total-majors&#34;&gt;-&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class=&#34;stat-card&#34;&gt;
-                &lt;div class=&#34;stat-title&#34;&gt;总申请人数&lt;/div&gt;
-                &lt;div class=&#34;stat-number&#34; id=&#34;total-applicants&#34;&gt;-&lt;/div&gt;
-            &lt;/div&gt;
-            &lt;div class=&#34;stat-card&#34;&gt;
-                &lt;div class=&#34;stat-title&#34;&gt;平均申请人数&lt;/div&gt;
-                &lt;div class=&#34;stat-number&#34; id=&#34;avg-applicants&#34;&gt;-&lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-
-        
-        &lt;div class=&#34;search-section&#34;&gt;
-            &lt;input type=&#34;text&#34; id=&#34;college-search&#34; placeholder=&#34;搜索学院名称...&#34; onkeyup=&#34;filterColleges()&#34;&gt;
-            &lt;select id=&#34;sort-select&#34; onchange=&#34;sortColleges()&#34;&gt;
-                &lt;option value=&#34;applicants-desc&#34;&gt;按申请人数降序&lt;/option&gt;
-                &lt;option value=&#34;applicants-asc&#34;&gt;按申请人数升序&lt;/option&gt;
-                &lt;option value=&#34;name-asc&#34;&gt;按学院名称排序&lt;/option&gt;
-                &lt;option value=&#34;majors-desc&#34;&gt;按专业数量降序&lt;/option&gt;
-            &lt;/select&gt;
-        &lt;/div&gt;
-
-        
-        &lt;div id=&#34;colleges-grid&#34; class=&#34;colleges-grid&#34;&gt;
-            
-        &lt;/div&gt;
-
-        
-        &lt;div id=&#34;college-modal&#34; class=&#34;modal&#34; style=&#34;display: none;&#34;&gt;
-            &lt;div class=&#34;modal-content&#34;&gt;
-                &lt;div class=&#34;modal-header&#34;&gt;
-                    &lt;h2 id=&#34;modal-college-name&#34;&gt;&lt;/h2&gt;
-                    &lt;span class=&#34;close&#34; onclick=&#34;closeModal()&#34;&gt;&amp;times;&lt;/span&gt;
-                &lt;/div&gt;
-                &lt;div class=&#34;modal-body&#34;&gt;
-                    &lt;div class=&#34;college-summary&#34;&gt;
-                        &lt;div class=&#34;summary-item&#34;&gt;
-                            &lt;strong&gt;学院代码:&lt;/strong&gt; &lt;span id=&#34;modal-college-code&#34;&gt;&lt;/span&gt;
-                        &lt;/div&gt;
-                        &lt;div class=&#34;summary-item&#34;&gt;
-                            &lt;strong&gt;专业总数:&lt;/strong&gt; &lt;span id=&#34;modal-total-majors&#34;&gt;&lt;/span&gt;
-                        &lt;/div&gt;
-                        &lt;div class=&#34;summary-item&#34;&gt;
-                            &lt;strong&gt;申请总人数:&lt;/strong&gt; &lt;span id=&#34;modal-total-applicants&#34;&gt;&lt;/span&gt;
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                    &lt;div id=&#34;majors-table-container&#34;&gt;
-                        &lt;div id=&#34;majors-loading&#34; class=&#34;modal-loading hidden&#34;&gt;正在加载专业数据…&lt;/div&gt;
-                        &lt;table id=&#34;majors-table&#34; class=&#34;majors-table&#34;&gt;
-                            &lt;thead&gt;
-                                &lt;tr&gt;
-                                    &lt;th&gt;专业名称&lt;/th&gt;
-                                    &lt;th&gt;申请人数&lt;/th&gt;
-                                    &lt;th&gt;余量&lt;/th&gt;
-                                &lt;/tr&gt;
-                            &lt;/thead&gt;
-                            &lt;tbody id=&#34;majors-table-body&#34;&gt;
-                                
-                            &lt;/tbody&gt;
-                        &lt;/table&gt;
-                    &lt;/div&gt;
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/div&gt;
-
-&lt;link rel=&#34;stylesheet&#34; href=&#34;https://smallfireworks.github.io/transfer-data/assets/style.css&#34; /&gt;
-&lt;script src=&#34;https://smallfireworks.github.io/transfer-data/assets/script.js&#34; defer&gt;&lt;/script&gt;
-
-</description>
         </item>
         <item>
         <title>关于</title>

@@ -10,7 +10,7 @@
 <meta property='og:description' content="实时查询浙江大学各学院转专业申请数据，包括申请人数、余量信息等详细统计">
 <meta property='og:url' content='https://smallfireworks.github.io/p/%E6%B5%99%E6%B1%9F%E5%A4%A7%E5%AD%A6%E8%BD%AC%E4%B8%93%E4%B8%9A%E6%95%B0%E6%8D%AE%E6%9F%A5%E8%AF%A2%E7%B3%BB%E7%BB%9F/'>
 <meta property='og:site_name' content='Small_fireworks的小站'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='转专业' /><meta property='article:published_time' content='2024-08-28T20:49:00&#43;08:00'/><meta property='article:modified_time' content='2024-08-28T20:49:00&#43;08:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='转专业' /><meta property='article:published_time' content='2025-08-29T16:28:00&#43;08:00'/><meta property='article:modified_time' content='2025-08-29T16:28:00&#43;08:00'/>
 <meta name="twitter:title" content="浙江大学转专业数据查询系统">
 <meta name="twitter:description" content="实时查询浙江大学各学院转专业申请数据，包括申请人数、余量信息等详细统计">
     </head>
@@ -287,7 +287,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">Aug 28, 2024</time>
+                <time class="article-time--published">Aug 29, 2025</time>
             </div>
         
 
@@ -364,7 +364,13 @@
         </div>
 
         
-        <div class="search-section">
+        <div class="view-toggle" role="tablist" aria-label="视图切换">
+            <button class="toggle-btn active" id="view-colleges" role="tab" aria-selected="true" onclick="switchView('colleges')">学院视图</button>
+            <button class="toggle-btn" id="view-majors" role="tab" aria-selected="false" onclick="switchView('majors')">专业列表视图</button>
+        </div>
+
+        
+        <div class="search-section" id="colleges-search">
             <input type="text" id="college-search" placeholder="搜索学院名称..." onkeyup="filterColleges()">
             <select id="sort-select" onchange="sortColleges()">
                 <option value="applicants-desc">按申请人数降序</option>
@@ -377,6 +383,28 @@
         
         <div id="colleges-grid" class="colleges-grid">
             
+        </div>
+
+        
+        <div id="majors-list-view" class="hidden">
+            <div class="major-list-controls">
+                <select id="major-sort-select" onchange="sortMajorsList()">
+                    <option value="applicants-desc">按申请人数降序</option>
+                    <option value="ratio-desc">按申请/余量比降序</option>
+                </select>
+            </div>
+            <div id="majors-list-loading" class="list-loading hidden">正在加载专业列表…</div>
+            <table class="majors-table" id="majors-list-table">
+                <thead>
+                    <tr>
+                        <th>专业名称</th>
+                        <th>学院名称</th>
+                        <th>申请人数</th>
+                        <th>余量</th>
+                    </tr>
+                </thead>
+                <tbody id="majors-list-body"></tbody>
+            </table>
         </div>
 
         
