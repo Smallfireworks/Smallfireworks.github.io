@@ -265,13 +265,15 @@ let majorsSortBy = "applicants-desc";
 
 function buildMajorsFlatList() {
   majorsFlat = [];
+  let idx = 0;
   collegesData.forEach((col) => {
     (col.majors || []).forEach((m) => {
       majorsFlat.push({
         major_name: m.major_name,
         college_name: col.college_name || col.name,
-        applicant_count: m.applicant_count || 0,
+        applicant_count: m.applicant_count ?? 0,
         remaining_quota: m.remaining_quota ?? null,
+        idx: idx++,
       });
     });
   });
@@ -316,30 +318,33 @@ function renderMajorsList() {
   if (majorsSortBy === "applicants-desc") {
     copy.sort((a, b) => (b.applicant_count || 0) - (a.applicant_count || 0));
   } else if (majorsSortBy === "ratio-desc") {
-    // Sort using categories to handle edge cases:
-    // cat 0: quota==0 and applicants>0 (Infinity) -> top (existing behavior)
-    // cat 1: quota>0 -> sort by finite ratio desc
-    // cat 2: applicants==0 and quota==0 (0/0) -> bottom
+    // Stable, cross-browser sort with explicit numeric coercion and category ranking
     copy.sort((a, b) => {
       const ra = rank(a);
       const rb = rank(b);
-      if (ra.cat !== rb.cat) return ra.cat - rb.cat; // lower cat first
+      if (ra.cat !== rb.cat) return ra.cat - rb.cat; // lower cat first: 0 (inf) -> 1 (finite) -> 2 (0/0)
       if (ra.cat === 1) {
-        if (rb.ratio !== ra.ratio) return rb.ratio - ra.ratio; // desc
+        if (rb.ratio !== ra.ratio) return rb.ratio - ra.ratio; // desc by finite ratio
       }
-      // fallback tie-breaker
-      return (b.applicant_count || 0) - (a.applicant_count || 0);
+      // tie-breakers for cat 0, 1, 2 to ensure stable, deterministic order
+      const aApp = toNum(a.applicant_count);
+      const bApp = toNum(b.applicant_count);
+      if (bApp !== aApp) return bApp - aApp; // higher applicants first
+      return (a.idx ?? 0) - (b.idx ?? 0); // preserve original order
     });
   }
 
   const CHUNK = 50;
+  function toNum(v) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  }
   function rank(item) {
-    const a = item.applicant_count || 0;
-    const qRaw = item.remaining_quota;
-    const q = qRaw == null ? 0 : qRaw;
-    if (q === 0) {
+    const a = toNum(item.applicant_count);
+    const q = toNum(item.remaining_quota);
+    if (q <= 0) {
       if (a === 0) return { cat: 2, ratio: 0 }; // 0/0 -> bottom
-      return { cat: 0, ratio: Infinity }; // applicants>0 & quota==0 -> top
+      return { cat: 0, ratio: Infinity }; // applicants>0 & quota<=0 -> top
     }
     return { cat: 1, ratio: a / q }; // finite ratio
   }
