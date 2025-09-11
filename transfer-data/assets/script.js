@@ -330,24 +330,8 @@ function exportCollegesCSV() {
   });
   downloadCSV("colleges_export.csv", toCSV(rows));
 }
-// Numeric coercion helper at global scope
-function toNum(v) {
-  const n = Number(v);
-  return Number.isFinite(n) ? n : 0;
-}
 
-// Ranking helper at global scope (used by both render and export)
-function rank(item) {
-  const a = toNum(item.applicant_count);
-  const q = toNum(item.remaining_quota);
-  if (q <= 0) {
-    if (a === 0) return { cat: 2, ratio: 0 }; // 0/0 -> bottom
-    return { cat: 0, ratio: Infinity }; // applicants>0 & quota<=0 -> top
-  }
-  return { cat: 1, ratio: a / q }; // finite ratio
-}
-
-// Export majors CSV at global scope so onclick can access it
+// Global: export majors as CSV (Major List View)
 function exportMajorsCSV() {
   if (!Array.isArray(majorsFlat) || majorsFlat.length === 0) {
     alert("暂无可导出的数据");
@@ -355,18 +339,36 @@ function exportMajorsCSV() {
   }
   // Build a copy using current sort order in the UI
   const copy = majorsFlat.slice();
+
+  // Helper numeric coercion
+  const toNumLocal = (v) => {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  };
+  const rankLocal = (item) => {
+    const a = toNumLocal(item.applicant_count);
+    const q = toNumLocal(item.remaining_quota);
+    if (q <= 0) {
+      if (a === 0) return { cat: 2, ratio: 0 }; // 0/0 -> bottom
+      return { cat: 0, ratio: Infinity }; // applicants>0 & quota<=0 -> top
+    }
+    return { cat: 1, ratio: a / q };
+  };
+
   if (majorsSortBy === "applicants-desc") {
-    copy.sort((a, b) => (b.applicant_count || 0) - (a.applicant_count || 0));
+    copy.sort(
+      (a, b) => toNumLocal(b.applicant_count) - toNumLocal(a.applicant_count)
+    );
   } else if (majorsSortBy === "ratio-desc") {
     copy.sort((a, b) => {
-      const ra = rank(a),
-        rb = rank(b);
-      if (ra.cat !== rb.cat) return ra.cat - rb.cat;
-      if (ra.cat === 1 && rb.ratio !== ra.ratio) return rb.ratio - ra.ratio;
-      const aApp = toNum(a.applicant_count),
-        bApp = toNum(b.applicant_count);
-      if (bApp !== aApp) return bApp - aApp;
-      return (a.idx ?? 0) - (b.idx ?? 0);
+      const ra = rankLocal(a),
+        rb = rankLocal(b);
+      if (ra.cat !== rb.cat) return ra.cat - rb.cat; // 0 -> 1 -> 2
+      if (ra.cat === 1 && rb.ratio !== ra.ratio) return rb.ratio - ra.ratio; // finite ratio desc
+      const aApp = toNumLocal(a.applicant_count),
+        bApp = toNumLocal(b.applicant_count);
+      if (bApp !== aApp) return bApp - aApp; // tie-breaker by applicants
+      return (a.idx ?? 0) - (b.idx ?? 0); // stable fallback
     });
   }
 
@@ -379,8 +381,8 @@ function exportMajorsCSV() {
   ];
   const rows = [header];
   const calcRatio = (item) => {
-    const a = toNum(item.applicant_count);
-    const q = toNum(item.remaining_quota);
+    const a = toNumLocal(item.applicant_count);
+    const q = toNumLocal(item.remaining_quota);
     if (q <= 0) return a > 0 ? "∞" : ""; // show infinity for >0/0, blank for 0/0
     return (a / q).toFixed(3);
   };
@@ -389,7 +391,7 @@ function exportMajorsCSV() {
     rows.push([
       item.major_name || "",
       item.college_name || "",
-      toNum(item.applicant_count),
+      toNumLocal(item.applicant_count),
       item.remaining_quota ?? "",
       calcRatio(item),
     ]);
@@ -480,6 +482,19 @@ function renderMajorsList() {
   }
 
   const CHUNK = 50;
+  function toNum(v) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  }
+  function rank(item) {
+    const a = toNum(item.applicant_count);
+    const q = toNum(item.remaining_quota);
+    if (q <= 0) {
+      if (a === 0) return { cat: 2, ratio: 0 }; // 0/0 -> bottom
+      return { cat: 0, ratio: Infinity }; // applicants>0 & quota<=0 -> top
+    }
+    return { cat: 1, ratio: a / q }; // finite ratio
+  }
 
   let offset = 0;
   (function renderBatch() {
