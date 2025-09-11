@@ -358,20 +358,26 @@ function switchView(view) {
   const collegesGrid = document.getElementById("colleges-grid");
   const majorsView = document.getElementById("majors-list-view");
   const collegesSearch = document.getElementById("colleges-search");
+  const collegesExport = document.getElementById("colleges-export-container");
+  const majorsExport = document.getElementById("majors-export-container");
 
   if (view === "majors") {
     btnColleges.classList.remove("active");
     btnMajors.classList.add("active");
     collegesGrid.classList.add("hidden");
     collegesSearch.classList.add("hidden");
+    if (collegesExport) collegesExport.style.display = "none";
     majorsView.classList.remove("hidden");
+    if (majorsExport) majorsExport.style.display = "flex";
     renderMajorsList();
   } else {
     btnMajors.classList.remove("active");
     btnColleges.classList.add("active");
     majorsView.classList.add("hidden");
+    if (majorsExport) majorsExport.style.display = "none";
     collegesGrid.classList.remove("hidden");
     collegesSearch.classList.remove("hidden");
+    if (collegesExport) collegesExport.style.display = "flex";
   }
 }
 

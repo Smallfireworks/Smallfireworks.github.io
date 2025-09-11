@@ -80,8 +80,8 @@
         &lt;div id=&#34;colleges-grid&#34; class=&#34;colleges-grid&#34;&gt;
             
         &lt;/div&gt;
-        &lt;div class=&#34;export-container&#34;&gt;
-            &lt;button class=&#34;export-btn&#34; onclick=&#34;exportCollegesCSV()&#34; aria-label=&#34;导出 CSV&#34;&gt;
+        &lt;div class=&#34;export-container&#34; id=&#34;colleges-export-container&#34;&gt;
+            &lt;button class=&#34;export-btn&#34; type=&#34;button&#34; onclick=&#34;exportCollegesCSV()&#34; aria-label=&#34;导出 CSV&#34;&gt;
                 &lt;span class=&#34;export-icon&#34;&gt;⬇&lt;/span&gt;
                 导出 CSV
             &lt;/button&gt;
@@ -107,8 +107,8 @@
                 &lt;/thead&gt;
                 &lt;tbody id=&#34;majors-list-body&#34;&gt;&lt;/tbody&gt;
             &lt;/table&gt;
-            &lt;div class=&#34;export-container&#34;&gt;
-                &lt;button class=&#34;export-btn&#34; onclick=&#34;exportMajorsCSV()&#34; aria-label=&#34;导出 CSV&#34;&gt;
+            &lt;div class=&#34;export-container&#34; id=&#34;majors-export-container&#34;&gt;
+                &lt;button class=&#34;export-btn&#34; type=&#34;button&#34; onclick=&#34;exportMajorsCSV()&#34; aria-label=&#34;导出 CSV&#34;&gt;
                     &lt;span class=&#34;export-icon&#34;&gt;⬇&lt;/span&gt;
                     导出 CSV
                 &lt;/button&gt;
