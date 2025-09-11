@@ -368,8 +368,8 @@
   font-size: 14px;
 }
 
-/* Export bar/buttons */
-.export-bar {
+/* Export button */
+.export-container {
   display: flex;
   justify-content: flex-end;
   margin-top: 12px;
@@ -380,17 +380,18 @@
   gap: 8px;
   padding: 10px 14px;
   border: 1px solid #e5e5ea;
-  border-radius: 12px;
+  border-radius: 10px;
   background: #0a84ff;
   color: #fff;
   cursor: pointer;
   font-weight: 600;
 }
 .export-btn:hover {
-  filter: brightness(0.98);
+  filter: brightness(0.95);
 }
 .export-icon {
   font-size: 16px;
+  line-height: 1;
 }
 
 /* Utility classes */

@@ -80,15 +80,12 @@
         &lt;div id=&#34;colleges-grid&#34; class=&#34;colleges-grid&#34;&gt;
             
         &lt;/div&gt;
-
-            
-            &lt;div class=&#34;export-bar&#34; id=&#34;export-colleges-bar&#34;&gt;
-                &lt;button class=&#34;export-btn&#34; onclick=&#34;exportCollegesToExcel()&#34; aria-label=&#34;导出学院视图为Excel&#34;&gt;
-                    &lt;span class=&#34;export-icon&#34;&gt;⬇️&lt;/span&gt;
-                    &lt;span&gt;导出 Excel&lt;/span&gt;
-                &lt;/button&gt;
-            &lt;/div&gt;
-
+        &lt;div class=&#34;export-container&#34;&gt;
+            &lt;button class=&#34;export-btn&#34; onclick=&#34;exportCollegesCSV()&#34; aria-label=&#34;导出 CSV&#34;&gt;
+                &lt;span class=&#34;export-icon&#34;&gt;⬇&lt;/span&gt;
+                导出 CSV
+            &lt;/button&gt;
+        &lt;/div&gt;
 
         
         &lt;div id=&#34;majors-list-view&#34; class=&#34;hidden&#34;&gt;
@@ -102,15 +99,6 @@
             &lt;table class=&#34;majors-table&#34; id=&#34;majors-list-table&#34;&gt;
                 &lt;thead&gt;
                     &lt;tr&gt;
-
-            
-            &lt;div class=&#34;export-bar&#34; id=&#34;export-majors-bar&#34;&gt;
-                &lt;button class=&#34;export-btn&#34; onclick=&#34;exportMajorsToExcel()&#34; aria-label=&#34;导出专业列表为Excel&#34;&gt;
-                    &lt;span class=&#34;export-icon&#34;&gt;⬇️&lt;/span&gt;
-                    &lt;span&gt;导出 Excel&lt;/span&gt;
-                &lt;/button&gt;
-            &lt;/div&gt;
-
                         &lt;th&gt;专业名称&lt;/th&gt;
                         &lt;th&gt;学院名称&lt;/th&gt;
                         &lt;th&gt;申请人数&lt;/th&gt;
@@ -119,6 +107,12 @@
                 &lt;/thead&gt;
                 &lt;tbody id=&#34;majors-list-body&#34;&gt;&lt;/tbody&gt;
             &lt;/table&gt;
+            &lt;div class=&#34;export-container&#34;&gt;
+                &lt;button class=&#34;export-btn&#34; onclick=&#34;exportMajorsCSV()&#34; aria-label=&#34;导出 CSV&#34;&gt;
+                    &lt;span class=&#34;export-icon&#34;&gt;⬇&lt;/span&gt;
+                    导出 CSV
+                &lt;/button&gt;
+            &lt;/div&gt;
         &lt;/div&gt;
 
         
@@ -145,7 +139,6 @@
                         &lt;table id=&#34;majors-table&#34; class=&#34;majors-table&#34;&gt;
                             &lt;thead&gt;
                                 &lt;tr&gt;
-
                                     &lt;th&gt;专业名称&lt;/th&gt;
                                     &lt;th&gt;申请人数&lt;/th&gt;
                                     &lt;th&gt;余量&lt;/th&gt;
@@ -164,8 +157,6 @@
 
 &lt;link rel=&#34;stylesheet&#34; href=&#34;https://smallfireworks.github.io/transfer-data/assets/style.css&#34; /&gt;
 &lt;script src=&#34;https://smallfireworks.github.io/transfer-data/assets/script.js&#34; defer&gt;&lt;/script&gt;
-&lt;script src=&#34;https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js&#34;&gt;&lt;/script&gt;
-
 
 </description>
         </item>

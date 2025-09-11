@@ -6,6 +6,17 @@ let statisticsData = null;
 // Initialize the application
 document.addEventListener("DOMContentLoaded", function () {
   loadData();
+  // Wire up export buttons if present
+  document.addEventListener("click", (e) => {
+    const t = e.target;
+    if (
+      t &&
+      t.matches &&
+      (t.matches(".export-btn") || t.closest(".export-btn"))
+    ) {
+      // no-op here, dedicated onclick handlers are set in HTML
+    }
+  });
 });
 
 // Load all data
@@ -259,6 +270,67 @@ function sortColleges() {
   renderColleges();
 }
 
+// CSV export helpers
+function toCSV(rows) {
+  const esc = (v) => {
+    if (v === null || v === undefined) return "";
+    const s = String(v);
+    // escape quotes by doubling them
+    const needsQuote = /[",\n]/.test(s);
+    const out = s.replace(/"/g, '""');
+    return needsQuote ? `"${out}"` : out;
+  };
+  return rows.map((r) => r.map(esc).join(",")).join("\n");
+}
+function downloadCSV(filename, content) {
+  const blob = new Blob(["\ufeff" + content], {
+    type: "text/csv;charset=utf-8;",
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function exportCollegesCSV() {
+  if (!Array.isArray(collegesData) || collegesData.length === 0) {
+    alert("暂无可导出的数据");
+    return;
+  }
+  // Build rows respecting current sort order of collegesData
+  const header = [
+    "College Name",
+    "College Code",
+    "Major Name",
+    "Applicant Count",
+    "Remaining Quota",
+  ];
+  const rows = [header];
+  collegesData.forEach((college) => {
+    const cname = college.college_name || college.name || "";
+    const ccode = college.college_code || college.code || "";
+    const majors = Array.isArray(college.majors) ? college.majors : [];
+    if (majors.length === 0) {
+      rows.push([cname, ccode, "", 0, ""]);
+    } else {
+      majors.forEach((m) => {
+        rows.push([
+          cname,
+          ccode,
+          m.major_name || "",
+          Number(m.applicant_count || 0),
+          m.remaining_quota ?? "",
+        ]);
+      });
+    }
+  });
+  downloadCSV("colleges_export.csv", toCSV(rows));
+}
+
 // Major list view helpers
 let majorsFlat = [];
 let majorsSortBy = "applicants-desc";
@@ -320,8 +392,8 @@ function renderMajorsList() {
   } else if (majorsSortBy === "ratio-desc") {
     // Stable, cross-browser sort with explicit numeric coercion and category ranking
     copy.sort((a, b) => {
-      const ra = ratioRank(a);
-      const rb = ratioRank(b);
+      const ra = rank(a);
+      const rb = rank(b);
       if (ra.cat !== rb.cat) return ra.cat - rb.cat; // lower cat first: 0 (inf) -> 1 (finite) -> 2 (0/0)
       if (ra.cat === 1) {
         if (rb.ratio !== ra.ratio) return rb.ratio - ra.ratio; // desc by finite ratio
@@ -335,6 +407,69 @@ function renderMajorsList() {
   }
 
   const CHUNK = 50;
+  function toNum(v) {
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
+  }
+  function rank(item) {
+    const a = toNum(item.applicant_count);
+    const q = toNum(item.remaining_quota);
+    if (q <= 0) {
+      if (a === 0) return { cat: 2, ratio: 0 }; // 0/0 -> bottom
+      return { cat: 0, ratio: Infinity }; // applicants>0 & quota<=0 -> top
+    }
+    return { cat: 1, ratio: a / q }; // finite ratio
+  }
+
+  function exportMajorsCSV() {
+    if (!Array.isArray(majorsFlat) || majorsFlat.length === 0) {
+      alert("暂无可导出的数据");
+      return;
+    }
+    // Build a copy using current sort order in the UI
+    const copy = majorsFlat.slice();
+    if (majorsSortBy === "applicants-desc") {
+      copy.sort((a, b) => (b.applicant_count || 0) - (a.applicant_count || 0));
+    } else if (majorsSortBy === "ratio-desc") {
+      copy.sort((a, b) => {
+        const ra = rank(a),
+          rb = rank(b);
+        if (ra.cat !== rb.cat) return ra.cat - rb.cat;
+        if (ra.cat === 1 && rb.ratio !== ra.ratio) return rb.ratio - ra.ratio;
+        const aApp = toNum(a.applicant_count),
+          bApp = toNum(b.applicant_count);
+        if (bApp !== aApp) return bApp - aApp;
+        return (a.idx ?? 0) - (b.idx ?? 0);
+      });
+    }
+
+    const header = [
+      "Major Name",
+      "College Name",
+      "Applicant Count",
+      "Remaining Quota",
+      "Ratio",
+    ];
+    const rows = [header];
+    const calcRatio = (item) => {
+      const a = toNum(item.applicant_count);
+      const q = toNum(item.remaining_quota);
+      if (q <= 0) return a > 0 ? "∞" : ""; // show infinity for >0/0, blank for 0/0
+      return (a / q).toFixed(3);
+    };
+
+    copy.forEach((item) => {
+      rows.push([
+        item.major_name || "",
+        item.college_name || "",
+        toNum(item.applicant_count),
+        item.remaining_quota ?? "",
+        calcRatio(item),
+      ]);
+    });
+
+    downloadCSV("majors_export.csv", toCSV(rows));
+  }
 
   let offset = 0;
   (function renderBatch() {
@@ -403,179 +538,3 @@ document.addEventListener("keydown", function (event) {
     closeModal();
   }
 });
-
-// ---------- Excel Export ----------
-function exportCollegesToExcel() {
-  try {
-    if (!window.ExcelJS) return alert("Excel 导出库未加载，请稍后重试");
-    const workbook = new ExcelJS.Workbook();
-    const sheet = workbook.addWorksheet("Colleges");
-
-    // headers
-    sheet.columns = [
-      { header: "学院名称", key: "college_name", width: 24 },
-      { header: "学院代码", key: "college_code", width: 14 },
-      { header: "专业总数", key: "total_majors", width: 12 },
-      { header: "申请总人数", key: "total_applicants", width: 14 },
-      { header: "平均申请", key: "avg_applicants", width: 12 },
-    ];
-
-    // Use current on-screen order: collegesData after sortColleges()
-    (collegesData || []).forEach((c) => {
-      const avg =
-        c.total_majors > 0 ? (c.total_applicants || 0) / c.total_majors : 0;
-      sheet.addRow({
-        college_name: c.college_name || c.name,
-        college_code: c.college_code || c.code || "",
-        total_majors: c.total_majors || 0,
-        total_applicants: c.total_applicants || 0,
-        avg_applicants: Number(avg.toFixed(2)),
-      });
-    });
-
-    sheet.getRow(1).font = { bold: true };
-
-    workbook.xlsx.writeBuffer().then((buffer) => {
-      const blob = new Blob([buffer], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `学院视图_${formatNow()}.xlsx`;
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-  } catch (e) {
-    console.error(e);
-    alert("导出失败，请重试");
-  }
-}
-
-function exportMajorsToExcel() {
-  try {
-    if (!window.ExcelJS) return alert("Excel 导出库未加载，请稍后重试");
-    const workbook = new ExcelJS.Workbook();
-    const sheet = workbook.addWorksheet("Majors");
-
-    sheet.columns = [
-      { header: "专业名称", key: "major_name", width: 24 },
-      { header: "学院名称", key: "college_name", width: 24 },
-      { header: "申请人数", key: "applicant_count", width: 12 },
-      { header: "余量", key: "remaining_quota", width: 10 },
-      { header: "申请/余量比", key: "ratio", width: 12 },
-    ];
-
-    // Build a copy in the exact current order in the UI
-    const data = buildCurrentMajorsOrder();
-
-    data.forEach((row) => {
-      const excelRow = sheet.addRow(row);
-      // Apply gradient coloring if current sort is by ratio-desc
-      if (majorsSortBy === "ratio-desc") {
-        // Map rank to a color gradient (red -> orange -> yellow -> green)
-        const color = rankToColor(row.__rankIndex, data.length);
-        // Color the entire row lightly
-        excelRow.eachCell((cell) => {
-          cell.fill = {
-            type: "pattern",
-            pattern: "solid",
-            fgColor: { argb: color },
-          };
-        });
-      }
-    });
-
-    sheet.getRow(1).font = { bold: true };
-
-    workbook.xlsx.writeBuffer().then((buffer) => {
-      const blob = new Blob([buffer], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `专业列表_${formatNow()}.xlsx`;
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-  } catch (e) {
-    console.error(e);
-    alert("导出失败，请重试");
-  }
-}
-
-function buildCurrentMajorsOrder() {
-  // Recreate the exact order currently shown
-  let arr = majorsFlat.slice();
-  if (majorsSortBy === "applicants-desc") {
-    arr.sort((a, b) => (b.applicant_count || 0) - (a.applicant_count || 0));
-  } else if (majorsSortBy === "ratio-desc") {
-    arr.sort((a, b) => {
-      const ra = ratioRank(a);
-      const rb = ratioRank(b);
-      if (ra.cat !== rb.cat) return ra.cat - rb.cat;
-      if (ra.cat === 1 && rb.ratio !== ra.ratio) return rb.ratio - ra.ratio;
-      const aApp = toNum(a.applicant_count),
-        bApp = toNum(b.applicant_count);
-      if (bApp !== aApp) return bApp - aApp;
-      return (a.idx ?? 0) - (b.idx ?? 0);
-    });
-  }
-
-  // Add calculated ratio and stable rank index for coloring
-  const result = arr.map((m, i) => ({
-    major_name: m.major_name,
-    college_name: m.college_name,
-    applicant_count: m.applicant_count || 0,
-    remaining_quota: m.remaining_quota ?? null,
-    ratio: computeRatioForExport(m),
-    __rankIndex: i,
-  }));
-  return result;
-}
-
-function computeRatioForExport(item) {
-  const a = toNum(item.applicant_count);
-  const q = toNum(item.remaining_quota);
-  if (q <= 0) return a === 0 ? 0 : Infinity;
-  return Number((a / q).toFixed(4));
-}
-
-function rankToColor(index, total) {
-  if (total <= 1) return "FFFFFFFF"; // white
-  // Normalize rank: 0 is top -> red, total-1 is bottom -> green
-  const t = index / (total - 1);
-  // Gradient stops: red (#FF3B30) -> orange (#FF9F0A) -> yellow (#FFD60A) -> green (#34C759)
-  const stops = [
-    { r: 0xff, g: 0x3b, b: 0x30 },
-    { r: 0xff, g: 0x9f, b: 0x0a },
-    { r: 0xff, g: 0xd6, b: 0x0a },
-    { r: 0x34, g: 0xc7, b: 0x59 },
-  ];
-  // Choose segment
-  const seg = Math.min(2, Math.floor(t * 3));
-  const t2 = (t - seg / 3) * 3;
-  const c0 = stops[seg];
-  const c1 = stops[seg + 1];
-  const r = Math.round(c0.r + (c1.r - c0.r) * t2);
-  const g = Math.round(c0.g + (c1.g - c0.g) * t2);
-  const b = Math.round(c0.b + (c1.b - c0.b) * t2);
-  // Return ARGB
-  const toHex = (n) => n.toString(16).padStart(2, "0").toUpperCase();
-  return `FF${toHex(r)}${toHex(g)}${toHex(b)}`;
-}
-
-function formatNow() {
-  const d = new Date();
-  const s = d.toLocaleString("zh-CN", {
-    timeZone: "Asia/Shanghai",
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
-  return s.replace(/[\\/:\s]/g, "-");
-}

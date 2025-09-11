@@ -384,15 +384,12 @@
         <div id="colleges-grid" class="colleges-grid">
             
         </div>
-
-            
-            <div class="export-bar" id="export-colleges-bar">
-                <button class="export-btn" onclick="exportCollegesToExcel()" aria-label="导出学院视图为Excel">
-                    <span class="export-icon">⬇️</span>
-                    <span>导出 Excel</span>
-                </button>
-            </div>
-
+        <div class="export-container">
+            <button class="export-btn" onclick="exportCollegesCSV()" aria-label="导出 CSV">
+                <span class="export-icon">⬇</span>
+                导出 CSV
+            </button>
+        </div>
 
         
         <div id="majors-list-view" class="hidden">
@@ -406,15 +403,6 @@
             <table class="majors-table" id="majors-list-table">
                 <thead>
                     <tr>
-
-            
-            <div class="export-bar" id="export-majors-bar">
-                <button class="export-btn" onclick="exportMajorsToExcel()" aria-label="导出专业列表为Excel">
-                    <span class="export-icon">⬇️</span>
-                    <span>导出 Excel</span>
-                </button>
-            </div>
-
                         <th>专业名称</th>
                         <th>学院名称</th>
                         <th>申请人数</th>
@@ -423,6 +411,12 @@
                 </thead>
                 <tbody id="majors-list-body"></tbody>
             </table>
+            <div class="export-container">
+                <button class="export-btn" onclick="exportMajorsCSV()" aria-label="导出 CSV">
+                    <span class="export-icon">⬇</span>
+                    导出 CSV
+                </button>
+            </div>
         </div>
 
         
@@ -449,7 +443,6 @@
                         <table id="majors-table" class="majors-table">
                             <thead>
                                 <tr>
-
                                     <th>专业名称</th>
                                     <th>申请人数</th>
                                     <th>余量</th>
@@ -468,8 +461,6 @@
 
 <link rel="stylesheet" href="/transfer-data/assets/style.css" />
 <script src="/transfer-data/assets/script.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/exceljs@4.4.0/dist/exceljs.min.js"></script>
-
 
 
 </section>
