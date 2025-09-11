@@ -331,6 +331,72 @@ function exportCollegesCSV() {
   downloadCSV("colleges_export.csv", toCSV(rows));
 }
 
+// Helper functions for major list sorting and export
+function toNum(v) {
+  const n = Number(v);
+  return Number.isFinite(n) ? n : 0;
+}
+
+function rank(item) {
+  const a = toNum(item.applicant_count);
+  const q = toNum(item.remaining_quota);
+  if (q <= 0) {
+    if (a === 0) return { cat: 2, ratio: 0 }; // 0/0 -> bottom
+    return { cat: 0, ratio: Infinity }; // applicants>0 & quota<=0 -> top
+  }
+  return { cat: 1, ratio: a / q }; // finite ratio
+}
+
+function exportMajorsCSV() {
+  if (!Array.isArray(majorsFlat) || majorsFlat.length === 0) {
+    alert("暂无可导出的数据");
+    return;
+  }
+  // Build a copy using current sort order in the UI
+  const copy = majorsFlat.slice();
+  if (majorsSortBy === "applicants-desc") {
+    copy.sort((a, b) => (b.applicant_count || 0) - (a.applicant_count || 0));
+  } else if (majorsSortBy === "ratio-desc") {
+    copy.sort((a, b) => {
+      const ra = rank(a),
+        rb = rank(b);
+      if (ra.cat !== rb.cat) return ra.cat - rb.cat;
+      if (ra.cat === 1 && rb.ratio !== ra.ratio) return rb.ratio - ra.ratio;
+      const aApp = toNum(a.applicant_count),
+        bApp = toNum(b.applicant_count);
+      if (bApp !== aApp) return bApp - aApp;
+      return (a.idx ?? 0) - (b.idx ?? 0);
+    });
+  }
+
+  const header = [
+    "Major Name",
+    "College Name",
+    "Applicant Count",
+    "Remaining Quota",
+    "Ratio",
+  ];
+  const rows = [header];
+  const calcRatio = (item) => {
+    const a = toNum(item.applicant_count);
+    const q = toNum(item.remaining_quota);
+    if (q <= 0) return a > 0 ? "∞" : ""; // show infinity for >0/0, blank for 0/0
+    return (a / q).toFixed(3);
+  };
+
+  copy.forEach((item) => {
+    rows.push([
+      item.major_name || "",
+      item.college_name || "",
+      toNum(item.applicant_count),
+      item.remaining_quota ?? "",
+      calcRatio(item),
+    ]);
+  });
+
+  downloadCSV("majors_export.csv", toCSV(rows));
+}
+
 // Major list view helpers
 let majorsFlat = [];
 let majorsSortBy = "applicants-desc";
@@ -413,69 +479,6 @@ function renderMajorsList() {
   }
 
   const CHUNK = 50;
-  function toNum(v) {
-    const n = Number(v);
-    return Number.isFinite(n) ? n : 0;
-  }
-  function rank(item) {
-    const a = toNum(item.applicant_count);
-    const q = toNum(item.remaining_quota);
-    if (q <= 0) {
-      if (a === 0) return { cat: 2, ratio: 0 }; // 0/0 -> bottom
-      return { cat: 0, ratio: Infinity }; // applicants>0 & quota<=0 -> top
-    }
-    return { cat: 1, ratio: a / q }; // finite ratio
-  }
-
-  function exportMajorsCSV() {
-    if (!Array.isArray(majorsFlat) || majorsFlat.length === 0) {
-      alert("暂无可导出的数据");
-      return;
-    }
-    // Build a copy using current sort order in the UI
-    const copy = majorsFlat.slice();
-    if (majorsSortBy === "applicants-desc") {
-      copy.sort((a, b) => (b.applicant_count || 0) - (a.applicant_count || 0));
-    } else if (majorsSortBy === "ratio-desc") {
-      copy.sort((a, b) => {
-        const ra = rank(a),
-          rb = rank(b);
-        if (ra.cat !== rb.cat) return ra.cat - rb.cat;
-        if (ra.cat === 1 && rb.ratio !== ra.ratio) return rb.ratio - ra.ratio;
-        const aApp = toNum(a.applicant_count),
-          bApp = toNum(b.applicant_count);
-        if (bApp !== aApp) return bApp - aApp;
-        return (a.idx ?? 0) - (b.idx ?? 0);
-      });
-    }
-
-    const header = [
-      "Major Name",
-      "College Name",
-      "Applicant Count",
-      "Remaining Quota",
-      "Ratio",
-    ];
-    const rows = [header];
-    const calcRatio = (item) => {
-      const a = toNum(item.applicant_count);
-      const q = toNum(item.remaining_quota);
-      if (q <= 0) return a > 0 ? "∞" : ""; // show infinity for >0/0, blank for 0/0
-      return (a / q).toFixed(3);
-    };
-
-    copy.forEach((item) => {
-      rows.push([
-        item.major_name || "",
-        item.college_name || "",
-        toNum(item.applicant_count),
-        item.remaining_quota ?? "",
-        calcRatio(item),
-      ]);
-    });
-
-    downloadCSV("majors_export.csv", toCSV(rows));
-  }
 
   let offset = 0;
   (function renderBatch() {
