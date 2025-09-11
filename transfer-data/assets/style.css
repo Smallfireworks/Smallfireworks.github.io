@@ -368,6 +368,31 @@
   font-size: 14px;
 }
 
+/* Export bar/buttons */
+.export-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 12px;
+}
+.export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid #e5e5ea;
+  border-radius: 12px;
+  background: #0a84ff;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+.export-btn:hover {
+  filter: brightness(0.98);
+}
+.export-icon {
+  font-size: 16px;
+}
+
 /* Utility classes */
 .text-center {
   text-align: center;
